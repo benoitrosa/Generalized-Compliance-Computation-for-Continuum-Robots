@@ -1,7 +1,5 @@
 function Plot_Tube_3D(curr_ax,curve,R,numPointsCircle,color)
     
-    digits(64)
-
     % curve: une matrice Nx3 où chaque ligne représente un point (x, y, z) de la courbe
     % R: rayon extérieur de l'anneau
     % r: rayon intérieur de l'anneau

@@ -47,10 +47,6 @@ function [mem_bvp , bvp_prop , ctcr_shape , mem_deriv_propag_low , bool_problem_
         bool_deriv_propag = true ;
     end
 
-
-    % Specifying the float precision
-    digits(simulation_param.digits_length) ;
-
     % Init timer
     tic_bvp = tic ;
 
