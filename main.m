@@ -13,7 +13,7 @@ close all
 delete all
 clc
 
-addpath('CTCR_Maths_Functions', 'CTCR_Shape_Functions', 'CTCR_Shape_Class', 'CTCR_Deriv_Propag_Class', 'CTCR_Deriv_Propag_Functions', 'CTCR_Graphic', 'DATA') ; 
+addpath('CTCR_Maths_Functions', 'CTCR_Shape_Functions', 'CTCR_Shape_Class', 'CTCR_Deriv_Propag_Class', 'CTCR_Deriv_Propag_Functions', 'CTCR_Graphic') ; 
 
 
 
@@ -31,6 +31,8 @@ name = 'RTC_demo' ;                             % Name of the folder created to 
 
 if exist(strcat('DATA/',name),'dir') == 0
    mkdir(strcat('DATA/',name)) ;
+else
+    addpath('DATA') ;
 end
 
 cd(['DATA/',name]) ;
