@@ -1,14 +1,39 @@
 function mem_CJ ...
          = Deriv_Propag_Comp_CJ(...
-         bool_J , bool_Cs0 , is , ctcr_carac , simulation_param , bvp_prop , mem_CJ , mem_deriv_propag_high)
+         bool_J , bool_Cs0 , ctcr_construc , ctcr_carac , simulation_param , bvp_prop , mem_CJ , mem_deriv_propag_high)
 
 
-% EXPLAIN THE FUNCTIONS
-%
-%
-%
-%
-%
+% ======================================================================= %
+% ======================================================================= %
+
+% This function computes the Generalized Compliance Matrix and
+% the Joint Jacobian using the High-Level derivatives Ex and Bx
+% obtained thanks to the Low-Level derivatives computed by the Low-Level
+% Derivative Propagation Method
+
+% ====================
+% ====== INPUTS ====== 
+
+% bool_J                : [boolean] Compute the Joint Jacobian ?
+% bool_Cs0              : [boolean] Compute the Generalized Compliance Matrix ?
+% ctcr_construc         : Robot features related to the model settings
+% ctcr_carac            : Robot features
+% simulation_param      : Model settings
+% bvp_prop              : Results of the BVP resolution
+% mem_CJ                : Memory of the Generalized Compliance Matrix and the Joint Jacobian
+% mem_deriv_propag_high : Memory of the high-level partial derivatives
+
+
+
+% ====================
+% ===== OUTPUTS ====== 
+
+% mem_CJ                : Memory of the Generalized Compliance Matrix and the Joint Jacobian
+
+% ======================================================================= %
+% ======================================================================= %
+
+
 
     % ========================================================== %
     % ================== Getting input values ================== %
@@ -19,45 +44,43 @@ function mem_CJ ...
     % ========================================================== %
 
 
-   
+   for is = ctcr_construc.ind_origin:ctcr_construc.nbP
+
+        Eu          = mem_deriv_propag_high.mem_E(:,1:nbT+6,is)  ;
+        pinv_Bu     = pinv(bvp_prop.Bu,simulation_param.opt_tol) ;
+        
     
-    Eu          = mem_deriv_propag_high.mem_E(:,1:nbT+6,is)      ;
-%     Bu          = [ [bvp_prop.Bu(1:nbT,1:nbT),bvp_prop.Bu(1:nbT,nbT*(1+2*3)+1:nbT*(1+2*3)+6)] ; ...
-%                     [bvp_prop.Bu(nbT*(1+2*3)+1:nbT*(1+2*3)+6,1:nbT),bvp_prop.Bu(nbT*(1+2*3)+1:nbT*(1+2*3)+6,nbT*(1+2*3)+1:nbT*(1+2*3)+6)] ] ;
-    pinv_Bu     = pinv(bvp_prop.Bu,simulation_param.opt_tol) ;
+        if bool_J
     
-
-    if bool_J
-
-        % ========================================================== %
-        % ============= Articular jacobian computation ============= %
-    
-        Eq                   = mem_deriv_propag_high.mem_E(:,nbT+7:3*nbT+6,is) ;
-        Bq                   = mem_deriv_propag_high.mem_B(:,nbT+7:3*nbT+6)    ;
-    
-        mem_CJ.mem_J(:,:,is) = Eq - Eu*pinv_Bu*Bq ;
-    
-    end
-
-
-
-    if bool_Cs0
-
-        % ========================================================== %
-        % =============== Compliance Cs0 computation =============== %
-
-        Ews0        = mem_deriv_propag_high.mem_Ews0                            ;
-        Bws0        = mem_deriv_propag_high.mem_Bws0                            ;
-
-        for tp_is0 = 1:length(simulation_param.pt_s0_LIT)
-            is0 = simulation_param.pt_s0_LIT(tp_is0) ;
-
-    
-            mem_CJ.mem_Cs0(:,:,is,is0) = Ews0(:,:,is,is0) - Eu*pinv_Bu*Bws0(:,:,is0) ;
-
+            % ========================================================== %
+            % ============= Articular jacobian computation ============= %
+        
+            Eq                   = mem_deriv_propag_high.mem_E(:,nbT+7:3*nbT+6,is) ;
+            Bq                   = mem_deriv_propag_high.mem_B(:,nbT+7:3*nbT+6)    ;
+        
+            mem_CJ.mem_J(:,:,is) = Eq - Eu*pinv_Bu*Bq ;
+        
         end
-    end
+    
+    
+    
+        if bool_Cs0
+    
+            % ========================================================== %
+            % =============== Compliance Cs0 computation =============== %
+    
+            Ews0        = mem_deriv_propag_high.mem_Ews0                            ;
+            Bws0        = mem_deriv_propag_high.mem_Bws0                            ;
+    
+            for tp_is0 = 1:length(simulation_param.pt_s0_LIT)
+                is0 = simulation_param.pt_s0_LIT(tp_is0) ;
+    
+                mem_CJ.mem_Cs0(:,:,is,is0) = Ews0(:,:,is,is0) - Eu*pinv_Bu*Bws0(:,:,is0) ;
+    
+            end
+        end
 
+   end
 
     
 end

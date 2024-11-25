@@ -1,4 +1,24 @@
-%% Opération inverse de ^
-function R3 = inv_hat6(skew)
-    R3 = [skew(1,4) ; skew(2,4) ; skew(3,4) ; skew(3,2); skew(1,3); skew(2,1)] ;
+function V = inv_hat6(M)
+
+% ======================================================================= %
+% ======================================================================= %
+
+% This function extract the 6x1 vector V associated to the skew-symmetric
+% matrix M formed from initially formed thanks to the skew-symmetric operation
+
+% ====================
+% ====== INPUTS ====== 
+
+% M     : 4x4 matrix 
+
+% ====================
+% ===== OUTPUTS ====== 
+
+% V     : 6x1 vector
+
+% ======================================================================= %
+% ======================================================================= %
+
+    V = [M(1,4) ; M(2,4) ; M(3,4) ; M(3,2) ; M(1,3) ; M(2,1)] ;
+
 end

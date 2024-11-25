@@ -3,18 +3,18 @@ classdef CTCRLoad
 % ======================================================================= %
 % ============================== ctcr_load ============================== %
 % ======================================================================= %
-
+%
 % This class contains the robot loads
-
-% tau_tip [N.m]     : Bending moment applied on the tip of the robot  
-% f_tip [N]         : Force applied on the tip of the robot 
-% load_lim_1 [m]    : Range for the curvilinear abscissa on which a distributed load is applied ([l_min,l_max] in the paper)
-% tau_dist_1 [N.m]  : Distributed bending moment applied on the robot  
-% f_dist_1 [N]      : Distributed force applied on the robot 
-% load_lim_2 [m]    : Range for the curvilinear abscissa on which a distributed load is applied ([l_min,l_max] in the paper)
-% tau_dist_2 [N.m]  : Distributed bending moment applied on the robot  
-% f_dist_2 [N]      : Distributed force applied on the robot 
-
+%
+% tau_tip       : [N.m] Bending moment applied on the tip of the robot  
+% f_tip         : [N] Force applied on the tip of the robot 
+% load_lim_1    : [m] Range for the curvilinear abscissa on which a distributed load is applied ([l_min,l_max] in the paper)
+% tau_dist_1    : [N.m] Distributed bending moment applied on the robot  
+% f_dist_1      : [N] Distributed force applied on the robot 
+% load_lim_2    : [m] Range for the curvilinear abscissa on which a distributed load is applied ([l_min,l_max] in the paper)
+% tau_dist_2    : [N.m] Distributed bending moment applied on the robot  
+% f_dist_2      : [N] Distributed force applied on the robot 
+%
 % ======================================================================= %
 % ======================================================================= %
 

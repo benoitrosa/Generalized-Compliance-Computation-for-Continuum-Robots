@@ -23,8 +23,8 @@ function mem_bvp = BVP_Init_IC(bvp_prop , mem_bvp , ctcr_construc , ctcr_carac)
     
     nbT = ctcr_carac.nbT ;
 
+    % uzi(0i) initialization
     for iT = 1:nbT
-        % uzi(0i) initialization
         mem_bvp.mem_y.mem_uz(iT,ctcr_construc.vect_ind_iT(iT,1)) = bvp_prop.IC_opt(iT) ;
     end
 
