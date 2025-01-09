@@ -1,21 +1,37 @@
-function [fig] = CTCR_Load_Plot(filename , simulation_param , ctcr_carac , ctcr_load , ctcr_construc , ctcr_shape)
+function fig = CTCR_Load_Plot(filename , simulation_param , ctcr_carac , ctcr_load , ctcr_construc , ctcr_shape)
 
-% EXPLAIN THE FUNCTIONS
+% ======================================================================= %
+% ======================================================================= %
 %
+% This function opens the 3D shape plot file, add some arrows to visualize 
+% the external loads and save a copy of the new file
 %
+% ====================
+% ====== INPUTS ====== 
 %
+% filename              : Name of the CTCR 3D shape plot file
+% simulation_param      : Model settings
+% ctcr_carac            : Robot features
+% ctcr_load             : Robot loads
+% ctcr_construc         : Robot features related to the model settings
+% ctcr_shape            : Robot 3D shape
 %
+% ====================
+% ===== OUTPUTS ====== 
 %
+% fig                   : Object of the 3D shape plot file
+%
+% ======================================================================= %
+% ======================================================================= %
 
     global fig ax
 
-    ctcr_shape          = ctcr_shape*1e3 ;
-
     regl_radius         = 0.05 ;
-    regl_arrow          = 0.22 ;
+    regl_arrow          = 0.15 ;
     densite_distrib     = 5*simulation_param.res_step ;
     width               = 2 ;
-            
+    ctcr_shape          = ctcr_shape*1e3 ;
+
     if isfile(filename)
     
         if ~isequal(ctcr_load.tau_tip,zeros(1,3)) || ...
@@ -77,7 +93,7 @@ function [fig] = CTCR_Load_Plot(filename , simulation_param , ctcr_carac , ctcr_
                 pt_circle   = [x_circle ; y_circle ; zeros(1,length(x_circle))] ;
                 
                 for ip = 1:length(pt_circle(1,:))
-                    pt_circle(:,ip) = LargeSO3(rot_coord)*pt_circle(:,ip) ;
+                    pt_circle(:,ip) = large_SO3(rot_coord)*pt_circle(:,ip) ;
                 end
     
                 pt_circle = pt_circle + [tip_point(1) ; tip_point(2) ; tip_point(3)] ;
@@ -125,7 +141,7 @@ function [fig] = CTCR_Load_Plot(filename , simulation_param , ctcr_carac , ctcr_
                 pt_circle   = [x_circle ; y_circle ; zeros(1,length(x_circle))] ;
             
                 for ip = 1:length(pt_circle(1,:))
-                    pt_circle(:,ip) = LargeSO3(rot_coord)*pt_circle(:,ip) ;
+                    pt_circle(:,ip) = large_SO3(rot_coord)*pt_circle(:,ip) ;
                 end
     
                 nb_point = floor((ctcr_load.load_lim_1(2) - ctcr_load.load_lim_1(1))/densite_distrib)+1 ;
@@ -136,7 +152,7 @@ function [fig] = CTCR_Load_Plot(filename , simulation_param , ctcr_carac , ctcr_
    
                     curr_circle = pt_circle + [curr_point(1) ; curr_point(2) ; curr_point(3)] ;
     
-                    plot3(ax,curr_circle(1,1:end-1) , curr_circle(2,1:end-1) , curr_circle(3,1:end-1) , 'b-' , 'LineWidth',5) ;
+                    plot3(ax,curr_circle(1,1:end-1) , curr_circle(2,1:end-1) , curr_circle(3,1:end-1) , 'b-' , 'LineWidth',3) ;
                     arrow3(curr_circle(:,end-1)',curr_circle(:,end)'-curr_circle(:,end-1)','b',width,width,'cone') ;
     
                     iP = iP + 1 ;
@@ -145,7 +161,7 @@ function [fig] = CTCR_Load_Plot(filename , simulation_param , ctcr_carac , ctcr_
                 curr_point = ctcr_shape(:,ind_i)' ;
                 curr_circle = pt_circle + [curr_point(1) ; curr_point(2) ; curr_point(3)] ;
 
-                plot3(ax,curr_circle(1,1:end-1) , curr_circle(2,1:end-1) , curr_circle(3,1:end-1) , 'b-' , 'LineWidth',5) ;
+                plot3(ax,curr_circle(1,1:end-1) , curr_circle(2,1:end-1) , curr_circle(3,1:end-1) , 'b-' , 'LineWidth',3) ;
                 arrow3(curr_circle(:,end-1)',curr_circle(:,end)'-curr_circle(:,end-1)','b',width,width,'cone') ;
             end
 
@@ -187,7 +203,7 @@ function [fig] = CTCR_Load_Plot(filename , simulation_param , ctcr_carac , ctcr_
                 pt_circle   = [x_circle ; y_circle ; zeros(1,length(x_circle))] ;
             
                 for ip = 1:length(pt_circle(1,:))
-                    pt_circle(:,ip) = LargeSO3(rot_coord)*pt_circle(:,ip) ;
+                    pt_circle(:,ip) = large_SO3(rot_coord)*pt_circle(:,ip) ;
                 end
     
                 nb_point = floor((ctcr_load.load_lim_2(2) - ctcr_load.load_lim_2(1))/densite_distrib)+1 ;
@@ -198,7 +214,7 @@ function [fig] = CTCR_Load_Plot(filename , simulation_param , ctcr_carac , ctcr_
     
                     curr_circle = pt_circle + [curr_point(1) ; curr_point(2) ; curr_point(3)] ;
     
-                    plot3(ax,curr_circle(1,1:end-1) , curr_circle(2,1:end-1) , curr_circle(3,1:end-1) , 'g-' , 'LineWidth',5) ;
+                    plot3(ax,curr_circle(1,1:end-1) , curr_circle(2,1:end-1) , curr_circle(3,1:end-1) , 'g-' , 'LineWidth',3) ;
                     arrow3(curr_circle(:,end-1)',curr_circle(:,end)'-curr_circle(:,end-1)','g',width,width,'cone') ;
     
                     iP = iP + 1 ;
@@ -209,7 +225,7 @@ function [fig] = CTCR_Load_Plot(filename , simulation_param , ctcr_carac , ctcr_
 
                 curr_circle = pt_circle + [curr_point(1) ; curr_point(2) ; curr_point(3)] ;
     
-                plot3(ax,curr_circle(1,1:end-1) , curr_circle(2,1:end-1) , curr_circle(3,1:end-1) , 'g-' , 'LineWidth',5) ;
+                plot3(ax,curr_circle(1,1:end-1) , curr_circle(2,1:end-1) , curr_circle(3,1:end-1) , 'g-' , 'LineWidth',3) ;
                 arrow3(curr_circle(:,end-1)',curr_circle(:,end)'-curr_circle(:,end-1)','g',width,width,'cone') ;
             
             end
@@ -237,7 +253,7 @@ function [fig] = CTCR_Load_Plot(filename , simulation_param , ctcr_carac , ctcr_
             hold off
     
             % Editing the 3D plot style
-            legend(lgd,'Interpreter','latex','FontSize',25,'Location','northoutside') ;
+            legend(lgd,'Interpreter','latex','FontSize',25,'Location','eastoutside') ;
             view(45,45) ;
             set(gca,'DataAspectRatio',[1 1 1]) ;
             grid on ;
@@ -247,7 +263,7 @@ function [fig] = CTCR_Load_Plot(filename , simulation_param , ctcr_carac , ctcr_
         if ~isfile(filename) && bool_file
             
             bool_file = false ;
-            disp('========================== /!\ Figure does not exist for Arrow force plot /!\ ===========================') ;
+            disp('========================== /!\ Figure does not exist for arrow force plot /!\ ===========================') ;
             disp('=========================================================================================================') ;
             
         end

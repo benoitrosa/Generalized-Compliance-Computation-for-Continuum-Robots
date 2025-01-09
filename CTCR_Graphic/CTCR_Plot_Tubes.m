@@ -1,9 +1,28 @@
-function [] = CTCR_Plot_Tubes(curr_ax , ctcr_carac , ctcr_construc)
+function CTCR_Plot_Tubes(curr_ax , ctcr_carac , ctcr_construc)
 
+% ======================================================================= %
+% ======================================================================= %
+%
+% This function plots individual tubes of the CTCR before their assembly
+%
+% ====================
+% ====== INPUTS ====== 
+%
+% curr_ax               : Axes of the figure on which the graph is plotted
+% ctcr_carac            : Robot features
+% ctcr_construc         : Robot features related to the model settings
+%
+% ====================
+% ===== OUTPUTS ====== 
+%
+% No output
+%
+% ======================================================================= %
+% ======================================================================= %
 
     ctcr_construc.pos_init      = ctcr_construc.pos_init*1e3 ;
     R                           = [2,1.75,1.5] ;
-    numPointsCircle             = 50 ;
+    nb_pt_circ                  = 50 ;
     couleur                     = [[0.56,0.17,0.14] ; ...
                                    [0.07,0.13,0.64] ; ...
                                    [0.27,0.44,0.20]] ;
@@ -20,7 +39,7 @@ function [] = CTCR_Plot_Tubes(curr_ax , ctcr_carac , ctcr_construc)
         mem_pos_tube    = [mem_pos_tube,pos_tube] ;
 
         % Plot the conresponding range of the tube
-        Plot_Tube_3D(curr_ax,pos_tube',R(iT),numPointsCircle,couleur(iT,:)) ;
+        Plot_Tube_3D(curr_ax,pos_tube',R(iT),nb_pt_circ,couleur(iT,:)) ;
 
         lgd(iT)  = fill3(curr_ax,NaN*zeros(1,4),NaN*zeros(1,4),NaN*zeros(1,4),couleur(iT,:),'DisplayName',['Tube n$^{\circ}$',num2str(iT)]) ;
 
@@ -33,7 +52,7 @@ function [] = CTCR_Plot_Tubes(curr_ax , ctcr_carac , ctcr_construc)
     zlimit_plus     = 1.5*max(mem_pos_tube(3,:)) ;
     zlimit_minus    = 1.5*min(mem_pos_tube(3,:)) ;
 
-    xylimit = 1.5*max(xlimit , ylimit) ;
+    xylimit         = 3*max(xlimit , ylimit) ;
 
     xlim(curr_ax,[-xylimit , xylimit]) ;
     ylim(curr_ax,[-xylimit , xylimit]) ;
@@ -53,7 +72,7 @@ function [] = CTCR_Plot_Tubes(curr_ax , ctcr_carac , ctcr_construc)
     % Editing the 3D plot style
     legend(curr_ax,lgd,'Interpreter','latex','FontSize',25,'Location','northoutside') ;
 
-    view(curr_ax,45,30) ;
+    view(curr_ax,45,45) ;
     set(curr_ax,'DataAspectRatio',[1 1 1]) ;
     grid(curr_ax,'on') ;
     curr_ax.GridLineWidth = 2 ;

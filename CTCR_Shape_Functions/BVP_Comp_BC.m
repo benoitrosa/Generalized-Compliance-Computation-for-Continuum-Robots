@@ -1,16 +1,38 @@
 function bvp_prop = BVP_Comp_BC(mem_bvp , bvp_prop , ctcr_carac , ctcr_construc , ctcr_load)
 
-% EXPLAIN THE FUNCTIONS
-%
-%
-%
-%
-%
 
+% ======================================================================= %
+% ======================================================================= %
+
+% This function is used to compute the boundary condition (= the residual b)
+% Equation n°29
+
+% ====================
+% ====== INPUTS ====== 
+
+% mem_bvp               : Memory of the BVP variables 
+% bvp_prop              : Results of the BVP resolution
+% ctcr_carac            : Robot features
+% ctcr_construc         : Robot features related to the model settings
+% ctcr_load             : Robot loads
+
+
+% ====================
+% ===== OUTPUTS ====== 
+
+% bvp_prop              : Results of the BVP resolution
+
+% ======================================================================= %
+% ======================================================================= %
+
+
+
+    % ========================================================== %
+    % ================== Getting input values ================== %
+    
     vect_ind_iT     = ctcr_construc.vect_ind_iT ;
     nbT             = ctcr_carac.nbT ;
 
-    % ======== Construction of the calculated boudary conditions ======== %
 
     % Concatenation of the uzi_end
     vect_uzi_tip = zeros(ctcr_carac.nbT,1) ;
@@ -38,22 +60,15 @@ function bvp_prop = BVP_Comp_BC(mem_bvp , bvp_prop , ctcr_carac , ctcr_construc 
     % Transforming f_tip expressed in RB0 to Rtip
     f_Rtip = R_tip'*ctcr_load.f_tip' ;
     
-    % Initialization
+    % Computing the expected distal value
     expect_CL = zeros(ctcr_carac.nbT+6,1) ;
-
-    % Ajout de la contrainte en traction/flexion à l'extrémité
     expect_CL(end-5: end) = [tau_Rtip ; f_Rtip] ;
-    
-    % Ajout de la contrainte en torsion sur le tube le plus au milieu
-    % moment_force_robot(3) : Moment selon zi
-    %expect_CL(end-6) = tau_Rtip(3)/ctcr_construc.K(3,3,ctcr_carac.nbT) ;
     expect_CL(end-6) = 1/ctcr_construc.K(3,3,nbT)*[0,0,1]*R_tip_nbT'*ctcr_load.tau_tip' ;
-
-
 
 
     % ================ Boudary conditions comparaison ================= %
     bvp_prop.vect_tol   = comp_CL - expect_CL       ;
     bvp_prop.norm_tol   = norm(bvp_prop.vect_tol)   ;
+    
 
 end

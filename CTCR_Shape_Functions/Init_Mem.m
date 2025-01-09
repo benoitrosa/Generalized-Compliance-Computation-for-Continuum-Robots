@@ -1,24 +1,27 @@
-function [mem_bvp , mem_deriv_propag_low] ...
-         = BVP_Init_Mem(...
-         ctcr_construc , ctcr_carac)
+function [mem_bvp , mem_deriv_propag_low , mem_deriv_propag_high , mem_CJ] ...
+         = Init_Mem(...
+         ctcr_construc , ctcr_carac , bvp_prop)
+
 
 % ======================================================================= %
 % ======================================================================= %
-
-% This function initializes the memories variables
-
+%
+% This function initializes the memories variables for the state vector and the partial derivatives. 
+%
 % ====================
 % ====== INPUTS ====== 
-
+%
 % ctcr_construc         : Robot features related to the model settings
 % ctcr_carac            : Robot features
-
+%
 % ====================
 % ===== OUTPUTS ====== 
-
+%
 % mem_bvp               : Memory of the BVP variables 
 % mem_deriv_propag_low  : Memory of the low-level derivatives 
-
+% mem_deriv_propag_high : Memory of the high-level partial derivatives
+% mem_CJ                : Memory of the Generalized Compliance Matrix and the Joint Jacobian
+%
 % ======================================================================= %
 % ======================================================================= %
 
@@ -32,6 +35,7 @@ function [mem_bvp , mem_deriv_propag_low] ...
     vect_ind_iT     = ctcr_construc.vect_ind_iT ;
     ind_origin      = ctcr_construc.ind_origin ;
     vect_z          = ctcr_construc.vect_z ;
+    vect_res        = ctcr_construc.vect_res ; 
     
 
 
@@ -41,20 +45,28 @@ function [mem_bvp , mem_deriv_propag_low] ...
     % ================= Initialization mem_bvp ================= %
 
     % y(s) memory initialization
-    mem_t   = zeros(nbT,nbP) ;
-    mem_uz  = zeros(nbT,nbP) ;
-    mem_m0  = zeros(3,nbP) ;
-    mem_n0  = zeros(3,nbP) ;
+    mem_t           = zeros(nbT,nbP) ;
+    mem_uz          = zeros(nbT,nbP) ;
+    mem_m0          = zeros(3,nbP) ;
+    mem_n0          = zeros(3,nbP) ;
+    mem_R0          = zeros(3,3,nbP) ;
+    mem_p0          = zeros(3,nbP) ;
 
-    mem_y   = MemY(mem_t , mem_uz , mem_m0 , mem_n0) ;
+    % ====== Non-zero initialization
+    mem_R0(:,:,1)   = eye(3,3) ;
+    mem_p0(:,1)     = [0;0;ctcr_construc.vect_z(1)] ;
+
+    mem_y   = MemY(mem_t , mem_uz , mem_m0 , mem_n0 , mem_R0 , mem_p0) ;
 
     % d_y_ds(s) memory initialization
-    mem_ts  = zeros(nbT,nbP) ;
-    mem_uzs = zeros(nbT,nbP) ;
-    mem_m0s = zeros(3,nbP) ;
-    mem_n0s = zeros(3,nbP) ;
+    mem_ts      = zeros(nbT,nbP) ;
+    mem_uzs     = zeros(nbT,nbP) ;
+    mem_m0s     = zeros(3,nbP) ;
+    mem_n0s     = zeros(3,nbP) ;
+    mem_R0s     = zeros(3,3,nbP) ;
+    mem_p0s     = zeros(3,nbP) ;
 
-    mem_ys  = MemYS(mem_ts , mem_uzs , mem_m0s , mem_n0s) ;
+    mem_ys  = MemYS(mem_ts , mem_uzs , mem_m0s , mem_n0s , mem_R0s , mem_p0s) ;
 
     % u0(s) memory initialization
     mem_u0          = zeros(3,nbP) ;
@@ -83,7 +95,6 @@ function [mem_bvp , mem_deriv_propag_low] ...
     
 
 
-
     % ===================================================================== %
     % ============================== mem_duzi ============================= %
     % ===================================================================== %
@@ -96,7 +107,9 @@ function [mem_bvp , mem_deriv_propag_low] ...
     mem_duzi_dtcj            = zeros(nbT,nbT,nbP)         ;
     mem_duzi_dbcj            = zeros(nbT,nbT,nbP)         ;
     mem_duzi_dtaus0          = zeros(nbT,3,nbP,nbP)       ;
-    mem_duzi_dfs0            = zeros(nbT,3,nbP,nbP)       ;    
+    mem_duzi_dfs0            = zeros(nbT,3,nbP,nbP)       ;   
+
+    
 
     % ====== Non-zero initialization
 
@@ -107,10 +120,10 @@ function [mem_bvp , mem_deriv_propag_low] ...
         end
     end
 
-    % % === mem_duzi_dbcj
-    % for iT = 1:nbT
-    %     mem_duzi_dbcj(iT,iT,vect_ind_iT(iT,1)) = - bvp_prop.IC_opt(iT)/vect_res(vect_ind_iT(iT,1)) ;
-    % end
+    % === mem_duzi_dbcj
+    for iT = 1:nbT
+        mem_duzi_dbcj(iT,iT,vect_ind_iT(iT,1)) = - bvp_prop.IC_opt(iT)/vect_res(vect_ind_iT(iT,1)) ;
+    end
 
     % ====== Final initialization
 
@@ -364,33 +377,6 @@ function [mem_bvp , mem_deriv_propag_low] ...
 
 
 
-    % ===================================================================== %
-    % ============================ mem_du0_ds ============================= %
-    % ===================================================================== %
-
-    % ====== Zero initialization
-
-    mem_du0_duzj0_ds        = zeros(3,nbT,nbP)         ;
-    mem_du0_dm0j0_ds        = zeros(3,3,nbP)           ;
-    mem_du0_dn0j0_ds        = zeros(3,3,nbP)           ;
-    mem_du0_dtcj_ds         = zeros(3,nbT,nbP)         ;
-    mem_du0_dbcj_ds         = zeros(3,nbT,nbP)         ;
-    mem_du0_dtaus0_ds       = zeros(3,3,nbP,nbP)     ;
-    mem_du0_dfs0_ds         = zeros(3,3,nbP,nbP)     ;
-
-    % ====== Final initialization
-    
-    mem_du0_ds = MemDU0DS(mem_du0_duzj0_ds , mem_du0_dm0j0_ds , mem_du0_dn0j0_ds , ...
-        mem_du0_dtcj_ds , mem_du0_dbcj_ds , mem_du0_dtaus0_ds , mem_du0_dfs0_ds) ;
-
-
-
-
-
-
-
-
-
 
 
     % ===================================================================== %
@@ -441,7 +427,6 @@ function [mem_bvp , mem_deriv_propag_low] ...
     
     mem_d00Rs_ds = MemD00RSDS(mem_d00Rs_duzj0_ds , mem_d00Rs_dm0j0_ds , mem_d00Rs_dn0j0_ds , ...
         mem_d00Rs_dtcj_ds , mem_d00Rs_dbcj_ds , mem_d00Rs_dtaus0_ds , mem_d00Rs_dfs0_ds) ;
-
 
 
 
@@ -513,16 +498,53 @@ function [mem_bvp , mem_deriv_propag_low] ...
 
 
 
-
     % ========================================================== %
     % ================== Setting output values ================= %
 
-    mem_deriv_propag_low = MemDerivPropagLow(mem_du0 , mem_du0_ds , ...
-        mem_dm0 , mem_dm0_ds , mem_dn0 , mem_dn0_ds , mem_dti , mem_dti_ds , ...
-        mem_duzi , mem_duzi_ds , mem_d00Rs , mem_d00Rs_ds , mem_d00Ps , mem_d00Ps_ds , mem_d00Ts) ;
+    mem_deriv_propag_low = MemDerivPropagLow( ...
+        mem_du0 , mem_dm0 , mem_dm0_ds , mem_dn0 , mem_dn0_ds , ...
+        mem_dti , mem_dti_ds , mem_duzi , mem_duzi_ds , ... 
+        mem_d00Rs , mem_d00Rs_ds , mem_d00Ps , mem_d00Ps_ds , mem_d00Ts) ;
 
     % ========================================================== %
     % ========================================================== %
+
+
+
+
+
+
+
+
+    % ===================================================================== %
+    % ======================= mem_deriv_propag_high ======================= %
+
+    mem_B                   = zeros(nbT+6 , 3*nbT+6)  ;
+    mem_Bw0s0               = zeros(nbT+6 , 6 , nbP) ;
+
+    mem_E                   = zeros(6 , 3*nbT+12 , nbP) ;
+    mem_Ew0s0               = zeros(6 , 6 , nbP , nbP) ;
+
+    mem_deriv_propag_high   = MemDerivPropagHigh(mem_B , mem_Bw0s0 , mem_E , mem_Ew0s0) ;
+
+
+
+
+
+
+    % ===================================================================== %
+    % =============================== mem_CJ ============================== %
+
+    mem_Cs0     = zeros(6 , 6 , nbP , nbP) ;
+    mem_J       = zeros(6 , 2*nbT , nbP) ;
+
+    mem_CJ      = MemCJ(mem_Cs0 , mem_J) ;
+
+
+
+
+
+    
 
     
     

@@ -4,25 +4,17 @@ classdef CTCRConstruc
 % ============================ ctcr_construc ============================ %
 % ======================================================================= %
 %
+% This class contains the robot features related to the model settings
+%
 % nbP           : Number of discretization points
-%
 % K             : Stiffness matrix
-%
-% vect_ind_iT   : Matrix filled with the discrezisation index corresponding
-% to the discontinuity points of the tubes
-% 
+% vect_ind_iT   : Matrix filled with the discrezisation index corresponding to the discontinuity points of the tubes
 % ind_origin    : Index corresponding to the base frame origin
-% 
 % vect_z        : Vector of the points curvilinear distances from the base frame
-% 
 % vect_res      : Vector of the distances between one point and the next one
-% 
 % ui_init       : Matrix of the tubes curvatures before the assembly
-%
 % pos_init      : Matrix of the tubes positions before the assembly
-%
 % vect_tau_dist : Matrix of the torque applied to the CTCR due to the constant distributed torque
-%
 % vect_f_dist   : Matrix of the force applied to the CTCR due to the constant distributed torque
 %
 % ======================================================================= %

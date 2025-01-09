@@ -1,5 +1,50 @@
 classdef MemD00PS
 
+% ======================================================================= %
+% ============================== mem_d00Ps ============================== %
+% ======================================================================= %
+%
+% This class contains all the partial derivatives of p0(s)
+%
+% mem_d00Ps_duzj0   : (3 x nbT x nbP) matrix containing the partial derivatives w.r.t. uz(0)
+%                     | mem_d00Ps_duzj0(i,j,is)
+%                     with
+%                     | i : the component X/Y/Z of p0(s)
+%                     | j : the index of the tube associated to uzj(0)
+%                     | is : the current curvilinear abscissa index
+%
+% mem_d00Ps_dm0j0   : (3 x 3 x nbP) matrix containing the partial derivatives w.r.t. m0(0)
+%                     | mem_d00Ps_dm0j0(i,j,is)
+%                     with
+%                     | i : the component X/Y/Z of p0(s)
+%                     | j : the component X/Y/Z associated to m0(0)
+%                     | is : the current curvilinear abscissa index
+%
+% mem_d00Ps_dn0j0   : (3 x 3 x nbP) matrix containing the partial derivatives w.r.t. n0(0)
+%                     | same template than mem_d00Ps_dm0j0
+%
+%
+% mem_d00Ps_dtcj    : (3 x nbT x nbP) matrix containing the partial derivatives w.r.t. theta_c
+%                     | same template than mem_d00Ps_duzj0
+%
+% mem_d00Ps_dbcj    : (3 x nbT x nbP) matrix containing the partial derivatives w.r.t. beta_c
+%                     | same template than mem_d00Ps_duzj0
+%
+% mem_d00Ps_dtaus0  : (3 x 3 x nbP x nbP) matrix containing the partial derivatives w.r.t. tau0(s0)
+%                     | mem_d00Ps_dtaus0(i,j,is,is0)
+%                     with
+%                     | i : the component X/Y/Z of p0(s)
+%                     | j : the component X/Y/Z associated to tau0(s0)
+%                     | is : the current curvilinear abscissa index
+%                     | is0 : the loaded point abscissa index
+%
+% mem_d00Ps_dfs0    : (3 x 3 x nbP x nbP) matrix containing the partial derivatives w.r.t. f0(s0)
+%                     | same template than mem_d00Ps_dtaus0
+%
+% ======================================================================= %
+% ======================================================================= %
+
+
     % ====== Members ======
     properties
 

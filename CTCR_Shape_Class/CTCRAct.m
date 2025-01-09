@@ -4,12 +4,12 @@ classdef CTCRAct
 % ======================================================================= %
 % ============================== ctcr_act =============================== %
 % ======================================================================= %
-
+%
 % This class contains the robot actuation
-
-% beta_c [m]    : Vector of the tubes translations (index i for tube i)
-% theta_c [rad] : Vector of the tubes rotations (index i for tube i)
-
+%
+% beta_c    : [m] Vector of the tubes translations (index i for tube i)
+% theta_c   : [rad] Vector of the tubes rotations (index i for tube i)
+%
 % ======================================================================= %
 % ======================================================================= %
 

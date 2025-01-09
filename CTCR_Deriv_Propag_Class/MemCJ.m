@@ -1,16 +1,27 @@
 classdef MemCJ
 
+
 % ======================================================================= %
-% ================================ mem_y ================================ %
+% =============================== mem_CJ ================================ %
 % ======================================================================= %
 %
-% mem_du0_ds    : Class of the d(du0_dxj)_ds values
+% This class contains the Generalized Compliance Matrix Cs0(s) 
+% and the Joint Jacobian J(s)
 %
-% mem_d00R0_ds  : Class of the d(dB00Rs_dxj)_ds values
+% mem_Cs0   = Generalized Compliance Matrix (4D matrix)     
+%             | mem_CJ.mem_Cs0(:,:,is,is0)  
+%             where 
+%             | is   : index of the discretized s
+%             | is0  : index of the discretized s0
 %
-% 
+% mem_J     = Joint Jacobian (3D matrix)
+%             | mem_CJ.mem_J(:,:,is)
+%             where
+%             | is   : index of the discretized s
+%
 % ======================================================================= %
 % ======================================================================= %
+
 
 
     % ====== Members ======

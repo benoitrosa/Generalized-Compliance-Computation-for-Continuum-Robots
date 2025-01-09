@@ -5,10 +5,9 @@ classdef BVPProp
 % ======================================================================= %
 % ============================== bvp_prop =============================== %
 % ======================================================================= %
-
+%
 % This class contains the results of the BVP resolution
-
-
+%
 % vect_tol          : Residual vector (b in the paper)
 % norm_tol          : Norm of b (at the iteration k)
 % norm_tol_prev     : Norm of b (at the iteration k-1)
@@ -19,7 +18,7 @@ classdef BVPProp
 % nb_iter           : Number of iterations for convergence
 % IC_opt            : Initial conditions yu(0) estimated (at the iteration k)
 % IC_opt_prev       : Initial conditions yu(0) estimated (at the iteration k-1)
-
+%
 % ======================================================================= %
 % ======================================================================= %
 

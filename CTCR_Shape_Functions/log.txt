@@ -1,9 +1,0 @@
-Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('cd')" style="font-weight:bold">cd</a>
-Unable to change current folder to
-'/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/CTCR_OPT/CTCR_Shape_Functions/DATA' (Name is nonexistent or not a
-folder).
-
-Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('Test_find_forces', '/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/CTCR_OPT/Test_find_forces.m', 37)" style="font-weight:bold">Test_find_forces</a> (<a href="matlab: opentoline('/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/CTCR_OPT/Test_find_forces.m',37,0)">line 37</a>)
-cd('DATA')
-
- 
