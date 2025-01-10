@@ -6,16 +6,16 @@ classdef CTCRConstruc
 %
 % This class contains the robot features related to the model settings
 %
-% nbP           : Number of discretization points
-% K             : Stiffness matrix
-% vect_ind_iT   : Matrix filled with the discrezisation index corresponding to the discontinuity points of the tubes
-% ind_origin    : Index corresponding to the base frame origin
-% vect_z        : Vector of the points curvilinear distances from the base frame
-% vect_res      : Vector of the distances between one point and the next one
-% ui_init       : Matrix of the tubes curvatures before the assembly
-% pos_init      : Matrix of the tubes positions before the assembly
-% vect_tau_dist : Matrix of the torque applied to the CTCR due to the constant distributed torque
-% vect_f_dist   : Matrix of the force applied to the CTCR due to the constant distributed torque
+% nbP           : (int > 0)         Number of discretization points
+% K             : (3 x 3 x nbT)     Matrix containing thhe tubes' stiffness matrices
+% vect_ind_iT   : (int) (nbT x 3)   Matrix filled with the discrezisation index corresponding to the discontinuity points of the tubes
+% ind_origin    : (int ∊ [1 , nbP]) Index corresponding to the base frame origin
+% vect_z        : (1 x nbP)         Vector of the points curvilinear distances from the base frame
+% vect_res      : (1 x nbP-1)       Vector of the distances between one point and the next one
+% ui_init       : (3 x nbP x nbT)   Matrix of the tubes curvatures before the assembly
+% pos_init      : (3 x nbP x nbT)   Matrix of the tubes positions before the assembly
+% vect_tau_dist : (3 x nbP)         Matrix of the distributed torque applied on the CTCR
+% vect_f_dist   : (3 x nbP)         Matrix of the distributed force applied on the CTCR
 %
 % ======================================================================= %
 % ======================================================================= %
@@ -33,9 +33,7 @@ classdef CTCRConstruc
         ui_init             = [] ;
         pos_init            = [] ;
         vect_tau_dist       = [] ;
-        vect_tau_dist_res   = [] ;
         vect_f_dist         = [] ;
-        vect_f_dist_res     = [] ;
 
     end
 
@@ -43,7 +41,7 @@ classdef CTCRConstruc
 
         % ====== Constructor ======
         function mc = CTCRConstruc(varargin)
-            if nargin == 12
+            if nargin == 10
 
                 mc.nbP                  = varargin{1} ;
                 mc.K                    = varargin{2} ;
@@ -54,9 +52,7 @@ classdef CTCRConstruc
                 mc.ui_init              = varargin{7} ;
                 mc.pos_init             = varargin{8} ;
                 mc.vect_tau_dist        = varargin{9} ;
-                mc.vect_tau_dist_res    = varargin{10} ;
-                mc.vect_f_dist          = varargin{11} ;
-                mc.vect_f_dist_res      = varargin{12} ;
+                mc.vect_f_dist          = varargin{10} ;
 
             end
         end
@@ -64,8 +60,7 @@ classdef CTCRConstruc
 
         % ====== Get all ======
         function [nbP , K , vect_ind_iT , ind_origin , vect_z , vect_res , ...
-                ui_init , pos_init , vect_tau_dist , vect_tau_dist_res , ...
-                vect_f_dist , vect_f_dist_res] = Get_All_CTCRConstruc(mc)
+                ui_init , pos_init , vect_tau_dist , vect_f_dist] = Get_All_CTCRConstruc(mc)
 
             nbP                 = mc.nbP ;
             K                   = mc.K ;
@@ -76,9 +71,7 @@ classdef CTCRConstruc
             ui_init             = mc.ui_init ;
             pos_init            = mc.pos_init ;
             vect_tau_dist       = mc.vect_tau_dist ;
-            vect_tau_dist_res   = mc.vect_tau_dist_res ;
             vect_f_dist         = mc.vect_f_dist ;
-            vect_f_dist_res     = mc.vect_f_dist_res ;
            
         end
     

@@ -6,75 +6,65 @@ function mem_deriv_propag_high ...
 
 % ======================================================================= %
 % ======================================================================= %
-
+%
 % This function computes the high-level partial derivatives Ex
-
+%
 % ====================
 % ====== INPUTS ====== 
-
-% bool_J                : [boolean] Compute the Joint Jacobian ?
-% bool_Cs0              : [boolean] Compute the Generalized Compliance Matrix ?
-% ctcr_construc         : Robot features related to the model settings
-% ctcr_carac            : Robot features
-% simulation_param      : Model settings
-% mem_deriv_propag_low  : Memory of the low-level derivatives 
-% mem_deriv_propag_high : Memory of the high-level partial derivatives
-
-
+%
+% bool_J                : (boolean) Compute the Joint Jacobian ?
+% bool_Cs0              : (boolean) Compute the Generalized Compliance Matrix ?
+% ctcr_construc         : (class) Robot features related to the model settings
+% ctcr_carac            : (class) Robot features
+% simulation_param      : (class) Model settings
+% mem_deriv_propag_low  : (class) Memory of the low-level derivatives 
+% mem_deriv_propag_high : (class) Memory of the high-level partial derivatives
+%
 % ====================
 % ===== OUTPUTS ====== 
-
-% mem_deriv_propag_high : Memory of the High-Level partial derivatives
-
-
+%
+% mem_deriv_propag_high : (class) Memory of the High-Level partial derivatives
+%
 % ======================================================================= %
 % ======================================================================= %
 
-
-
-
-    % ========================================================== %
-    % ================== Getting input values ================== %
-    
-    nbT             = ctcr_carac.nbT ;
-    
-    % ========================================================== %
-    % ========================================================== %
-    
 
 
     for is = ctcr_construc.ind_origin : ctcr_construc.nbP
 
         % =========================== %
-        % ======== mem_dT0_dx ======== %
+        % ======== dT0(s)_dx ======== %
 
-        mem_d00Ts = cat(3,mem_deriv_propag_low.mem_d00Ts.mem_d00Ts_duzj0(:,:,:,is)   , ...
-                          mem_deriv_propag_low.mem_d00Ts.mem_d00Ts_dm0j0(:,:,:,is)   , ...
-                          mem_deriv_propag_low.mem_d00Ts.mem_d00Ts_dn0j0(:,:,:,is)   , ...
-                          mem_deriv_propag_low.mem_d00Ts.mem_d00Ts_dtcj(:,:,:,is)    , ...
-                          mem_deriv_propag_low.mem_d00Ts.mem_d00Ts_dbcj(:,:,:,is)    ) ;
+        mem_dT0 = cat(3,mem_deriv_propag_low.mem_dT0.mem_dT0_duzj0(:,:,:,is)   , ...
+                          mem_deriv_propag_low.mem_dT0.mem_dT0_dm0j0(:,:,:,is)   , ...
+                          mem_deriv_propag_low.mem_dT0.mem_dT0_dn0j0(:,:,:,is)   , ...
+                          mem_deriv_propag_low.mem_dT0.mem_dT0_dtcj(:,:,:,is)    , ...
+                          mem_deriv_propag_low.mem_dT0.mem_dT0_dbcj(:,:,:,is)    ) ;
 
         
-        % ============================== %
-        % ======== mem_dT0_dyu0 ======== %
+        % ============================= %
+        % ======== dT0(s)_dyu0 ======== %
+        % (eq 34)
 
-        for j = 1:nbT+6
-            mem_deriv_propag_high.mem_E(:,j,is) = inv_hat6(mem_d00Ts(:,:,j)) ;
+        for j = 1:ctcr_carac.nbT+6
+            mem_deriv_propag_high.mem_E(:,j,is) = inv_hat6(mem_dT0(:,:,j)) ;
         end
 
 
-        % ============================== %
-        % ========= mem_dT0_dq ========= %
+        % ============================= %
+        % ========= dT0(s)_dq ========= %
+        % (eq 34)
 
         if bool_J
-            for j = nbT+7:3*nbT+6
-                mem_deriv_propag_high.mem_E(:,j,is) = inv_hat6(mem_d00Ts(:,:,j)) ;
+            for j = ctcr_carac.nbT+7:3*ctcr_carac.nbT+6
+                mem_deriv_propag_high.mem_E(:,j,is) = inv_hat6(mem_dT0(:,:,j)) ;
             end
         end
 
 
         % ============================== %
-        % ======= mem_dT0_dw0s0 ======== %
+        % ======= dT0(s)_dw0(s0) ======= %
+        % (eq 34)
 
         if bool_Cs0
 
@@ -83,11 +73,11 @@ function mem_deriv_propag_high ...
             for tp_is0 = 1:length(pt_s0_LIT_curr)
                 is0 = pt_s0_LIT_curr(tp_is0) ;
     
-                mem_d00Ts_ws0 = cat(3,mem_deriv_propag_low.mem_d00Ts.mem_d00Ts_dtaus0(:,:,:,is,is0)  , ...
-                                      mem_deriv_propag_low.mem_d00Ts.mem_d00Ts_dfs0(:,:,:,is,is0)  ) ;
+                mem_dT0_ws0 = cat(3,mem_deriv_propag_low.mem_dT0.mem_dT0_dtaus0(:,:,:,is,is0)  , ...
+                                      mem_deriv_propag_low.mem_dT0.mem_dT0_dfs0(:,:,:,is,is0)  ) ;
                                       
                 for j = 1:6
-                    mem_deriv_propag_high.mem_Ews0(:,j,is,is0) = inv_hat6(mem_d00Ts_ws0(:,:,j)) ;
+                    mem_deriv_propag_high.mem_Ews0(:,j,is,is0) = inv_hat6(mem_dT0_ws0(:,:,j)) ;
                 end
             end
         end

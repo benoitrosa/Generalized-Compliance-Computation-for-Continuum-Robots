@@ -8,14 +8,14 @@ function flag_ctcr = CTCR_Setting_OK(ctcr_carac , ctcr_act , bool_disp)
 % ====================
 % ====== INPUTS ====== 
 
-% ctcr_carac    : Robot features
-% ctcr_act      : Robot actuation
-% bool_disp     : [boolean] Display the result in the terminal ?  
+% ctcr_carac    : (class) Robot features
+% ctcr_act      : (class) Robot actuation
+% bool_disp     : (boolean) Display the result in the terminal ?  
 
 % ====================
 % ===== OUTPUTS ====== 
 
-% flag_ctcr     : [boolean] Is the actuation correct ? 
+% flag_ctcr     : (boolean) Is the actuation compatible with the robots features ? 
 
 % ======================================================================= %
 % ======================================================================= %

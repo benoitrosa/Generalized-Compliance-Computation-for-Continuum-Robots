@@ -10,13 +10,13 @@ function simulation_param = ...
 % ====================
 % ====== INPUTS ====== 
 
-% ctcr_construc         : Robot features related to the model settings
-% simulation_param      : Model settings
+% ctcr_construc         : (class) Robot features related to the model settings
+% simulation_param      : (class) Model settings
 
 % ====================
 % ===== OUTPUTS ====== 
 
-% simulation_param      : Model settings
+% simulation_param      : (class) Model settings
 
 % ======================================================================= %
 % ======================================================================= %

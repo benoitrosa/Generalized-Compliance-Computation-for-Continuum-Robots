@@ -4,22 +4,22 @@ function ctcr_construc ...
 
 % ======================================================================= %
 % ======================================================================= %
-
-% This function computes the robot features related to the model settings
-
+%
+% This function computes the robot features which depend on the model settings
+%
 % ====================
 % ====== INPUTS ====== 
-
-% simulation_param      : Model settings
-% ctcr_carac            : Robot features
-% ctcr_act              : Robot actuation
-% ctcr_load             : Robot loads
-
+%
+% simulation_param      : (class) Model settings
+% ctcr_carac            : (class) Robot features
+% ctcr_act              : (class) Robot actuation
+% ctcr_load             : (class) Robot loads
+%
 % ====================
 % ===== OUTPUTS ====== 
-
-% ctcr_construc         : Robot features related to the model settings
-
+%
+% ctcr_construc         : (class) Robot features related to the model settings
+%
 % ======================================================================= %
 % ======================================================================= %
 
@@ -31,21 +31,17 @@ function ctcr_construc ...
     res_step                = simulation_param.res_step ;
     epsilon_disct_pt        = simulation_param.epsilon_disct_pt ;
     nb_disct_pt             = simulation_param.nb_disct_pt ;
-
     nbT                     = ctcr_carac.nbT ;
     stiff                   = ctcr_carac.stiff ;
     coeff_poiss             = ctcr_carac.coeff_poiss ;
     Rc                      = ctcr_carac.Rc ;
     Lc                      = ctcr_carac.Lc ;
     L                       = ctcr_carac.L ;
-
     theta_c                 = ctcr_act.theta_c ;
     beta_c                  = ctcr_act.beta_c ;
-    
     load_lim_1              = ctcr_load.load_lim_1 ;
     tau_dist_1              = ctcr_load.tau_dist_1 ;
     f_dist_1                = ctcr_load.f_dist_1 ;
-
     load_lim_2              = ctcr_load.load_lim_2 ;
     tau_dist_2              = ctcr_load.tau_dist_2 ;
     f_dist_2                = ctcr_load.f_dist_2 ;
@@ -278,8 +274,7 @@ function ctcr_construc ...
     % ================== Setting output values ================= %
 
     ctcr_construc = CTCRConstruc(nbP , K , vect_ind_iT , ind_origin , ...
-        vect_z , vect_res , ui_init , pos_init , vect_tau_dist , ...
-        [] , vect_f_dist , [] ) ;
+        vect_z , vect_res , ui_init , pos_init , vect_tau_dist , vect_f_dist ) ;
 
     % ========================================================== %
     % ========================================================== %

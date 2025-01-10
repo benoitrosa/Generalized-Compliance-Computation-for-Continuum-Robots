@@ -8,9 +8,9 @@ function CTCR_Plot_Tubes(curr_ax , ctcr_carac , ctcr_construc)
 % ====================
 % ====== INPUTS ====== 
 %
-% curr_ax               : Axes of the figure on which the graph is plotted
-% ctcr_carac            : Robot features
-% ctcr_construc         : Robot features related to the model settings
+% curr_ax               : (axes object) Axes of the figure on which the graph is plotted
+% ctcr_carac            : (class) Robot features
+% ctcr_construc         : (class) Robot features related to the model settings
 %
 % ====================
 % ===== OUTPUTS ====== 

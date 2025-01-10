@@ -2,21 +2,21 @@ function mem_bvp = IVP_ODE(is , ctcr_construc , mem_bvp)
 
 % ======================================================================= %
 % ======================================================================= %
-
+%
 % This function computes the state vector ODE
-
+%
 % ====================
 % ====== INPUTS ====== 
-
-% is                    : [int] Index of the current curvilinear abscissa
-% ctcr_construc         : Robot features related to the model settings
-% mem_bvp               : Memory of the BVP variables 
-
+%
+% is                    : (int ∊ [1 , nbP])   Index of the current curvilinear abscissa
+% ctcr_construc         : (class)             Robot features related to the model settings
+% mem_bvp               : (class)             Memory of the BVP variables 
+%
 % ====================
 % ===== OUTPUTS ====== 
-
-% mem_bvp               : Memory of the BVP variables 
-
+%
+% mem_bvp               : (class)             Memory of the BVP variables 
+%
 % ======================================================================= %
 % ======================================================================= %
 
@@ -33,7 +33,6 @@ function mem_bvp = IVP_ODE(is , ctcr_construc , mem_bvp)
     u0              = mem_bvp.mem_u0(:,is) ;
     R0              = mem_bvp.mem_y.mem_R0(:,:,is) ;
 
-
     % ========================================================== %
     % ========================================================== %
 
@@ -47,16 +46,16 @@ function mem_bvp = IVP_ODE(is , ctcr_construc , mem_bvp)
     for i = 1:length(vectT)
         iT = vectT(i) ;
         
-        % ============================== %
-        % ===== dti_ds computation ===== %
+        % ================== %
+        % ===== dti_ds ===== %
         % (eq 26a)
 
         mem_bvp.mem_ys.mem_ts(iT,is)    = uz(iT) ;
 
 
 
-        % ============================== %
-        % ===== duzi_ds computation ==== %
+        % ================== %
+        % ===== duzi_ds ==== %
         % (eq 26b)
 
         temp                            = rotz(mem_bvp.mem_y.mem_t(iT,is))'*u0 ;
@@ -68,8 +67,8 @@ function mem_bvp = IVP_ODE(is , ctcr_construc , mem_bvp)
 
     if (is >= ctcr_construc.ind_origin) && ~(is == ctcr_construc.nbP)
 
-        % ============================== %
-        % ===== dm0_ds computation ===== %
+        % ================== %
+        % ===== dm0_ds ===== %
         % (eq 26c)
 
         mem_bvp.mem_ys.mem_m0s(:,is)    = hat(u0)*m0 ...
@@ -77,8 +76,8 @@ function mem_bvp = IVP_ODE(is , ctcr_construc , mem_bvp)
                                           - R0'*ctcr_construc.vect_tau_dist(:,is) ;
 
 
-        % ============================== %
-        % ===== dn0_ds computation ===== %
+        % ================== %
+        % ===== dn0_ds ===== %
         % (eq 26d) 
 
         mem_bvp.mem_ys.mem_n0s(:,is)    = hat(u0)*n0 ...

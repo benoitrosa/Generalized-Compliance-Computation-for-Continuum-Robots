@@ -6,34 +6,33 @@ function [ctcr_shape , mem_bvp , bvp_prop , mem_deriv_propag_low , ...
 
 % ======================================================================= %
 % ======================================================================= %
-
+%
 % This function computes the robot shape
-
+%
 % ====================
 % ====== INPUTS ====== 
-
-% IC                    : Initial value for yu(0) (see Table 5) 
-% simulation_param      : Model settings
-% ctcr_carac            : Robot features
-% ctcr_load             : Robot loads
-% ctcr_construc         : Robot features related to the model settings
-% bool_disp_terminal    : [boolean] Display the results in the terminal ?
-
+%
+% IC                    : (nbT+6 x 1)   Initial value for yu(0)
+% simulation_param      : (class)       Model settings
+% ctcr_carac            : (class)       Robot features
+% ctcr_load             : (class)       Robot loads
+% ctcr_construc         : (class)       Robot features related to the model settings
+% bool_disp_terminal    : (boolean)     Display the results in the terminal ?
+%
 % ====================
 % ===== OUTPUTS ====== 
-
-% ctcr_shape            : Robot 3D shape
-% mem_bvp               : Memory of the BVP variables 
-% bvp_prop              : Results of the BVP resolution
-% mem_deriv_propag_low  : Memory of the low-level derivatives 
-% mem_deriv_propag_high : Memory of the high-level partial derivatives
-% mem_CJ                : Memory of the Generalized Compliance Matrix and the Joint Jacobian
-% simulation_param      : Model settings
-% bool_problem_opt      : [boolean] Is there a problem solving the BVP ?
-% exitflag              : exitflag of fsolve describing the stopping condition of fsolve
-% output                : output of fsolve giving information about the optimization process
-
-
+%
+% ctcr_shape            : (3 x _)       Robot 3D shape
+% mem_bvp               : (class)       Memory of the BVP variables 
+% bvp_prop              : (class)       Results of the BVP resolution
+% mem_deriv_propag_low  : (class)       Memory of the low-level derivatives 
+% mem_deriv_propag_high : (class)       Memory of the high-level partial derivatives
+% mem_CJ                : (class)       Memory of the Generalized Compliance Matrix and the Joint Jacobian
+% simulation_param      : (class)       Model settings
+% bool_problem_opt      : (boolean)     Is there a problem solving the BVP ?
+% exitflag              : (sign int)    Exitflag of fsolve
+% output                : (object)      Output of fsolve giving information about the optimization process
+%
 % ======================================================================= %
 % ======================================================================= %
     

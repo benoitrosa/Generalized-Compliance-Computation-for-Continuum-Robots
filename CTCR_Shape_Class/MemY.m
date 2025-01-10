@@ -6,12 +6,12 @@ classdef MemY
 %
 % This class contains the state vector values
 %
-% mem_t     : Matrix memory of the thetai(s) values
-% mem_uz    : Matrix memory of the uzi(s) values
-% mem_m0    : Matrix memory of the m0(s) values
-% mem_n0    : Matrix memory of the n0(s) values
-% mem_R0    : Matrix memory of the R0(s) values
-% mem_p0    : Matrix memory of the p0(s) values
+% mem_t     : (class) Object containing the thetai(s) values
+% mem_uz    : (class) Object containing the uzi(s) values
+% mem_m0    : (class) Object containing the m0(s) values
+% mem_n0    : (class) Object containing the n0(s) values
+% mem_R0    : (class) Object containing the R0(s) values
+% mem_p0    : (class) Object containing the p0(s) values
 %
 % ======================================================================= %
 % ======================================================================= %

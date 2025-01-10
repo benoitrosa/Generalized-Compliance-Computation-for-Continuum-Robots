@@ -7,34 +7,33 @@ function [mem_bvp , bvp_prop , ctcr_shape , mem_deriv_propag_low , mem_deriv_pro
 
 % ======================================================================= %
 % ======================================================================= %
-
+%
 % This function solves the BVP
-
+%
 % ====================
 % ====== INPUTS ====== 
-
-% IC                        : Initial value for yu(0) (see Table 5) 
-% select_opt                : Method for solving the BVP
-% ctcr_construc             : Robot features related to the model settings
-% simulation_param          : Model settings
-% ctcr_carac                : Robot features
-% ctcr_act                  : Robot actuation
-% ctcr_load                 : Robot loads
-% bool_disp_terminal        : [boolean] Display the results in the terminal ?
-
+%
+% IC                        : (nbT+6 x 1)   Initial value for yu(0)
+% ctcr_construc             : (class)       Robot features related to the model settings
+% simulation_param          : (class)       Model settings
+% ctcr_carac                : (class)       Robot features
+% ctcr_act                  : (class)       Robot actuation
+% ctcr_load                 : (class)       Robot loads
+% bool_disp_terminal        : (boolean)     Display the results in the terminal ?
+%
 % ====================
 % ===== OUTPUTS ====== 
-
-% mem_bvp                   : Memory of the BVP variables 
-% bvp_prop                  : Results of the BVP resolution
-% ctcr_shape                : Robot shape
-% mem_deriv_propag_low      : Memory of the low-level derivatives 
-% mem_deriv_propag_high     : Memory of the high-level partial derivatives
-% mem_CJ                    : Memory of the Generalized Compliance Matrix and the Joint Jacobian
-% bool_problem_opt          : [boolean] Is there a problem solving the BVP ?
-% exitflag                  : exitflag of fsolve describing the stopping condition of fsolve
-% output                    : output of fsolve giving information about the optimization process
-
+%
+% mem_bvp                   : (class)       Memory of the BVP variables 
+% bvp_prop                  : (class)       Results of the BVP resolution
+% ctcr_shape                : (3 x _)       Robot shape
+% mem_deriv_propag_low      : (class)       Memory of the low-level derivatives 
+% mem_deriv_propag_high     : (class)       Memory of the high-level partial derivatives
+% mem_CJ                    : (class)       Memory of the Generalized Compliance Matrix and the Joint Jacobian
+% bool_problem_opt          : (boolean)     Is there a problem solving the BVP ?
+% exitflag                  : (sign int)    Exitflag of fsolve
+% output                    : (object)      Output of fsolve giving information about the optimization process
+%
 % ======================================================================= %
 % ======================================================================= %
 
@@ -42,10 +41,6 @@ function [mem_bvp , bvp_prop , ctcr_shape , mem_deriv_propag_low , mem_deriv_pro
 
     % ========================================================== %
     % ======================= Preparing ======================== %
-
-
-    % Specifying the float precision
-    digits(simulation_param.digits_length) ;
 
     % Init timer
     tic_bvp = tic ;
@@ -55,10 +50,7 @@ function [mem_bvp , bvp_prop , ctcr_shape , mem_deriv_propag_low , mem_deriv_pro
 
     bvp_prop                = BVPProp() ;           % BVP prop initialization
     bvp_prop.IC_opt         = IC ;                  % IC initialization
-    bvp_prop.IC_opt_prev    = bvp_prop.IC_opt ;     % IC memory initialization        
-    bvp_prop.flag_bvp       = false ;               % BVP flag initialization
-    bvp_prop.nb_iter        = 0 ; % 1                   % Iteration number initialzation
-
+    bvp_prop.nb_iter        = 0 ; % 1               % Iteration number initialzation
 
     
     % Memories initialization
@@ -73,7 +65,6 @@ function [mem_bvp , bvp_prop , ctcr_shape , mem_deriv_propag_low , mem_deriv_pro
            'MaxIter',500,'FunctionTolerance',10*eps, ...
            'InitDamping',1,'SpecifyObjectiveGradient',true, ...
            'MaxFunctionEvaluations',(2*ctcr_carac.nbT+6)*500) ;
-
 
 
     % ========================================= %

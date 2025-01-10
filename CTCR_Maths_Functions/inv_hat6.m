@@ -2,20 +2,20 @@ function V = inv_hat6(M)
 
 % ======================================================================= %
 % ======================================================================= %
-
+%
 % This function extract the 6x1 vector V associated to the skew-symmetric
 % matrix M formed from initially formed thanks to the skew-symmetric operation
-
+%
 % ====================
 % ====== INPUTS ====== 
-
-% M     : 4x4 matrix 
-
+%
+% M     : (4x4) Matrix 
+%
 % ====================
 % ===== OUTPUTS ====== 
-
-% V     : 6x1 vector
-
+%
+% V     : (6x1) Vector
+%
 % ======================================================================= %
 % ======================================================================= %
 

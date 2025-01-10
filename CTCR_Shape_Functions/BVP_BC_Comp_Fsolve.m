@@ -6,36 +6,34 @@ function [error , jacobianMatrix , bvp_prop , mem_bvp , mem_deriv_propag_low] = 
 
 % ======================================================================= %
 % ======================================================================= %
-
+%
 % This function is used in the fsolve function to integrate the IVP, to compute the residual
 % and optionally to compute manually the optimization Jacobian 
-
+%
 % ====================
 % ====== INPUTS ====== 
-
-% IC                    : Initial value for yu(0) (see Table 5) 
-% simulation_param      : Model settings
-% ctcr_construc         : Robot features related to the model settings
-% ctcr_carac            : Robot features
-% ctcr_load             : Robot loads
-% ctcr_act              : Robot actuation
-% bvp_prop              : Results of the BVP resolution
-% mem_bvp               : Memory of the BVP variables 
-% mem_deriv_propag_low  : Memory of the low-level derivatives 
-
+%
+% IC                    : (nbT+6 x 1)       Initial value for yu(0) (see Table 5) 
+% simulation_param      : (class)           Model settings
+% ctcr_construc         : (class)           Robot features related to the model settings
+% ctcr_carac            : (class)           Robot features
+% ctcr_load             : (class)           Robot loads
+% ctcr_act              : (class)           Robot actuation
+% bvp_prop              : (class)           Results of the BVP resolution
+% mem_bvp               : (class)           Memory of the BVP variables 
+% mem_deriv_propag_low  : (class)           Memory of the low-level derivatives 
+%
 % ====================
 % ===== OUTPUTS ====== 
-
-% error                 : Vector corresponding to the residual b
-% jacobianMatrix        : Optimization Jacobian
-% bvp_prop              : Results of the BVP resolution
-% mem_bvp               : Memory of the BVP variables 
-% mem_deriv_propag_low  : Memory of the low-level derivatives 
-
-
+%
+% error                 : (nbT+6 x 1)       Residual vector (b in the paper)
+% jacobianMatrix        : (nbT+6 x nbT+6)   Optimization Jacobian
+% bvp_prop              : (class)           Results of the BVP resolution
+% mem_bvp               : (class)           Memory of the BVP variables 
+% mem_deriv_propag_low  : (class)           Memory of the low-level derivatives 
+%
 % ======================================================================= %
 % ======================================================================= %
-
 
 
     % IC initialization

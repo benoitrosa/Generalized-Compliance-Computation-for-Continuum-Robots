@@ -2,20 +2,20 @@ function R = rotz(gamma)
 
 % ======================================================================= %
 % ======================================================================= %
-
+%
 % This function produces a rotation matrix R, associated to an angle gamma,
 % around the Z-direction
-
+%
 % ====================
 % ====== INPUTS ====== 
-
-% gamma     : angle in [rad]
-
+%
+% gamma     : (float) angle in [rad]
+%
 % ====================
 % ===== OUTPUTS ====== 
-
-% R         : Rotation matrix in SO(3)
-
+%
+% R         : (3x3) Rotation matrix in SO(3)
+%
 % ======================================================================= %
 % ======================================================================= %
 

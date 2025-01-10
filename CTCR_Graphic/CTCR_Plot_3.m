@@ -14,14 +14,14 @@ function CTCR_Plot_3(curr_ax , ctcr_shape_init , ctcr_shape_def_1 , ctcr_shape_d
 % ====================
 % ====== INPUTS ====== 
 %
-% curr_ax               : Axes of the figure on which the graph is plotted
-% ctcr_shape_init       : Initial CTCR shape before applying the force variation
-% ctcr_shape_def_1      : Deformed CTCR shape, due to the force variations, computed using the model
-% ctcr_shape_def_2      : Deformed CTCR shape, due to the force variations, computed using the Generalized Compliance Matrix
-% ctcr_carac            : Robot features
-% ctcr_construc         : Robot features related to the model settings
-% mem_is0               : Vector with the index of the loaded points
-% delta_f0              : Matrix with the force variaitons vectors (row i for force i)
+% curr_ax               : (axes object) Axes of the figure on which the graph is plotted
+% ctcr_shape_init       : (3 x _)       Initial CTCR shape before applying the force variation
+% ctcr_shape_def_1      : (3 x _)       Deformed CTCR shape, due to the force variations, computed using the model
+% ctcr_shape_def_2      : (3 x _)       Deformed CTCR shape, due to the force variations, computed using the Generalized Compliance Matrix
+% ctcr_carac            : (class)       Robot features
+% ctcr_construc         : (class)       Robot features related to the model settings
+% mem_is0               : (_ x 1)       Vector with the index of the loaded points
+% delta_f0              : (_ x 3)       Matrix with the force variaitons vectors (row i for force i)
 %
 % ====================
 % ===== OUTPUTS ====== 

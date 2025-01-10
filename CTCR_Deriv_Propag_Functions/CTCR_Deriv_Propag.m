@@ -13,27 +13,27 @@ function [mem_CJ , mem_deriv_propag_high , mem_deriv_propag_low , time_comp_CJ] 
 % ====================
 % ====== INPUTS ====== 
 
-% bool_J                : [boolean] Compute the Joint Jacobian ?
-% bool_Cs0              : [boolean] Compute the Generalized Compliance Matrix ?
-% ctcr_carac            : Robot features
-% ctcr_construc         : Robot features related to the model settings
-% ctcr_act              : Robot actuation
-% ctcr_load             : Robot loads
-% mem_bvp               : Memory of the BVP variables 
-% bvp_prop              : Results of the BVP resolution
-% simulation_param      : Model settings
-% mem_deriv_propag_low  : Memory of the low-level derivatives 
-% mem_deriv_propag_high : Memory of the high-level partial derivatives
-% mem_CJ                : Memory of the Generalized Compliance Matrix and the Joint Jacobian
-% bool_disp_terminal    : [boolean] Display results in the terminal ?
+% bool_J                : (boolean) Compute the Joint Jacobian ?
+% bool_Cs0              : (boolean) Compute the Generalized Compliance Matrix ?
+% ctcr_carac            : (class) Robot features
+% ctcr_construc         : (class) Robot features related to the model settings
+% ctcr_act              : (class) Robot actuation
+% ctcr_load             : (class) Robot loads
+% mem_bvp               : (class) Memory of the BVP variables 
+% bvp_prop              : (class) Results of the BVP resolution
+% simulation_param      : (class) Model settings
+% mem_deriv_propag_low  : (class) Memory of the low-level derivatives 
+% mem_deriv_propag_high : (class) Memory of the high-level partial derivatives
+% mem_CJ                : (class) Memory of the Generalized Compliance Matrix and the Joint Jacobian
+% bool_disp_terminal    : (boolean) Display results in the terminal ?
 
 % ====================
 % ===== OUTPUTS ====== 
 
-% mem_CJ                : Memory of the Generalized Compliance Matrix and the Joint Jacobian
-% mem_deriv_propag_high : Memory of the high-level partial derivatives
-% mem_deriv_propag_low  : Memory of the low-level partial derivatives
-% time_comp_CJ          : Computation time
+% mem_CJ                : (class) Memory of the Generalized Compliance Matrix and the Joint Jacobian
+% mem_deriv_propag_high : (class) Memory of the high-level partial derivatives
+% mem_deriv_propag_low  : (class) Memory of the low-level partial derivatives
+% time_comp_CJ          : (float) Computation time
 
 % ======================================================================= %
 % ======================================================================= %

@@ -8,13 +8,13 @@ classdef MemCJ
 % This class contains the Generalized Compliance Matrix Cs0(s) 
 % and the Joint Jacobian J(s)
 %
-% mem_Cs0   = Generalized Compliance Matrix (4D matrix)     
+% mem_Cs0   = (6 x 6 x nbP x nbP) Generalized Compliance Matrix    
 %             | mem_CJ.mem_Cs0(:,:,is,is0)  
 %             where 
 %             | is   : index of the discretized s
 %             | is0  : index of the discretized s0
 %
-% mem_J     = Joint Jacobian (3D matrix)
+% mem_J     = (6 x 2nbT x nbP) Joint Jacobian
 %             | mem_CJ.mem_J(:,:,is)
 %             where
 %             | is   : index of the discretized s

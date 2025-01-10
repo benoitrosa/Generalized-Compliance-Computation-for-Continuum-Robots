@@ -9,17 +9,17 @@ function [ctcr_construc_new,ctcr_load_new,mem_is0] = Add_Force_var(prc_s0,delta_
 % ====================
 % ====== INPUTS ====== 
 %
-% prc_s0                : [%] Vector with the curvilinear abscissa of the loaded points in pourcent of the CTCR length
-% delta_f0              : Matrix with the force variaitons vectors (row i for force i)
-% ctcr_construc         : Robot features related to the model settings
-% ctcr_load             : Robot loads
+% prc_s0                : (_ x 1)   Vector with the curvilinear abscissa of the loaded points in pourcent of the CTCR length
+% delta_f0              : (_ x 3)   Matrix with the force variaitons vectors (row i for force i)
+% ctcr_construc         : (class)   Robot features related to the model settings
+% ctcr_load             : (class)   Robot loads
 %
 % ====================
 % ===== OUTPUTS ====== 
 %
-% ctcr_construc_new     : Robot features related to the model settings after including the force variations
-% ctcr_load_new         : Robot loads after including the force variations
-% mem_is0               : Vector of the index of the loaded points 
+% ctcr_construc_new     : (class)   Robot features related to the model settings after including the force variations
+% ctcr_load_new         : (class)   Robot loads after including the force variations
+% mem_is0               : (_ x 1)   Vector of the index of the loaded points 
 %
 % ======================================================================= %
 % ======================================================================= %

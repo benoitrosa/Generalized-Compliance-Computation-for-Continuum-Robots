@@ -5,23 +5,24 @@ function Bu ...
 
 % ======================================================================= %
 % ======================================================================= %
-
-% This function is used to compute manually the optimization Jacobian 
-
+%
+% This function computes manually the optimization Jacobian using the 
+% associated Low-Level derivatives
+%
 % ====================
 % ====== INPUTS ====== 
-
-% mem_bvp               : Memory of the BVP variables 
-% mem_deriv_propag_low  : Memory of the low-level derivatives 
-% ctcr_construc         : Robot features related to the model settings
-% ctcr_carac            : Robot features
-% ctcr_load             : Robot loads
-
+%
+% mem_bvp               : (class)           Memory of the BVP variables 
+% mem_deriv_propag_low  : (class)           Memory of the low-level derivatives 
+% ctcr_construc         : (class)           Robot features related to the model settings
+% ctcr_carac            : (class)           Robot features
+% ctcr_load             : (class)           Robot loads
+%
 % ====================
 % ===== OUTPUTS ====== 
-
-% Bu                    : Optimization Jacobian
-
+%
+% Bu                    : (nbT+6 x nbT+6)   Optimization Jacobian
+%
 % ======================================================================= %
 % ======================================================================= %
 
@@ -90,19 +91,19 @@ function Bu ...
     % ============== db2_duz(0) ============= %
     for j = 1:nbT
         Bu(nbT,j) = mem_deriv_propag_low.mem_duzi.mem_duzi_duzj0(nbT,j,vect_ind_iT(nbT,3)) ...
-                    - [0,0,1]/K(3,3,nbT)*dB0nbTRs_duzj0(vect_ind_iT(nbT,3),j,nbT,mem_bvp.mem_T,mem_bvp.mem_y,mem_deriv_propag_low.mem_d00Rs.mem_d00Rs_duzj0,mem_deriv_propag_low.mem_dti.mem_dti_duzj0)'*tau_tip'  ;
+                    - [0,0,1]/K(3,3,nbT)*dB0nbTRs_duzj0(vect_ind_iT(nbT,3),j,nbT,mem_bvp.mem_T,mem_bvp.mem_y,mem_deriv_propag_low.mem_dR0.mem_dR0_duzj0,mem_deriv_propag_low.mem_dti.mem_dti_duzj0)'*tau_tip'  ;
     end
 
     % ============== db2_dm(0) ============== %
     for j = 1:3
         Bu(nbT,nbT+j) = mem_deriv_propag_low.mem_duzi.mem_duzi_dm0j0(nbT,j,vect_ind_iT(nbT,3)) ...
-                        - [0,0,1]/K(3,3,nbT)*dB0nbTRs_dm0j0(vect_ind_iT(nbT,3),j,nbT,mem_bvp.mem_T,mem_bvp.mem_y,mem_deriv_propag_low.mem_d00Rs.mem_d00Rs_dm0j0,mem_deriv_propag_low.mem_dti.mem_dti_dm0j0)'*tau_tip'  ;
+                        - [0,0,1]/K(3,3,nbT)*dB0nbTRs_dm0j0(vect_ind_iT(nbT,3),j,nbT,mem_bvp.mem_T,mem_bvp.mem_y,mem_deriv_propag_low.mem_dR0.mem_dR0_dm0j0,mem_deriv_propag_low.mem_dti.mem_dti_dm0j0)'*tau_tip'  ;
     end
     
     % ============== db2_dn(0) ============== %
     for j = 1:3
         Bu(nbT,nbT+3+j) = mem_deriv_propag_low.mem_duzi.mem_duzi_dn0j0(nbT,j,vect_ind_iT(nbT,3)) ...
-                          - [0,0,1]/K(3,3,nbT)*dB0nbTRs_dn0j0(vect_ind_iT(nbT,3),j,nbT,mem_bvp.mem_T,mem_bvp.mem_y,mem_deriv_propag_low.mem_d00Rs.mem_d00Rs_dn0j0,mem_deriv_propag_low.mem_dti.mem_dti_dn0j0)'*tau_tip'  ;
+                          - [0,0,1]/K(3,3,nbT)*dB0nbTRs_dn0j0(vect_ind_iT(nbT,3),j,nbT,mem_bvp.mem_T,mem_bvp.mem_y,mem_deriv_propag_low.mem_dR0.mem_dR0_dn0j0,mem_deriv_propag_low.mem_dti.mem_dti_dn0j0)'*tau_tip'  ;
     end
 
 
@@ -110,19 +111,19 @@ function Bu ...
     % ============== db3_duz(0) ============= %
     for j = 1:nbT
         Bu(nbT+1:nbT+3,j) = mem_deriv_propag_low.mem_dm0.mem_dm0_duzj0(:,j,vect_ind_iT(nbT,3)) ...
-                            - mem_deriv_propag_low.mem_d00Rs.mem_d00Rs_duzj0(:,:,j,vect_ind_iT(nbT,3))'*tau_tip' ;
+                            - mem_deriv_propag_low.mem_dR0.mem_dR0_duzj0(:,:,j,vect_ind_iT(nbT,3))'*tau_tip' ;
     end
 
     % ============== db3_dm(0) ============== %
     for j = 1:3
         Bu(nbT+1:nbT+3,nbT+j) = mem_deriv_propag_low.mem_dm0.mem_dm0_dm0j0(:,j,vect_ind_iT(nbT,3)) ...
-                                - mem_deriv_propag_low.mem_d00Rs.mem_d00Rs_dm0j0(:,:,j,vect_ind_iT(nbT,3))'*tau_tip' ;
+                                - mem_deriv_propag_low.mem_dR0.mem_dR0_dm0j0(:,:,j,vect_ind_iT(nbT,3))'*tau_tip' ;
     end
 
     % ============== db3_dn(0) ============== %
     for j = 1:3
         Bu(nbT+1:nbT+3,nbT+3+j) = mem_deriv_propag_low.mem_dm0.mem_dm0_dn0j0(:,j,vect_ind_iT(nbT,3)) ...
-                                  - mem_deriv_propag_low.mem_d00Rs.mem_d00Rs_dn0j0(:,:,j,vect_ind_iT(nbT,3))'*tau_tip' ;
+                                  - mem_deriv_propag_low.mem_dR0.mem_dR0_dn0j0(:,:,j,vect_ind_iT(nbT,3))'*tau_tip' ;
     end
 
 
@@ -131,19 +132,19 @@ function Bu ...
     % ============== db4_duz(0) ============= %
     for j = 1:nbT
         Bu(nbT+4:nbT+6,j) = mem_deriv_propag_low.mem_dn0.mem_dn0_duzj0(:,j,vect_ind_iT(nbT,3)) ...
-                            - mem_deriv_propag_low.mem_d00Rs.mem_d00Rs_duzj0(:,:,j,vect_ind_iT(nbT,3))'*f_tip' ;
+                            - mem_deriv_propag_low.mem_dR0.mem_dR0_duzj0(:,:,j,vect_ind_iT(nbT,3))'*f_tip' ;
     end
 
     % ============== db4_dm(0) ============== %
     for j = 1:3
         Bu(nbT+4:nbT+6,nbT+j) = mem_deriv_propag_low.mem_dn0.mem_dn0_dm0j0(:,j,vect_ind_iT(nbT,3)) ...
-                                - mem_deriv_propag_low.mem_d00Rs.mem_d00Rs_dm0j0(:,:,j,vect_ind_iT(nbT,3))'*f_tip' ;
+                                - mem_deriv_propag_low.mem_dR0.mem_dR0_dm0j0(:,:,j,vect_ind_iT(nbT,3))'*f_tip' ;
     end
 
     % ============== db4_dn(0) ============== %
     for j = 1:3
         Bu(nbT+4:nbT+6,nbT+3+j) = mem_deriv_propag_low.mem_dn0.mem_dn0_dn0j0(:,j,vect_ind_iT(nbT,3)) ...
-                                  - mem_deriv_propag_low.mem_d00Rs.mem_d00Rs_dn0j0(:,:,j,vect_ind_iT(nbT,3))'*f_tip' ;
+                                  - mem_deriv_propag_low.mem_dR0.mem_dR0_dn0j0(:,:,j,vect_ind_iT(nbT,3))'*f_tip' ;
     end
     
 

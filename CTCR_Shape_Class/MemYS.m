@@ -4,15 +4,14 @@ classdef MemYS
 % ================================ mem_ys =============================== %
 % ======================================================================= %
 %
-% This class contains the state vector derivatives values w.r.t. the 
-% curvilinear abscissa s
+% This class contains the partial derivatives of dy(s)_ds
 %
-% mem_ts    : Matrix memory of the d_thetai_ds(s) values
-% mem_uzs   : Matrix memory of the d_uzi_ds(s) values
-% mem_m0s   : Matrix memory of the d_m0_ds(s) values
-% mem_n0s   : Matrix memory of the d_n0_ds(s) values
-% mem_R0s   : Matrix memory of the d_R0_ds(s) values
-% mem_p0s   : Matrix memory of the d_p0_ds(s) values
+% mem_ts    : (class) Object containing the d_thetai_ds(s) values
+% mem_uzs   : (class) Object containing the d_uzi_ds(s) values
+% mem_m0s   : (class) Object containing the d_m0_ds(s) values
+% mem_n0s   : (class) Object containing the d_n0_ds(s) values
+% mem_R0s   : (class) Object containing the d_R0_ds(s) values
+% mem_p0s   : (class) Object containing the d_p0_ds(s) values
 %
 % ======================================================================= %
 % ======================================================================= %

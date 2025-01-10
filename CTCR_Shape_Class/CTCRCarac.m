@@ -8,13 +8,13 @@ classdef CTCRCarac
 %
 % This class contains the robot features
 %
-% nbT           : Number of tubes of the CTCR
-% stiff         : [N.m2] Vector of transversal bending stiffness
-% coeff_poiss   : Poisson's ratio
-% Rc            : [m] Vector of the radii of curvature of the tubes (index i for tube i)
-% Lr            : [m] Vector of the straight lengths of the tubes (index i for tube i)
-% Lc            : [m] Vector of the curved lengths of the tubes (index i for tube i)
-% L             : [m] Vector of the total lengths of the tubes (index i for tube i)
+% nbT           : (int > 0)         Number of tubes of the CTCR
+% stiff         : (1 x nbT) [N.m2]  Vector of transversal bending stiffness (index i for tube i)
+% coeff_poiss   : (float)           Poisson's ratio (the same for all the tubes)
+% Rc            : (1 x nbT) [m]     Vector of the radii of curvature of the tubes (index i for tube i)
+% Lr            : (1 x nbT) [m]     Vector of the straight lengths of the tubes (index i for tube i)
+% Lc            : (1 x nbT) [m]     Vector of the curved lengths of the tubes (index i for tube i)
+% L             : (1 x nbT) [m]     Vector of the total lengths of the tubes (index i for tube i)
 %
 % ======================================================================= %
 % ======================================================================= %

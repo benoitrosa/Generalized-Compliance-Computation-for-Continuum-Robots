@@ -9,17 +9,17 @@ function fig = CTCR_Load_Plot(filename , simulation_param , ctcr_carac , ctcr_lo
 % ====================
 % ====== INPUTS ====== 
 %
-% filename              : Name of the CTCR 3D shape plot file
-% simulation_param      : Model settings
-% ctcr_carac            : Robot features
-% ctcr_load             : Robot loads
-% ctcr_construc         : Robot features related to the model settings
-% ctcr_shape            : Robot 3D shape
+% filename              : (string) Name of the CTCR 3D shape plot file
+% simulation_param      : (class) Model settings
+% ctcr_carac            : (class) Robot features
+% ctcr_load             : (class) Robot loads
+% ctcr_construc         : (class) Robot features related to the model settings
+% ctcr_shape            : (3x_) Robot 3D shape
 %
 % ====================
 % ===== OUTPUTS ====== 
 %
-% fig                   : Object of the 3D shape plot file
+% fig                   : (figure object) Object of the 3D shape plot file
 %
 % ======================================================================= %
 % ======================================================================= %
