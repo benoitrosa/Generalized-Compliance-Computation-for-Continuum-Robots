@@ -4,30 +4,29 @@ function mem_deriv_propag_low ...
         mem_deriv_propag_low , simulation_param)
 
 
-
 % ======================================================================= %
 % ======================================================================= %
-
+%
 % This function integrates the Low-Level derivatives using a manual 
 % first order linearization 
-
+%
 % ====================
 % ====== INPUTS ====== 
-
-% bool_J                : [boolean] Compute the Joint Jacobian ?
-% bool_Cs0              : [boolean] Compute the Generalized Compliance Matrix ?
-% is                    : [int] Index of the current curvilinear abscissa
-% ctcr_carac            : Robot features
-% ctcr_construc         : Robot features related to the model settings
-% mem_bvp               : Memory of the BVP variables 
-% mem_deriv_propag_low  : Memory of the low-level derivatives 
-% simulation_param      : Model settings
-
+%
+% bool_J                : (boolean) Compute the Joint Jacobian ?
+% bool_Cs0              : (boolean) Compute the Generalized Compliance Matrix ?
+% is                    : (int ∊ [1 , nbP]) Index of the current curvilinear abscissa
+% ctcr_carac            : (class) Robot features
+% ctcr_construc         : (class) Robot features related to the model settings
+% mem_bvp               : (class) Memory of the BVP variables 
+% mem_deriv_propag_low  : (class) Memory of the low-level derivatives 
+% simulation_param      : (class) Model settings
+%
 % ====================
 % ===== OUTPUTS ====== 
-
-% mem_deriv_propag_low  : Memory of the low-level partial derivatives
-
+%
+% mem_deriv_propag_low  : (class) Memory of the low-level partial derivatives
+%
 % ======================================================================= %
 % ======================================================================= %
   
@@ -119,8 +118,8 @@ function mem_deriv_propag_low ...
 
                 mem_deriv_propag_low.mem_dm0.mem_dm0_dtcj(:,:,is+1)                 = mem_deriv_propag_low.mem_dm0.mem_dm0_dtcj(:,:,is)                 + mem_deriv_propag_low.mem_dm0_ds.mem_dm0_dtcj_ds(:,:,is)               *ctcr_construc.vect_res(is) ;
                 mem_deriv_propag_low.mem_dn0.mem_dn0_dtcj(:,:,is+1)                 = mem_deriv_propag_low.mem_dn0.mem_dn0_dtcj(:,:,is)                 + mem_deriv_propag_low.mem_dn0_ds.mem_dn0_dtcj_ds(:,:,is)               *ctcr_construc.vect_res(is) ;
-                mem_deriv_propag_low.mem_d00Rs.mem_d00Rs_dtcj(:,:,:,is+1)           = mem_deriv_propag_low.mem_d00Rs.mem_d00Rs_dtcj(:,:,:,is)           + mem_deriv_propag_low.mem_d00Rs_ds.mem_d00Rs_dtcj_ds(:,:,:,is)         *ctcr_construc.vect_res(is) ;
-                mem_deriv_propag_low.mem_d00Ps.mem_d00Ps_dtcj(:,:,is+1)             = mem_deriv_propag_low.mem_d00Ps.mem_d00Ps_dtcj(:,:,is)             + mem_deriv_propag_low.mem_d00Ps_ds.mem_d00Ps_dtcj_ds(:,:,is)           *ctcr_construc.vect_res(is) ;
+                mem_deriv_propag_low.mem_dR0.mem_dR0_dtcj(:,:,:,is+1)               = mem_deriv_propag_low.mem_dR0.mem_dR0_dtcj(:,:,:,is)               + mem_deriv_propag_low.mem_dR0_ds.mem_dR0_dtcj_ds(:,:,:,is)         *ctcr_construc.vect_res(is) ;
+                mem_deriv_propag_low.mem_dP0.mem_dP0_dtcj(:,:,is+1)                 = mem_deriv_propag_low.mem_dP0.mem_dP0_dtcj(:,:,is)                 + mem_deriv_propag_low.mem_dP0_ds.mem_dP0_dtcj_ds(:,:,is)           *ctcr_construc.vect_res(is) ;
                 
                 for j = 1:nbT
 
@@ -132,15 +131,15 @@ function mem_deriv_propag_low ...
 
                         mem_deriv_propag_low.mem_dm0.mem_dm0_dbcj(:,nbT,is+1)       = mem_deriv_propag_low.mem_dm0.mem_dm0_dbcj(:,nbT,is)               + mem_bvp.mem_y.mem_m0(:,is)/ctcr_construc.vect_res(is) ;
                         mem_deriv_propag_low.mem_dn0.mem_dn0_dbcj(:,nbT,is+1)       = mem_deriv_propag_low.mem_dn0.mem_dn0_dbcj(:,nbT,is)               + mem_bvp.mem_y.mem_n0(:,is)/ctcr_construc.vect_res(is) ;
-                        mem_deriv_propag_low.mem_d00Rs.mem_d00Rs_dbcj(:,:,j,is+1)   = mem_deriv_propag_low.mem_d00Rs.mem_d00Rs_dbcj(:,:,j,is)           + mem_deriv_propag_low.mem_d00Rs_ds.mem_d00Rs_dbcj_ds(:,:,j,is)         *ctcr_construc.vect_res(is-1) ;
-                        mem_deriv_propag_low.mem_d00Ps.mem_d00Ps_dbcj(:,:,is+1)     = mem_deriv_propag_low.mem_d00Ps.mem_d00Ps_dbcj(:,:,is)             + mem_deriv_propag_low.mem_d00Ps_ds.mem_d00Ps_dbcj_ds(:,:,is)           *ctcr_construc.vect_res(is-1) ;
+                        mem_deriv_propag_low.mem_dR0.mem_dR0_dbcj(:,:,j,is+1)       = mem_deriv_propag_low.mem_dR0.mem_dR0_dbcj(:,:,j,is)               + mem_deriv_propag_low.mem_dR0_ds.mem_dR0_dbcj_ds(:,:,j,is)         *ctcr_construc.vect_res(is-1) ;
+                        mem_deriv_propag_low.mem_dP0.mem_dP0_dbcj(:,:,is+1)         = mem_deriv_propag_low.mem_dP0.mem_dP0_dbcj(:,:,is)                 + mem_deriv_propag_low.mem_dP0_ds.mem_dP0_dbcj_ds(:,:,is)           *ctcr_construc.vect_res(is-1) ;
 
                     else
 
                         mem_deriv_propag_low.mem_dm0.mem_dm0_dbcj(:,j,is+1)         = mem_deriv_propag_low.mem_dm0.mem_dm0_dbcj(:,j,is)                 + mem_deriv_propag_low.mem_dm0_ds.mem_dm0_dbcj_ds(:,j,is)               *ctcr_construc.vect_res(is) ;
                         mem_deriv_propag_low.mem_dn0.mem_dn0_dbcj(:,j,is+1)         = mem_deriv_propag_low.mem_dn0.mem_dn0_dbcj(:,j,is)                 + mem_deriv_propag_low.mem_dn0_ds.mem_dn0_dbcj_ds(:,j,is)               *ctcr_construc.vect_res(is) ;
-                        mem_deriv_propag_low.mem_d00Rs.mem_d00Rs_dbcj(:,:,j,is+1)   = mem_deriv_propag_low.mem_d00Rs.mem_d00Rs_dbcj(:,:,j,is)           + mem_deriv_propag_low.mem_d00Rs_ds.mem_d00Rs_dbcj_ds(:,:,j,is)         *ctcr_construc.vect_res(is) ;
-                        mem_deriv_propag_low.mem_d00Ps.mem_d00Ps_dbcj(:,j,is+1)     = mem_deriv_propag_low.mem_d00Ps.mem_d00Ps_dbcj(:,j,is)             + mem_deriv_propag_low.mem_d00Ps_ds.mem_d00Ps_dbcj_ds(:,j,is)           *ctcr_construc.vect_res(is) ;
+                        mem_deriv_propag_low.mem_dR0.mem_dR0_dbcj(:,:,j,is+1)       = mem_deriv_propag_low.mem_dR0.mem_dR0_dbcj(:,:,j,is)               + mem_deriv_propag_low.mem_dR0_ds.mem_dR0_dbcj_ds(:,:,j,is)         *ctcr_construc.vect_res(is) ;
+                        mem_deriv_propag_low.mem_dP0.mem_dP0_dbcj(:,j,is+1)         = mem_deriv_propag_low.mem_dP0.mem_dP0_dbcj(:,j,is)                 + mem_deriv_propag_low.mem_dP0_ds.mem_dP0_dbcj_ds(:,j,is)           *ctcr_construc.vect_res(is) ;
                     
                     end
                 end
@@ -178,10 +177,10 @@ function mem_deriv_propag_low ...
                     mem_deriv_propag_low.mem_dm0.mem_dm0_dfs0(:,:,is+1,is0)             = mem_deriv_propag_low.mem_dm0.mem_dm0_dfs0(:,:,is,is0)         + mem_deriv_propag_low.mem_dm0_ds.mem_dm0_dfs0_ds(:,:,is,is0)           *ctcr_construc.vect_res(is)  ;
                     mem_deriv_propag_low.mem_dn0.mem_dn0_dtaus0(:,:,is+1,is0)           = mem_deriv_propag_low.mem_dn0.mem_dn0_dtaus0(:,:,is,is0)       + mem_deriv_propag_low.mem_dn0_ds.mem_dn0_dtaus0_ds(:,:,is,is0)         *ctcr_construc.vect_res(is)  ;
                     mem_deriv_propag_low.mem_dn0.mem_dn0_dfs0(:,:,is+1,is0)             = mem_deriv_propag_low.mem_dn0.mem_dn0_dfs0(:,:,is,is0)         + mem_deriv_propag_low.mem_dn0_ds.mem_dn0_dfs0_ds(:,:,is,is0)           *ctcr_construc.vect_res(is)  ;
-                    mem_deriv_propag_low.mem_d00Rs.mem_d00Rs_dtaus0(:,:,:,is+1,is0)     = mem_deriv_propag_low.mem_d00Rs.mem_d00Rs_dtaus0(:,:,:,is,is0) + mem_deriv_propag_low.mem_d00Rs_ds.mem_d00Rs_dtaus0_ds(:,:,:,is,is0)   *ctcr_construc.vect_res(is)  ;
-                    mem_deriv_propag_low.mem_d00Rs.mem_d00Rs_dfs0(:,:,:,is+1,is0)       = mem_deriv_propag_low.mem_d00Rs.mem_d00Rs_dfs0(:,:,:,is,is0)   + mem_deriv_propag_low.mem_d00Rs_ds.mem_d00Rs_dfs0_ds(:,:,:,is,is0)     *ctcr_construc.vect_res(is)  ;
-                    mem_deriv_propag_low.mem_d00Ps.mem_d00Ps_dtaus0(:,:,is+1,is0)       = mem_deriv_propag_low.mem_d00Ps.mem_d00Ps_dtaus0(:,:,is,is0)   + mem_deriv_propag_low.mem_d00Ps_ds.mem_d00Ps_dtaus0_ds(:,:,is,is0)     *ctcr_construc.vect_res(is)  ;                    
-                    mem_deriv_propag_low.mem_d00Ps.mem_d00Ps_dfs0(:,:,is+1,is0)         = mem_deriv_propag_low.mem_d00Ps.mem_d00Ps_dfs0(:,:,is,is0)     + mem_deriv_propag_low.mem_d00Ps_ds.mem_d00Ps_dfs0_ds(:,:,is,is0)       *ctcr_construc.vect_res(is)  ;
+                    mem_deriv_propag_low.mem_dR0.mem_dR0_dtaus0(:,:,:,is+1,is0)         = mem_deriv_propag_low.mem_dR0.mem_dR0_dtaus0(:,:,:,is,is0)     + mem_deriv_propag_low.mem_dR0_ds.mem_dR0_dtaus0_ds(:,:,:,is,is0)   *ctcr_construc.vect_res(is)  ;
+                    mem_deriv_propag_low.mem_dR0.mem_dR0_dfs0(:,:,:,is+1,is0)           = mem_deriv_propag_low.mem_dR0.mem_dR0_dfs0(:,:,:,is,is0)       + mem_deriv_propag_low.mem_dR0_ds.mem_dR0_dfs0_ds(:,:,:,is,is0)     *ctcr_construc.vect_res(is)  ;
+                    mem_deriv_propag_low.mem_dP0.mem_dP0_dtaus0(:,:,is+1,is0)           = mem_deriv_propag_low.mem_dP0.mem_dP0_dtaus0(:,:,is,is0)       + mem_deriv_propag_low.mem_dP0_ds.mem_dP0_dtaus0_ds(:,:,is,is0)     *ctcr_construc.vect_res(is)  ;                    
+                    mem_deriv_propag_low.mem_dP0.mem_dP0_dfs0(:,:,is+1,is0)             = mem_deriv_propag_low.mem_dP0.mem_dP0_dfs0(:,:,is,is0)         + mem_deriv_propag_low.mem_dP0_ds.mem_dP0_dfs0_ds(:,:,is,is0)       *ctcr_construc.vect_res(is)  ;
     
                 end
             end

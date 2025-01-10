@@ -4,26 +4,24 @@ function [mem_bvp , mem_deriv_propag_low] ...
 
 % ======================================================================= %
 % ======================================================================= %
-
+%
 % This function integrates the differential equations
-
+%
 % ====================
 % ====== INPUTS ====== 
-
-% ctcr_construc         : Robot features related to the model settings
-% ctcr_carac            : Robot features
-% simulation_param      : Model settings
-% mem_bvp               : Memory of the BVP variables 
-% mem_deriv_propag_low  : Memory of the low-level derivatives 
-% select_opt            : Method for solving the BVP
-
-
+%
+% ctcr_construc         : (class)   Robot features related to the model settings
+% ctcr_carac            : (class)   Robot features
+% simulation_param      : (class)   Model settings
+% mem_bvp               : (class)   Memory of the BVP variables 
+% mem_deriv_propag_low  : (class)   Memory of the low-level derivatives 
+%
 % ====================
 % ===== OUTPUTS ====== 
-
-% mem_bvp               : Memory of the BVP variables 
-% mem_deriv_propag_low  : Memory of the low-level derivatives 
-
+%
+% mem_bvp               : (class)   Memory of the BVP variables 
+% mem_deriv_propag_low  : (class)   Memory of the low-level derivatives 
+%
 % ======================================================================= %
 % ======================================================================= %
 

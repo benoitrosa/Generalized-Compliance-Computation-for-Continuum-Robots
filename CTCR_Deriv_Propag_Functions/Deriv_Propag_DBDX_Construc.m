@@ -6,30 +6,28 @@ function mem_deriv_propag_high ...
 
 % ======================================================================= %
 % ======================================================================= %
-
+%
 % This function computes the High-Level partial derivatives Bx
-
+%
 % ====================
 % ====== INPUTS ====== 
-
-% bool_J                : [boolean] Compute the Joint Jacobian ?
-% bool_Cs0              : [boolean] Compute the Generalized Compliance Matrix ?
-% mem_bvp               : Memory of the BVP variables 
-% ctcr_construc         : Robot features related to the model settings
-% ctcr_carac            : Robot features
-% ctcr_load             : Robot loads
-% bvp_prop              : Results of the BVP resolution
-% simulation_param      : Model settings
-% mem_deriv_propag_low  : Memory of the low-level derivatives 
-% mem_deriv_propag_high : Memory of the high-level partial derivatives
-
-
+%
+% bool_J                : (boolean) Compute the Joint Jacobian ?
+% bool_Cs0              : (boolean) Compute the Generalized Compliance Matrix ?
+% mem_bvp               : (class) Memory of the BVP variables 
+% ctcr_construc         : (class) Robot features related to the model settings
+% ctcr_carac            : (class) Robot features
+% ctcr_load             : (class) Robot loads
+% bvp_prop              : (class) Results of the BVP resolution
+% simulation_param      : (class) Model settings
+% mem_deriv_propag_low  : (class) Memory of the low-level derivatives 
+% mem_deriv_propag_high : (class) Memory of the high-level partial derivatives
+%
 % ====================
 % ===== OUTPUTS ====== 
-
-% mem_deriv_propag_high : Memory of the high-level partial derivatives
-
-
+%
+% mem_deriv_propag_high : (class) Memory of the high-level partial derivatives
+%
 % ======================================================================= %
 % ======================================================================= %
 
@@ -76,6 +74,7 @@ function mem_deriv_propag_high ...
 
     % ============================================== %
     % ============== db_dtc and db_bc ============== %
+    % (eq 35)
 
     if bool_J
 
@@ -92,7 +91,7 @@ function mem_deriv_propag_high ...
 
         for j = 1:nbT
             mem_deriv_propag_high.mem_B(nbT,nbT+6+j) = mem_deriv_propag_low.mem_duzi.mem_duzi_dtcj(nbT,j,vect_ind_iT(nbT,3)) ...
-                        - [0,0,1]/K(3,3,nbT)*dB0nbTRs_dtcj(vect_ind_iT(nbT,3),j,nbT,mem_bvp.mem_T,mem_bvp.mem_y,mem_deriv_propag_low.mem_d00Rs.mem_d00Rs_dtcj,mem_deriv_propag_low.mem_dti.mem_dti_dtcj)'*tau_tip' ;
+                        - [0,0,1]/K(3,3,nbT)*dB0nbTRs_dtcj(vect_ind_iT(nbT,3),j,nbT,mem_bvp.mem_T,mem_bvp.mem_y,mem_deriv_propag_low.mem_dR0.mem_dR0_dtcj,mem_deriv_propag_low.mem_dti.mem_dti_dtcj)'*tau_tip' ;
         end
         
 
@@ -101,7 +100,7 @@ function mem_deriv_propag_high ...
 
         for j = 1:nbT
             mem_deriv_propag_high.mem_B(nbT+1:nbT+3,nbT+6+j) = mem_deriv_propag_low.mem_dm0.mem_dm0_dtcj(:,j,vect_ind_iT(nbT,3)) ...
-                                - mem_deriv_propag_low.mem_d00Rs.mem_d00Rs_dtcj(:,:,j,vect_ind_iT(nbT,3))'*tau_tip'  ;
+                                - mem_deriv_propag_low.mem_dR0.mem_dR0_dtcj(:,:,j,vect_ind_iT(nbT,3))'*tau_tip'  ;
         end
 
 
@@ -110,7 +109,7 @@ function mem_deriv_propag_high ...
 
         for j = 1:nbT
             mem_deriv_propag_high.mem_B(nbT+4:nbT+6,nbT+6+j) = mem_deriv_propag_low.mem_dn0.mem_dn0_dtcj(:,j,vect_ind_iT(nbT,3)) ...
-                                - mem_deriv_propag_low.mem_d00Rs.mem_d00Rs_dtcj(:,:,j,vect_ind_iT(nbT,3))'*f_tip'  ;
+                                - mem_deriv_propag_low.mem_dR0.mem_dR0_dtcj(:,:,j,vect_ind_iT(nbT,3))'*f_tip'  ;
         end
 
 
@@ -137,7 +136,7 @@ function mem_deriv_propag_high ...
         for j = 1:nbT
     
             mem_deriv_propag_high.mem_B(nbT,2*nbT+6+j) = mem_deriv_propag_low.mem_duzi.mem_duzi_dbcj(nbT,j,vect_ind_iT(nbT,3)) ...
-                        - [0,0,1]/K(3,3,nbT)*dB0nbTRs_dbcj(vect_ind_iT(nbT,3),j,nbT,mem_bvp.mem_T,mem_bvp.mem_y,mem_deriv_propag_low.mem_d00Rs.mem_d00Rs_dbcj,mem_deriv_propag_low.mem_dti.mem_dti_dbcj)'*tau_tip' ;
+                        - [0,0,1]/K(3,3,nbT)*dB0nbTRs_dbcj(vect_ind_iT(nbT,3),j,nbT,mem_bvp.mem_T,mem_bvp.mem_y,mem_deriv_propag_low.mem_dR0.mem_dR0_dbcj,mem_deriv_propag_low.mem_dti.mem_dti_dbcj)'*tau_tip' ;
         
         end
 
@@ -148,7 +147,7 @@ function mem_deriv_propag_high ...
 
         for j = 1:nbT
             mem_deriv_propag_high.mem_B(nbT+1:nbT+3,2*nbT+6+j) = mem_deriv_propag_low.mem_dm0.mem_dm0_dbcj(:,j,vect_ind_iT(nbT,3)) ...
-                                     - mem_deriv_propag_low.mem_d00Rs.mem_d00Rs_dbcj(:,:,j,vect_ind_iT(nbT,3))'*tau_tip'  ;
+                                     - mem_deriv_propag_low.mem_dR0.mem_dR0_dbcj(:,:,j,vect_ind_iT(nbT,3))'*tau_tip'  ;
         end
 
         
@@ -158,7 +157,7 @@ function mem_deriv_propag_high ...
         
         for j = 1:nbT
             mem_deriv_propag_high.mem_B(nbT+4:nbT+6,2*nbT+6+j) = mem_deriv_propag_low.mem_dn0.mem_dn0_dbcj(:,j,vect_ind_iT(nbT,3)) ...
-                                     - mem_deriv_propag_low.mem_d00Rs.mem_d00Rs_dbcj(:,:,j,vect_ind_iT(nbT,3))'*f_tip'  ;
+                                     - mem_deriv_propag_low.mem_dR0.mem_dR0_dbcj(:,:,j,vect_ind_iT(nbT,3))'*f_tip'  ;
         end
 
     end
@@ -169,7 +168,8 @@ function mem_deriv_propag_high ...
 
     % =========================== %
     % ======== db_dyu(0) ======== %
-        
+    % (eq 35)
+
     mem_deriv_propag_high.mem_B(1:nbT+6,1:nbT+6) = bvp_prop.Bu ;
 
 
@@ -190,8 +190,8 @@ function mem_deriv_propag_high ...
 
 
                 % =========================================== %
-                % ======== db_dtau(L0) and db_df(L0) ======== %
-
+                % ======= db_dtau0(L0) and db_df0(L0) ======= %
+                % (eq 35)
 
                 % ============================== %
                 % ======== db1_dtau(L0) ======== %
@@ -251,8 +251,8 @@ function mem_deriv_propag_high ...
             else
 
                 % =========================================== %
-                % ======== db_dtau(s0) and db_df(s0) ======== %
-
+                % ======= db_dtau0(s0) and db_df0(s0) ======= %
+                % (eq 35)
        
 
                 % ============================== %
@@ -269,7 +269,7 @@ function mem_deriv_propag_high ...
 
                 for j = 1:3
                     mem_deriv_propag_high.mem_Bws0(nbT,j,is0) = mem_deriv_propag_low.mem_duzi.mem_duzi_dtaus0(nbT,j,vect_ind_iT(nbT,3),is0) ...
-                                      - [0,0,1]/K(3,3,nbT)*dB0nbTRs_dtaus0(is0,vect_ind_iT(nbT,3),j,nbT,mem_bvp.mem_T,mem_bvp.mem_y,mem_deriv_propag_low.mem_d00Rs.mem_d00Rs_dtaus0,mem_deriv_propag_low.mem_dti.mem_dti_dtaus0)*tau_tip' ;
+                                      - [0,0,1]/K(3,3,nbT)*dB0nbTRs_dtaus0(is0,vect_ind_iT(nbT,3),j,nbT,mem_bvp.mem_T,mem_bvp.mem_y,mem_deriv_propag_low.mem_dR0.mem_dR0_dtaus0,mem_deriv_propag_low.mem_dti.mem_dti_dtaus0)*tau_tip' ;
                 end
             
 
@@ -279,7 +279,7 @@ function mem_deriv_propag_high ...
                 
                 for j = 1:3
                     mem_deriv_propag_high.mem_Bws0(nbT+1:nbT+3,j,is0) = mem_deriv_propag_low.mem_dm0.mem_dm0_dtaus0(:,j,vect_ind_iT(nbT,3),is0) ...
-                                              - mem_deriv_propag_low.mem_d00Rs.mem_d00Rs_dtaus0(:,:,j,vect_ind_iT(nbT,3),is0)*tau_tip' ;
+                                              - mem_deriv_propag_low.mem_dR0.mem_dR0_dtaus0(:,:,j,vect_ind_iT(nbT,3),is0)*tau_tip' ;
         
                 end
                 
@@ -290,7 +290,7 @@ function mem_deriv_propag_high ...
 
                 for j = 1:3
                     mem_deriv_propag_high.mem_Bws0(nbT+4:nbT+6,j,is0) = mem_deriv_propag_low.mem_dn0.mem_dn0_dtaus0(:,j,vect_ind_iT(nbT,3),is0) ...
-                                              - mem_deriv_propag_low.mem_d00Rs.mem_d00Rs_dtaus0(:,:,j,vect_ind_iT(nbT,3),is0)*f_tip' ;
+                                              - mem_deriv_propag_low.mem_dR0.mem_dR0_dtaus0(:,:,j,vect_ind_iT(nbT,3),is0)*f_tip' ;
                 end
             
             
@@ -311,7 +311,7 @@ function mem_deriv_propag_high ...
                 
                 for j = 1:3
                     mem_deriv_propag_high.mem_Bws0(nbT,3+j,is0) = mem_deriv_propag_low.mem_duzi.mem_duzi_dfs0(nbT,j,vect_ind_iT(nbT,3),is0) ...
-                                      - [0,0,1]/K(3,3,nbT)*dB0nbTRs_dfs0(is0,vect_ind_iT(nbT,3),j,nbT,mem_bvp.mem_T,mem_bvp.mem_y,mem_deriv_propag_low.mem_d00Rs.mem_d00Rs_dfs0,mem_deriv_propag_low.mem_dti.mem_dti_dfs0)*tau_tip' ;
+                                      - [0,0,1]/K(3,3,nbT)*dB0nbTRs_dfs0(is0,vect_ind_iT(nbT,3),j,nbT,mem_bvp.mem_T,mem_bvp.mem_y,mem_deriv_propag_low.mem_dR0.mem_dR0_dfs0,mem_deriv_propag_low.mem_dti.mem_dti_dfs0)*tau_tip' ;
                 end
             
 
@@ -321,7 +321,7 @@ function mem_deriv_propag_high ...
 
                 for j = 1:3
                     mem_deriv_propag_high.mem_Bws0(nbT+1:nbT+3,3+j,is0) = mem_deriv_propag_low.mem_dm0.mem_dm0_dfs0(:,j,vect_ind_iT(nbT,3),is0) ...
-                                              - mem_deriv_propag_low.mem_d00Rs.mem_d00Rs_dfs0(:,:,j,vect_ind_iT(nbT,3),is0)*tau_tip' ;
+                                              - mem_deriv_propag_low.mem_dR0.mem_dR0_dfs0(:,:,j,vect_ind_iT(nbT,3),is0)*tau_tip' ;
                 end
                 
 
@@ -331,7 +331,7 @@ function mem_deriv_propag_high ...
 
                 for j = 1:3
                     mem_deriv_propag_high.mem_Bws0(nbT+4:nbT+6,3+j,is0) = mem_deriv_propag_low.mem_dn0.mem_dn0_dfs0(:,j,vect_ind_iT(nbT,3),is0) ...
-                                              - mem_deriv_propag_low.mem_d00Rs.mem_d00Rs_dfs0(:,:,j,vect_ind_iT(nbT,3),is0)*f_tip' ;
+                                              - mem_deriv_propag_low.mem_dR0.mem_dR0_dfs0(:,:,j,vect_ind_iT(nbT,3),is0)*f_tip' ;
                 end
                 
             end

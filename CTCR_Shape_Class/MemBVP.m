@@ -6,11 +6,12 @@ classdef MemBVP
 %
 % This class contains the memories of the BVP variables 
 %
-% mem_y     : Matrix memory of the y(s) values
-% mem_ys    : Matrix memory of the d_y_ds(s) values
-% mem_u0    : Matrix memory of the u0(s) values
-% mem_T     : Matrix memory of the B0(0)Ts values
-% mem_tBu   : Matrix of the tilde_Bu(s) values
+% mem_y             : (class)           Object memory of the y(s) values
+% mem_ys            : (class)           Object memory of the dy(s)_ds values
+% mem_uixy          : (2 x nbT x nbP)   Matrix containing all the ui|x,y(s) values
+% mem_u0            : (3 x nbP)         Matrix containing all the u0(s) values
+% mem_T             : (4 x 4 x nbP)     Matrix all the B0(0)Ts values
+% mem_inv_sum_Ki    : (3 x 3 x nbP)     Matrix containing all the (Ki)^-1 values
 % 
 % ======================================================================= %
 % ======================================================================= %
@@ -21,12 +22,9 @@ classdef MemBVP
 
         mem_y           = [] ;
         mem_ys          = [] ;
-
         mem_uixy        = [] ;
         mem_u0          = [] ;
-
         mem_T           = [] ;
-
         mem_inv_sum_Ki  = [] ;
 
     end

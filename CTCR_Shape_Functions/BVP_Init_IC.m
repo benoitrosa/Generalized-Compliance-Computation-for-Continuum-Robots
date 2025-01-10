@@ -2,22 +2,22 @@ function mem_bvp = BVP_Init_IC(bvp_prop , mem_bvp , ctcr_construc , ctcr_carac)
 
 % ======================================================================= %
 % ======================================================================= %
-
+%
 % This function initializes the state vector initial value
-
+%
 % ====================
 % ====== INPUTS ====== 
-
-% bvp_prop              : Results of the BVP resolution
-% mem_bvp               : Memory of the BVP variables
-% ctcr_construc         : Robot features related to the model settings
-% ctcr_carac            : Robot features
-
+%
+% bvp_prop              : (class)   Results of the BVP resolution
+% mem_bvp               : (class)   Memory of the BVP variables
+% ctcr_construc         : (class)   Robot features related to the model settings
+% ctcr_carac            : (class)   Robot features
+%
 % ====================
 % ===== OUTPUTS ====== 
-
-% mem_bvp               : Memory of the BVP variables
-
+%
+% mem_bvp               : (class)   Memory of the BVP variables
+%
 % ======================================================================= %
 % ======================================================================= %
     

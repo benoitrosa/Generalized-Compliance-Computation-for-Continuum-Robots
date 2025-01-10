@@ -6,20 +6,20 @@ classdef MemDerivPropagLow
 %
 % This class contains all the Low-Level partial derivatives
 %
-% mem_du0       : Class containing the partial derivatives of u0(s)
-% mem_dm0       : Class containing the partial derivatives of m0(s)
-% mem_dm0_ds    : Class containing the partial derivatives of dm0(s)_ds
-% mem_dn0       : Class containing the partial derivatives of n0(s)
-% mem_dn0_ds    : Class containing the partial derivatives of dn0(s)_ds
-% mem_dti       : Class containing the partial derivatives of theta(s)
-% mem_dti_ds    : Class containing the partial derivatives of dtheta(s)_ds
-% mem_duzi      : Class containing the partial derivatives of uz(s)
-% mem_duzi_ds   : Class containing the partial derivatives of duz(s)_ds
-% mem_d00Rs     : Class containing the partial derivatives of R0(s)
-% mem_d00Rs_ds  : Class containing the partial derivatives of dR0(s)_ds
-% mem_d00Ps     : Class containing the partial derivatives of p0(s)
-% mem_d00Ps_ds  : Class containing the partial derivatives of dp0(s)_ds
-% mem_d00Ts     : Class containing the partial derivatives of T0(s)
+% mem_du0       : (class) Object containing the partial derivatives of u0(s)
+% mem_dm0       : (class) Object containing the partial derivatives of m0(s)
+% mem_dm0_ds    : (class) Object containing the partial derivatives of dm0(s)_ds
+% mem_dn0       : (class) Object containing the partial derivatives of n0(s)
+% mem_dn0_ds    : (class) Object containing the partial derivatives of dn0(s)_ds
+% mem_dti       : (class) Object containing the partial derivatives of theta(s)
+% mem_dti_ds    : (class) Object containing the partial derivatives of dtheta(s)_ds
+% mem_duzi      : (class) Object containing the partial derivatives of uz(s)
+% mem_duzi_ds   : (class) Object containing the partial derivatives of duz(s)_ds
+% mem_dR0       : (class) Object containing the partial derivatives of R0(s)
+% mem_dR0_ds    : (class) Object containing the partial derivatives of dR0(s)_ds
+% mem_dP0       : (class) Object containing the partial derivatives of p0(s)
+% mem_dP0_ds    : (class) Object containing the partial derivatives of dp0(s)_ds
+% mem_dT0       : (class) Object containing the partial derivatives of T0(s)
 % 
 % ======================================================================= %
 % ======================================================================= %
@@ -37,11 +37,11 @@ classdef MemDerivPropagLow
         mem_dti_ds      = [] ;
         mem_duzi        = [] ;
         mem_duzi_ds     = [] ;
-        mem_d00Rs       = [] ;
-        mem_d00Rs_ds    = [] ;
-        mem_d00Ps       = [] ;
-        mem_d00Ps_ds    = [] ;
-        mem_d00Ts       = [] ;
+        mem_dR0         = [] ;
+        mem_dR0_ds      = [] ;
+        mem_dP0         = [] ;
+        mem_dP0_ds      = [] ;
+        mem_dT0         = [] ;
 
     end
 
@@ -60,11 +60,11 @@ classdef MemDerivPropagLow
                 mc.mem_dti_ds       = varargin{7} ;
                 mc.mem_duzi         = varargin{8} ;
                 mc.mem_duzi_ds      = varargin{9} ;
-                mc.mem_d00Rs        = varargin{10} ;
-                mc.mem_d00Rs_ds     = varargin{11} ;
-                mc.mem_d00Ps        = varargin{12} ;
-                mc.mem_d00Ps_ds     = varargin{13} ;
-                mc.mem_d00Ts        = varargin{14} ;
+                mc.mem_dR0          = varargin{10} ;
+                mc.mem_dR0_ds       = varargin{11} ;
+                mc.mem_dP0          = varargin{12} ;
+                mc.mem_dP0_ds       = varargin{13} ;
+                mc.mem_dT0          = varargin{14} ;
                 
             end
         end
@@ -72,8 +72,8 @@ classdef MemDerivPropagLow
         % ====== Get all ======
         function [mem_du0      , mem_dm0    , mem_dm0_ds   , mem_dn0   , ...
                   mem_dn0_ds   , mem_dti    , mem_dti_ds   , mem_duzi  , ...
-                  mem_duzi_ds  , mem_d00Rs  , mem_d00Rs_ds , mem_d00Ps , ...
-                  mem_d00Ps_ds , mem_d00Ts] = Get_All_MemDerivPropagLow(mc)
+                  mem_duzi_ds  , mem_dR0  , mem_dR0_ds , mem_dP0 , ...
+                  mem_dP0_ds , mem_dT0] = Get_All_MemDerivPropagLow(mc)
 
             mem_du0         = mc.mem_du0        ;
             mem_dm0         = mc.mem_dm0        ;
@@ -84,11 +84,11 @@ classdef MemDerivPropagLow
             mem_dti_ds      = mc.mem_dti_ds     ;
             mem_duzi        = mc.mem_dti        ;
             mem_duzi_ds     = mc.mem_dti_ds     ;
-            mem_d00Rs       = mc.mem_d00Rs      ;
-            mem_d00Rs_ds    = mc.mem_d00Rs_ds   ;
-            mem_d00Ps       = mc.mem_d00Ps      ;
-            mem_d00Ps_ds    = mc.mem_d00Ps_ds   ;
-            mem_d00Ts       = mc.mem_d00Ts      ;
+            mem_dR0         = mc.mem_dR0      ;
+            mem_dR0_ds      = mc.mem_dR0_ds   ;
+            mem_dP0         = mc.mem_dP0      ;
+            mem_dP0_ds      = mc.mem_dP0_ds   ;
+            mem_dT0         = mc.mem_dT0      ;
 
         end
     

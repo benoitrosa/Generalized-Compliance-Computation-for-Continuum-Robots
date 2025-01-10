@@ -8,12 +8,12 @@ function R = large_SO3(w)
 % ====================
 % ====== INPUTS ====== 
 %
-% w     : 3x1 or 1x3 vector of rotation angles
+% w     : (3x1) or (1x3) Vector of rotation angles
 %
 % ====================
 % ===== OUTPUTS ====== 
 %
-% R     : Rotation matrix
+% R     : (3x3) Rotation matrix in SO(3)
 %
 % ======================================================================= %
 % ======================================================================= %

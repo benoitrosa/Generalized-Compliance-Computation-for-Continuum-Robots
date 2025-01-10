@@ -8,11 +8,11 @@ function Plot_Tube_3D(curr_ax,curve,R,nb_pt_circ,color)
 % ====================
 % ====== INPUTS ====== 
 %
-% curr_ax       : Axes of the figure on which the graph is plotted
-% curve         : 3D curve along which the sweep is proceeded
-% R             : Radius of the circular cross section
-% nb_pt_circ    : Number of discretization points of the circular cross section
-% color         : Color of the 3D plot
+% curr_ax       : (axes object) Axes of the figure on which the graph is plotted
+% curve         : (_ x 3) 3D curve along which the sweep is proceeded
+% R             : (float) Radius of the circular cross section
+% nb_pt_circ    : (int > 0) Number of discretization points of the circular cross section
+% color         : (1 x _ with coeff <1) Color of the 3D plot
 %
 % ====================
 % ===== OUTPUTS ====== 

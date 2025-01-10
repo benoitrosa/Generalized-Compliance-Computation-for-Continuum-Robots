@@ -5,42 +5,40 @@ classdef MemDN0DS
 % ============================= mem_dn0_ds ============================ %
 % ===================================================================== %
 %
-% This class contains all the derivatives w.r.t. the cuvilinear abscissa s
-% of the partial derivatives of n0(s)
+% This class contains all the partial derivatives of dn0(s)_ds
 %
-% mem_dn0_duzj0_ds      : (3 x nbT x nbP) matrix containing the partial derivatives w.r.t. uz(0)
+% mem_dn0_duzj0_ds      : (3 x nbT x nbP) Matrix containing the partial derivatives w.r.t. uz(0)
 %                         | mem_dn0_duzj0_ds(i,j,is)
 %                         with
-%                         | i : the component X/Y/Z of n0(s)
-%                         | j : the index of the tube associated to uzj(0)
-%                         | is : the current curvilinear abscissa index
+%                         | i ∊ [1 , 3]     : the component X/Y/Z of n0(s)
+%                         | j ∊ [1 , nbT]   : the index of the tube associated to uzj(0)
+%                         | is ∊ [1 , nbP]  : the current curvilinear abscissa index
 %
-% mem_dn0_dm0j0_ds      : (3 x 3 x nbP) matrix containing the partial derivatives w.r.t. m0(0)
+% mem_dn0_dm0j0_ds      : (3 x 3 x nbP) Matrix containing the partial derivatives w.r.t. m0(0)
 %                         | mem_dn0_dm0j0_ds(i,j,is)
 %                         with
-%                         | i : the component X/Y/Z of n0(s)
-%                         | j : the component X/Y/Z associated to m0(0)
-%                         | is : the current curvilinear abscissa index
+%                         | i ∊ [1 , 3]     : the component X/Y/Z of n0(s)
+%                         | j ∊ [1 , 3]     : the component X/Y/Z associated to m0(0)
+%                         | is ∊ [1 , nbP]  : the current curvilinear abscissa index
 %
-% mem_dn0_dn0j0_ds      : (3 x 3 x nbP) matrix containing the partial derivatives w.r.t. n0(0)
+% mem_dn0_dn0j0_ds      : (3 x 3 x nbP) Matrix containing the partial derivatives w.r.t. n0(0)
 %                         | same template than mem_dn0_dm0j0_ds
 %
-%
-% mem_dn0_dtcj_ds       : (3 x nbT x nbP) matrix containing the partial derivatives w.r.t. theta_c
+% mem_dn0_dtcj_ds       : (3 x nbT x nbP) Matrix containing the partial derivatives w.r.t. theta_c
 %                         | same template than mem_dn0_duzj0_ds
 %
-% mem_dn0_dbcj_ds       : (3 x nbT x nbP) matrix containing the partial derivatives w.r.t. beta_c
+% mem_dn0_dbcj_ds       : (3 x nbT x nbP) Matrix containing the partial derivatives w.r.t. beta_c
 %                         | same template than mem_dn0_duzj0_ds
 %
-% mem_dn0_dtaus0_ds     : (3 x 3 x nbP x nbP) matrix containing the partial derivatives w.r.t. tau0(s0)
+% mem_dn0_dtaus0_ds     : (3 x 3 x nbP x nbP) Matrix containing the partial derivatives w.r.t. tau0(s0)
 %                         | mem_dn0_dtaus0_ds(i,j,is,is0)
 %                         with
-%                         | i : the component X/Y/Z of n0(s)
-%                         | j : the component X/Y/Z associated to tau0(s0)
-%                         | is : the current curvilinear abscissa index
-%                         | is0 : the loaded point abscissa index
+%                         | i ∊ [1 , 3]     : the component X/Y/Z of n0(s)
+%                         | j ∊ [1 , 3]     : the component X/Y/Z associated to tau0(s0)
+%                         | is ∊ [1 , nbP]  : the current curvilinear abscissa index
+%                         | is0 ∊ [1 , nbP] : the loaded point abscissa index
 %
-% mem_dn0_dfs0_ds       : (3 x 3 x nbP x nbP) matrix containing the partial derivatives w.r.t. f0(s0)
+% mem_dn0_dfs0_ds       : (3 x 3 x nbP x nbP) Matrix containing the partial derivatives w.r.t. f0(s0)
 %                         | same template than mem_dn0_dtaus0_ds
 %
 % ======================================================================= %

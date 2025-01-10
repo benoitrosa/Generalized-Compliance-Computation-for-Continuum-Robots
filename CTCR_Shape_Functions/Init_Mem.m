@@ -6,21 +6,21 @@ function [mem_bvp , mem_deriv_propag_low , mem_deriv_propag_high , mem_CJ] ...
 % ======================================================================= %
 % ======================================================================= %
 %
-% This function initializes the memories variables for the state vector and the partial derivatives. 
+% This function initializes the memories variables for the state vector and the partial derivatives 
 %
 % ====================
 % ====== INPUTS ====== 
 %
-% ctcr_construc         : Robot features related to the model settings
-% ctcr_carac            : Robot features
+% ctcr_construc         : (class) Robot features related to the model settings
+% ctcr_carac            : (class) Robot features
 %
 % ====================
 % ===== OUTPUTS ====== 
 %
-% mem_bvp               : Memory of the BVP variables 
-% mem_deriv_propag_low  : Memory of the low-level derivatives 
-% mem_deriv_propag_high : Memory of the high-level partial derivatives
-% mem_CJ                : Memory of the Generalized Compliance Matrix and the Joint Jacobian
+% mem_bvp               : (class) Memory of the BVP variables 
+% mem_deriv_propag_low  : (class) Memory of the low-level derivatives 
+% mem_deriv_propag_high : (class) Memory of the high-level partial derivatives
+% mem_CJ                : (class) Memory of the Generalized Compliance Matrix and the Joint Jacobian
 %
 % ======================================================================= %
 % ======================================================================= %
@@ -380,23 +380,23 @@ function [mem_bvp , mem_deriv_propag_low , mem_deriv_propag_high , mem_CJ] ...
 
 
     % ===================================================================== %
-    % ============================= mem_d00Rs ============================= %
+    % ============================== mem_dR0 ============================== %
     % ===================================================================== %
 
     % ====== Zero initialization
 
-    mem_d00Rs_duzj0         = zeros(3,3,nbT,nbP)       ;
-    mem_d00Rs_dm0j0         = zeros(3,3,3,nbP)         ;
-    mem_d00Rs_dn0j0         = zeros(3,3,3,nbP)         ;
-    mem_d00Rs_dtcj          = zeros(3,3,nbT,nbP)       ;
-    mem_d00Rs_dbcj          = zeros(3,3,nbT,nbP)       ;
-    mem_d00Rs_dtaus0        = zeros(3,3,3,nbP,nbP)     ;
-    mem_d00Rs_dfs0          = zeros(3,3,3,nbP,nbP)     ;
+    mem_dR0_duzj0           = zeros(3,3,nbT,nbP)       ;
+    mem_dR0_dm0j0           = zeros(3,3,3,nbP)         ;
+    mem_dR0_dn0j0           = zeros(3,3,3,nbP)         ;
+    mem_dR0_dtcj            = zeros(3,3,nbT,nbP)       ;
+    mem_dR0_dbcj            = zeros(3,3,nbT,nbP)       ;
+    mem_dR0_dtaus0          = zeros(3,3,3,nbP,nbP)     ;
+    mem_dR0_dfs0            = zeros(3,3,3,nbP,nbP)     ;
 
     % ====== Final initialization
 
-    mem_d00Rs = MemD00RS(mem_d00Rs_duzj0 , mem_d00Rs_dm0j0 , mem_d00Rs_dn0j0 , ...
-        mem_d00Rs_dtcj , mem_d00Rs_dbcj , mem_d00Rs_dtaus0 , mem_d00Rs_dfs0) ;
+    mem_dR0 = MemDR0(mem_dR0_duzj0 , mem_dR0_dm0j0 , mem_dR0_dn0j0 , ...
+        mem_dR0_dtcj , mem_dR0_dbcj , mem_dR0_dtaus0 , mem_dR0_dfs0) ;
 
 
 
@@ -410,91 +410,91 @@ function [mem_bvp , mem_deriv_propag_low , mem_deriv_propag_high , mem_CJ] ...
 
 
     % ===================================================================== %
-    % =========================== mem_d00Rs_ds ============================ %
+    % ============================ mem_dR0_ds ============================= %
     % ===================================================================== %
 
     % ====== Zero initialization
 
-    mem_d00Rs_duzj0_ds      = zeros(3,3,nbT,nbP)       ;
-    mem_d00Rs_dm0j0_ds      = zeros(3,3,3,nbP)         ;
-    mem_d00Rs_dn0j0_ds      = zeros(3,3,3,nbP)         ;
-    mem_d00Rs_dtcj_ds       = zeros(3,3,nbT,nbP)       ;
-    mem_d00Rs_dbcj_ds       = zeros(3,3,nbT,nbP)       ;
-    mem_d00Rs_dtaus0_ds     = zeros(3,3,3,nbP,nbP)     ;
-    mem_d00Rs_dfs0_ds       = zeros(3,3,3,nbP,nbP)     ;
+    mem_dR0_duzj0_ds        = zeros(3,3,nbT,nbP)       ;
+    mem_dR0_dm0j0_ds        = zeros(3,3,3,nbP)         ;
+    mem_dR0_dn0j0_ds        = zeros(3,3,3,nbP)         ;
+    mem_dR0_dtcj_ds         = zeros(3,3,nbT,nbP)       ;
+    mem_dR0_dbcj_ds         = zeros(3,3,nbT,nbP)       ;
+    mem_dR0_dtaus0_ds       = zeros(3,3,3,nbP,nbP)     ;
+    mem_dR0_dfs0_ds         = zeros(3,3,3,nbP,nbP)     ;
 
     % ====== Final initialization
     
-    mem_d00Rs_ds = MemD00RSDS(mem_d00Rs_duzj0_ds , mem_d00Rs_dm0j0_ds , mem_d00Rs_dn0j0_ds , ...
-        mem_d00Rs_dtcj_ds , mem_d00Rs_dbcj_ds , mem_d00Rs_dtaus0_ds , mem_d00Rs_dfs0_ds) ;
+    mem_dR0_ds = MemDR0DS(mem_dR0_duzj0_ds , mem_dR0_dm0j0_ds , mem_dR0_dn0j0_ds , ...
+        mem_dR0_dtcj_ds , mem_dR0_dbcj_ds , mem_dR0_dtaus0_ds , mem_dR0_dfs0_ds) ;
 
 
 
     % ===================================================================== %
-    % ============================= mem_d00Ps ============================= %
+    % ============================== mem_dP0 ============================== %
     % ===================================================================== %
 
     % ====== Zero initialization
 
-    mem_d00Ps_duzj0         = zeros(3,nbT,nbP)       ;
-    mem_d00Ps_dm0j0         = zeros(3,3,nbP)         ;
-    mem_d00Ps_dn0j0         = zeros(3,3,nbP)         ;
-    mem_d00Ps_dtcj          = zeros(3,nbT,nbP)       ;
-    mem_d00Ps_dbcj          = zeros(3,nbT,nbP)       ;
-    mem_d00Ps_dtaus0        = zeros(3,3,nbP,nbP)     ;
-    mem_d00Ps_dfs0          = zeros(3,3,nbP,nbP)     ;
+    mem_dP0_duzj0           = zeros(3,nbT,nbP)       ;
+    mem_dP0_dm0j0           = zeros(3,3,nbP)         ;
+    mem_dP0_dn0j0           = zeros(3,3,nbP)         ;
+    mem_dP0_dtcj            = zeros(3,nbT,nbP)       ;
+    mem_dP0_dbcj            = zeros(3,nbT,nbP)       ;
+    mem_dP0_dtaus0          = zeros(3,3,nbP,nbP)     ;
+    mem_dP0_dfs0            = zeros(3,3,nbP,nbP)     ;
 
     % ====== Final initialization
 
-    mem_d00Ps = MemD00PS(mem_d00Ps_duzj0 , mem_d00Ps_dm0j0 , mem_d00Ps_dn0j0 , ...
-        mem_d00Ps_dtcj , mem_d00Ps_dbcj , mem_d00Ps_dtaus0 , mem_d00Ps_dfs0) ;
+    mem_dP0 = MemDP0(mem_dP0_duzj0 , mem_dP0_dm0j0 , mem_dP0_dn0j0 , ...
+        mem_dP0_dtcj , mem_dP0_dbcj , mem_dP0_dtaus0 , mem_dP0_dfs0) ;
 
 
 
 
 
     % ===================================================================== %
-    % ============================ mem_d00Ps_ds =========================== %
+    % ============================= mem_dP0_ds ============================ %
     % ===================================================================== %
 
     % ====== Zero initialization
 
-    mem_d00Ps_ds_duzj0         = zeros(3,nbT,nbP)       ;
-    mem_d00Ps_ds_dm0j0         = zeros(3,3,nbP)         ;
-    mem_d00Ps_ds_dn0j0         = zeros(3,3,nbP)         ;
-    mem_d00Ps_dtcj_ds       = zeros(3,nbT,nbP)       ;
-    mem_d00Ps_dbcj_ds       = zeros(3,nbT,nbP)       ;
-    mem_d00Ps_dtaus0_ds     = zeros(3,3,nbP,nbP)     ;
-    mem_d00Ps_dfs0_ds       = zeros(3,3,nbP,nbP)     ;
+    mem_dP0_ds_duzj0        = zeros(3,nbT,nbP)       ;
+    mem_dP0_ds_dm0j0        = zeros(3,3,nbP)         ;
+    mem_dP0_ds_dn0j0        = zeros(3,3,nbP)         ;
+    mem_dP0_dtcj_ds         = zeros(3,nbT,nbP)       ;
+    mem_dP0_dbcj_ds         = zeros(3,nbT,nbP)       ;
+    mem_dP0_dtaus0_ds       = zeros(3,3,nbP,nbP)     ;
+    mem_dP0_dfs0_ds         = zeros(3,3,nbP,nbP)     ;
    
 
     % ====== Final initialization
 
-    mem_d00Ps_ds = MemD00PSDS(mem_d00Ps_ds_duzj0 , mem_d00Ps_ds_dm0j0 , mem_d00Ps_ds_dn0j0 , ...
-        mem_d00Ps_dtcj_ds , mem_d00Ps_dbcj_ds , mem_d00Ps_dtaus0_ds , mem_d00Ps_dfs0_ds) ;
+    mem_dP0_ds = MemDP0DS(mem_dP0_ds_duzj0 , mem_dP0_ds_dm0j0 , mem_dP0_ds_dn0j0 , ...
+        mem_dP0_dtcj_ds , mem_dP0_dbcj_ds , mem_dP0_dtaus0_ds , mem_dP0_dfs0_ds) ;
 
 
 
 
 
     % ===================================================================== %
-    % ============================= mem_d00Ts ============================= %
+    % ============================= mem_dT0 ============================= %
     % ===================================================================== %
 
     % ====== Zero initialization
 
-    mem_d00Ts_duzj0         = zeros(4,4,nbT,nbP)       ;
-    mem_d00Ts_dm0j0         = zeros(4,4,3,nbP)         ;
-    mem_d00Ts_dn0j0         = zeros(4,4,3,nbP)         ;
-    mem_d00Ts_dtcj          = zeros(4,4,nbT,nbP)       ;
-    mem_d00Ts_dbcj          = zeros(4,4,nbT,nbP)       ;
-    mem_d00Ts_dtaus0        = zeros(4,4,3,nbP,nbP)     ;
-    mem_d00Ts_dfs0          = zeros(4,4,3,nbP,nbP)     ;
+    mem_dT0_duzj0           = zeros(4,4,nbT,nbP)       ;
+    mem_dT0_dm0j0           = zeros(4,4,3,nbP)         ;
+    mem_dT0_dn0j0           = zeros(4,4,3,nbP)         ;
+    mem_dT0_dtcj            = zeros(4,4,nbT,nbP)       ;
+    mem_dT0_dbcj            = zeros(4,4,nbT,nbP)       ;
+    mem_dT0_dtaus0          = zeros(4,4,3,nbP,nbP)     ;
+    mem_dT0_dfs0            = zeros(4,4,3,nbP,nbP)     ;
 
     % ====== Final initialization
 
-    mem_d00Ts = MemD00TS(mem_d00Ts_duzj0 , mem_d00Ts_dm0j0 , mem_d00Ts_dn0j0 , ...
-        mem_d00Ts_dtcj , mem_d00Ts_dbcj , mem_d00Ts_dtaus0 , mem_d00Ts_dfs0) ;
+    mem_dT0 = MemDT0(mem_dT0_duzj0 , mem_dT0_dm0j0 , mem_dT0_dn0j0 , ...
+        mem_dT0_dtcj , mem_dT0_dbcj , mem_dT0_dtaus0 , mem_dT0_dfs0) ;
 
 
 
@@ -504,7 +504,7 @@ function [mem_bvp , mem_deriv_propag_low , mem_deriv_propag_high , mem_CJ] ...
     mem_deriv_propag_low = MemDerivPropagLow( ...
         mem_du0 , mem_dm0 , mem_dm0_ds , mem_dn0 , mem_dn0_ds , ...
         mem_dti , mem_dti_ds , mem_duzi , mem_duzi_ds , ... 
-        mem_d00Rs , mem_d00Rs_ds , mem_d00Ps , mem_d00Ps_ds , mem_d00Ts) ;
+        mem_dR0 , mem_dR0_ds , mem_dP0 , mem_dP0_ds , mem_dT0) ;
 
     % ========================================================== %
     % ========================================================== %

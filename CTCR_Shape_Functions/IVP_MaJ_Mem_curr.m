@@ -5,25 +5,25 @@ function [mem_bvp , mem_deriv_propag_low] ...
 
 % ======================================================================= %
 % ======================================================================= %
-
+%
 % This function computes the u0(s) values for the current is and the partial derivatives 
 % of u0(s) involved in the optimization Jacobian computation
-
+%
 % ====================
 % ====== INPUTS ====== 
-
-% is                    : [int] Index of the current curvilinear abscissa
-% mem_bvp               : Memory of the BVP variables 
-% ctcr_carac            : Robot features
-% ctcr_construc         : Robot features related to the model settings
-% mem_deriv_propag_low  : Memory of the low-level derivatives 
-
+%
+% is                    : (int ∊ [1 , nbP]) Index of the current curvilinear abscissa
+% mem_bvp               : (class)           Memory of the BVP variables 
+% ctcr_carac            : (class)           Robot features
+% ctcr_construc         : (class)           Robot features related to the model settings
+% mem_deriv_propag_low  : (class)           Memory of the low-level derivatives 
+%
 % ====================
 % ===== OUTPUTS ====== 
-
-% mem_bvp               : Memory of the BVP variables 
-% mem_deriv_propag_low  : Memory of the low-level derivatives 
-
+%
+% mem_bvp               : (class)           Memory of the BVP variables 
+% mem_deriv_propag_low  : (class)           Memory of the low-level derivatives 
+%
 % ======================================================================= %
 % ======================================================================= %
 

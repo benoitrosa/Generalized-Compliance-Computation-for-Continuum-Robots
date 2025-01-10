@@ -3,25 +3,24 @@ function bvp_prop = BVP_Comp_BC(mem_bvp , bvp_prop , ctcr_carac , ctcr_construc 
 
 % ======================================================================= %
 % ======================================================================= %
-
+%
 % This function is used to compute the boundary condition (= the residual b)
 % Equation n°29
-
+%
 % ====================
 % ====== INPUTS ====== 
-
-% mem_bvp               : Memory of the BVP variables 
-% bvp_prop              : Results of the BVP resolution
-% ctcr_carac            : Robot features
-% ctcr_construc         : Robot features related to the model settings
-% ctcr_load             : Robot loads
-
-
+%
+% mem_bvp          : (class) Memory of the BVP variables 
+% bvp_prop         : (class) Results of the BVP resolution
+% ctcr_carac       : (class) Robot features
+% ctcr_construc    : (class) Robot features related to the model settings
+% ctcr_load        : (class) Robot loads
+%
 % ====================
 % ===== OUTPUTS ====== 
-
-% bvp_prop              : Results of the BVP resolution
-
+%
+% bvp_prop         : (class) Results of the BVP resolution
+%
 % ======================================================================= %
 % ======================================================================= %
 

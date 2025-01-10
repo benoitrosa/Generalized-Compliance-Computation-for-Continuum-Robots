@@ -2,29 +2,28 @@ function dB0nbTRsdtaus0 = dB0nbTRs_dtaus0(is0,is,j,nbT,mem_T,mem_y,mem_dR0_dtaus
 
 % ======================================================================= %
 % ======================================================================= %
-
+%
 % This function computes the partial derivative of rigid transformation 
 % matrix, from the base B0 to the current s, associated to the tube i=nbT 
 % w.r.t. the vector torque t0 applied at s0
-
+%
 % ====================
 % ====== INPUTS ====== 
-
-% is0               : [int] Index of the loaded point curvilinear abscissa
-% is                : [int] Index of the current curvilinear abscissa
-% j                 : [int] ∈ [1,3] Index of the component x,y or z on which the derivation is proceeded
-% nbT               : Number of tubes of the CTCR
-% mem_T             : Matrix memory of the B0(0)Ts values
-% mem_y             : Matrix memory of the y(s) values
-% mem_dR0_dtaus0    : Matrix memory of the dR0(s)_dtau(s0) partial derivatives
-% mem_dti_dtaus0    : Matrix memory of the dti(s)_dtau(s0) partial derivatives
-
-
+%
+% is0               : (int ∊ [1 , nbP])       Index of the loaded point curvilinear abscissa
+% is                : (int ∊ [1 , nbP])       Index of the current curvilinear abscissa
+% j                 : (int ∊ [1 , 3])         Index of the component x,y or z on which the derivation is proceeded
+% nbT               : (int > 0)               Number of tubes of the CTCR
+% mem_T             : (4 x 4 x nbP)           Matrix memory of the B0(0)Ts values
+% mem_y             : (class)                 Matrix memory of the y(s) values
+% mem_dR0_dtaus0    : (3 x 3 x 3 x nbP x nbP) Matrix memory of the dR0(s)_dtau(s0) partial derivatives
+% mem_dti_dtaus0    : (nbT x 3 x nbP x nbP)   Matrix memory of the dti(s)_dtau(s0) partial derivatives
+%
 % ====================
 % ===== OUTPUTS ====== 
-
-% dB0nbTRsdtaus0    : Value of the partial derivative
-
+%
+% dB0nbTRsdtaus0    : (3x3)                   Value of the partial derivative
+%
 % ======================================================================= %
 % ======================================================================= %
 

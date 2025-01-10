@@ -14,21 +14,21 @@ function mem_CJ ...
 % ====================
 % ====== INPUTS ====== 
 
-% bool_J                : [boolean] Compute the Joint Jacobian ?
-% bool_Cs0              : [boolean] Compute the Generalized Compliance Matrix ?
-% ctcr_construc         : Robot features related to the model settings
-% ctcr_carac            : Robot features
-% simulation_param      : Model settings
-% bvp_prop              : Results of the BVP resolution
-% mem_CJ                : Memory of the Generalized Compliance Matrix and the Joint Jacobian
-% mem_deriv_propag_high : Memory of the high-level partial derivatives
+% bool_J                : (boolean) Compute the Joint Jacobian ?
+% bool_Cs0              : (boolean) Compute the Generalized Compliance Matrix ?
+% ctcr_construc         : (class) Robot features related to the model settings
+% ctcr_carac            : (class) Robot features
+% simulation_param      : (class) Model settings
+% bvp_prop              : (class) Results of the BVP resolution
+% mem_CJ                : (class) Memory of the Generalized Compliance Matrix and the Joint Jacobian
+% mem_deriv_propag_high : (class) Memory of the high-level partial derivatives
 
 
 
 % ====================
 % ===== OUTPUTS ====== 
 
-% mem_CJ                : Memory of the Generalized Compliance Matrix and the Joint Jacobian
+% mem_CJ                : (class) Memory of the Generalized Compliance Matrix and the Joint Jacobian
 
 % ======================================================================= %
 % ======================================================================= %
@@ -54,6 +54,7 @@ function mem_CJ ...
     
             % ========================================================== %
             % ============= Articular jacobian computation ============= %
+            % (eq 16)
         
             Eq                   = mem_deriv_propag_high.mem_E(:,nbT+7:3*nbT+6,is) ;
             Bq                   = mem_deriv_propag_high.mem_B(:,nbT+7:3*nbT+6)    ;
@@ -68,7 +69,8 @@ function mem_CJ ...
     
             % ========================================================== %
             % =============== Compliance Cs0 computation =============== %
-    
+            % (eq 15)
+
             Ews0        = mem_deriv_propag_high.mem_Ews0                            ;
             Bws0        = mem_deriv_propag_high.mem_Bws0                            ;
     

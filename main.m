@@ -22,7 +22,8 @@ addpath('CTCR_Maths_Functions', 'CTCR_Shape_Functions', 'CTCR_Shape_Class', 'CTC
 % Equation implementations are indicated by their numbers with respect to the paper : 
 %
 % Guillaume Lods, Benoit Rosa, Bernard Bayle et Florent Nageotte, 
-% Exact derivative propagation method to compute the generalized compliance matrix for continuum robots : Application to concentric tubes continuum robots, 
+% Exact derivative propagation method to compute the generalized compliance matrix 
+% for continuum robots : Application to concentric tubes continuum robots, 
 % Mechanism and Machine Theory, Volume 200, 15 September 2024
 %
 % ============================================================== %
@@ -55,7 +56,7 @@ cd ../..
 nbT         = 3 ;                               % Number of tubes of the CTCR (nbT in the paper)
 Lr          = [65  , 120 , 180]*1e-3 ;          % [m] Vecttor of the straight lengths of the tubes (index i for tube i)
 Lc          = [50  , 50  , 47 ]*1e-3 ;          % [m] Vector of the curved lengths of the tubes (index i for tube i)
-Rc          = [100 , 80 , 70]*1e-3 ;          % [m] Vector of the radii of curvature of the tubes (index i for tube i)
+Rc          = [100 , 80 , 70]*1e-3 ;            % [m] Vector of the radii of curvature of the tubes (index i for tube i)
 
 % ================
 % ======== Stiffness features ========
@@ -63,7 +64,7 @@ Rc          = [100 , 80 , 70]*1e-3 ;          % [m] Vector of the radii of curva
 coeff_poiss = 0.3 ;                             % Poisson's ratio
 R           = [0.978 , 0.762 , 0.59]*1e-3 ;     % [m] External radius of the tubes (index i for tube i)
 r           = [0.884 , 0.648 , 0.445]*1e-3 ;    % [m] Internal radius of the tubes (index i for tube i)
-E           = 6.5e10 ;                         % [Pa] Young modulus (the same for all the tubes)
+E           = 6.5e10 ;                          % [Pa] Young modulus (the same for all the tubes)
 stiff       = CTCR_Geom_2_Stiff(nbT,E,R,r) ;    % [N.m2] Computation of the vector of the transversal bending stiffness (index i for tube i)
 
 % ================
@@ -87,7 +88,6 @@ f_dist_2    = [0 , 0 , 0] ;                     % [N] Distributed force applied 
 % ================
 % ======== Solving parameters ========
 
-nb_digits       = 64 ;                          % Precision of symbolic computations involving variable-precision arithmetic
 tol_opt         = 1e-15 ;                       % Stopping criterion for solving the BVP (𝜖 in the paper see Table 5)
 resolution      = 0.005 ;                       % [m] Discretization step away from discontinuity points (𝛥(𝑠) in the paper see Table 5)
 nb_pt_dict      = 3 ;                           % Number of points before and after each discontinuity points (see Table 5)
@@ -101,7 +101,7 @@ resol_pt_disct  = 1e-05 ;                       % [m] Discretization step near d
 % ============================================================== %
 % ======================== Initialization ====================== %
  
-simulation_param    = SimulationParam(resolution , tol_opt , nb_digits , resol_pt_disct , nb_pt_dict , []) ;
+simulation_param    = SimulationParam(resolution , tol_opt , resol_pt_disct , nb_pt_dict , []) ;
 ctcr_carac          = CTCRCarac(nbT , stiff , coeff_poiss , Rc , Lr , Lc , Lr+Lc) ;
 ctcr_act            = CTCRAct(beta_c , theta_c) ;
 ctcr_load           = CTCRLoad(tau_tip , f_tip , load_lim_1 , tau_dist_1 , f_dist_1 , load_lim_2 , tau_dist_2 , f_dist_2) ;
@@ -133,12 +133,12 @@ if flag_ctcr
 
     IC = zeros(ctcr_carac.nbT+6,1) ;            % Initial value for yu(0) (see Table 5) 
 
-    [ctcr_shape , mem_bvp , bvp_prop , mem_deriv_propag_low , mem_deriv_propag_high , mem_CJ , simulation_param , bool_problem_opt] ...
+    [ctcr_shape , mem_bvp , bvp_prop , mem_deriv_propag_low , ...
+    mem_deriv_propag_high , mem_CJ , simulation_param , bool_problem_opt] ...
     = CTCR_Shape( ...
     IC , simulation_param , ctcr_carac , ctcr_load , ctcr_construc , true) ;
     
-
-
+    
 
 
 
@@ -146,10 +146,13 @@ if flag_ctcr
     % =============== Compute generalized compliance =============== %
     % ===============   and joint Jacobian matrix    =============== %
     %
-    % Computation based on the Low-Level Derivative Propagation Method presented in the paper :
+    % Computation based on the Low-Level Derivative Propagation Method 
+    % presented in the paper :
     %
     % Guillaume Lods, Benoit Rosa, Bernard Bayle et Florent Nageotte, 
-    % Exact derivative propagation method to compute the generalized compliance matrix for continuum robots : Application to concentric tubes continuum robots, 
+    % Exact derivative propagation method to compute the generalized 
+    % compliance matrix for continuum robots : Application to concentric 
+    % tubes continuum robots, 
     % Mechanism and Machine Theory, Volume 200, 15 September 2024
     %
     % ============================================================== %
@@ -159,8 +162,8 @@ if flag_ctcr
     % ================
     % ==== Jacobian and/or compliance ====
     
-    bool_J      = true ;                            % [boolean] Compute the joint Jacobian ?  
-    bool_Cs0    = true ;                            % [boolean] Compute the generalized compliance matrix ?
+    bool_J      = true ;        % [boolean] Compute the joint Jacobian ?  
+    bool_Cs0    = true ;        % [boolean] Compute the generalized compliance matrix ?
     
     
     
@@ -272,11 +275,11 @@ if flag_ctcr
     % ================
     % ============== Force variation ===============
 
-    prc_s0      = [30 ; ...                 % [%] Vector of the curvilinear abscissa of the contact points
-                   70] ;                    % /!\ in pourcentage of the CTCR length /!\ (row i for force i) 
+    prc_s0      = [30 ; ...                     % [%] Vector of the curvilinear abscissa of the contact points
+                   70] ;                        % /!\ in pourcentage of the CTCR length /!\ (row i for force i) 
     
     delta_f0     = [[0.3  , 0.5 , 0] ; ...      % [N] Matrix of the forces applied on the CTCR
-                    [-0.5 , 1 , 0] ];         % (row i for vector force i)
+                    [-0.5 , 1 , 0] ];           % (row i for vector force i)
 
     % ================
     % ============== Adding the vector force to ctcr_construc ===============
@@ -289,7 +292,8 @@ if flag_ctcr
     % ================
     % ============== Compute the model again ===============
 
-    [ctcr_shape_def_mod , mem_bvp_def_mod , bvp_prop_def_mod , mem_deriv_propag_low_def_mod , mem_deriv_propag_high_def_mod , mem_CJ_def_mod , simulation_param_def_mod , bool_problem_opt_def_mod] ...
+    [ctcr_shape_def_mod , mem_bvp_def_mod , bvp_prop_def_mod , mem_deriv_propag_low_def_mod , ...
+    mem_deriv_propag_high_def_mod , mem_CJ_def_mod , simulation_param_def_mod , bool_problem_opt_def_mod] ...
     = CTCR_Shape( ...
     IC , simulation_param , ctcr_carac , ctcr_load_new , ctcr_construc_new , true) ;
 
