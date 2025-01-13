@@ -6,6 +6,8 @@
 
 **This code computes the Quasistatic Model, the Generalized Compliance Matrix and the Joint Jacobian of a concentric tubes continuum robot. An example is also provided showing how to linearize the robot's deformations when one or more forces are applied to it.**
 
+**The “variable_mapping.pdf” file shows the correspondences between article and code variables**
+
 **We provide several configuration files that enable you to run the code on simple examples :**
 - "Demo_11" : CTCR n°1 composed of 2 tubes
 - "Demo_12" : CTCR n°1 with a tip external force

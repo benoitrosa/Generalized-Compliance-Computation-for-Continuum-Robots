@@ -1,6 +1,27 @@
 function [] = Write_Config(name)
 
-        
+       
+% ======================================================================= %
+% ======================================================================= %
+%
+% // ! \\         This function must be run in the root folder         // ! \\
+% // ! \\   "Generalized-Compliance-Computaion-for-Continuum-Robots"   // ! \\
+%
+% This function creates a configuration file named "<name>_config.mat" 
+% saved in the "CTCR_Config" folder.
+%
+% ====================
+% ====== INPUTS ====== 
+%
+% name                  : (string) Name of the configuration
+%
+% ====================
+% ===== OUTPUTS ====== 
+%
+% No output
+%
+% ======================================================================= %
+% ======================================================================= %
     
     
     % ================

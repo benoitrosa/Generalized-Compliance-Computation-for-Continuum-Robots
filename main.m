@@ -40,7 +40,7 @@ addpath('CTCR_Maths_Functions', 'CTCR_Shape_Functions', ...
 % ================
 % =============== File ===============
 
-name = 'Demo_27' ;                               % Name of the folder created to store the results and the graphs
+name = 'Demo_11' ;                               % Name of the folder created to store the results and the graphs
 
 % Load the config file
 [simulation_param , ctcr_carac , ctcr_act , ctcr_load , ...
