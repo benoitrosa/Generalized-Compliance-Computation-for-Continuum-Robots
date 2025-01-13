@@ -31,7 +31,7 @@ function mem_deriv_propag_high ...
 
 
 % ======================================================================= %
-% ============= Organization of the partial dervatives of b ============= %
+% ==================== Organization of the residual b =================== %
 %       ____   
 %      ⎡    ⎤  1
 %      ⎪ b1 ⎥
