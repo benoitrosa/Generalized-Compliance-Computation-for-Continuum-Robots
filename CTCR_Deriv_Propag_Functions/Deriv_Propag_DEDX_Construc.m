@@ -1,6 +1,6 @@
 function mem_deriv_propag_high ...
          = Deriv_Propag_DEDX_Construc(...
-         bool_J , bool_Cs0 , ctcr_construc , ctcr_carac , ...
+         ctcr_construc , ctcr_carac , ...
          simulation_param , mem_deriv_propag_low , mem_deriv_propag_high)
 
 
@@ -12,8 +12,6 @@ function mem_deriv_propag_high ...
 % ====================
 % ====== INPUTS ====== 
 %
-% bool_J                : (boolean) Compute the Joint Jacobian ?
-% bool_Cs0              : (boolean) Compute the Generalized Compliance Matrix ?
 % ctcr_construc         : (class) Robot features related to the model settings
 % ctcr_carac            : (class) Robot features
 % simulation_param      : (class) Model settings
@@ -55,7 +53,7 @@ function mem_deriv_propag_high ...
         % ========= dT0(s)_dq ========= %
         % (eq 34)
 
-        if bool_J
+        if simulation_param.bool_J
             for j = ctcr_carac.nbT+7:3*ctcr_carac.nbT+6
                 mem_deriv_propag_high.mem_E(:,j,is) = inv_hat6(mem_dT0(:,:,j)) ;
             end
@@ -66,7 +64,7 @@ function mem_deriv_propag_high ...
         % ======= dT0(s)_dw0(s0) ======= %
         % (eq 34)
 
-        if bool_Cs0
+        if simulation_param.bool_Cs0
 
             pt_s0_LIT_curr = simulation_param.pt_s0_LIT(simulation_param.pt_s0_LIT<= is) ;
             

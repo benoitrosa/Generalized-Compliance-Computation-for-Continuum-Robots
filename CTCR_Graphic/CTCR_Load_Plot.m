@@ -27,7 +27,7 @@ function fig = CTCR_Load_Plot(filename , simulation_param , ctcr_carac , ctcr_lo
     global fig ax
 
     regl_radius         = 0.05 ;
-    regl_arrow          = 0.15 ;
+    regl_arrow          = 0.2 ;
     densite_distrib     = 5*simulation_param.res_step ;
     width               = 2 ;
     ctcr_shape          = ctcr_shape*1e3 ;
@@ -181,7 +181,7 @@ function fig = CTCR_Load_Plot(filename , simulation_param , ctcr_carac , ctcr_lo
     
                     iP = iP + 1 ;
                 end
-                ind_i = find(ctcr_construc.vect_z >= ctcr_load.load_lim_1(2), 1 , 'first') ;
+                ind_i = find(ctcr_construc.vect_z >= ctcr_load.load_lim_2(2), 1 , 'first') ;
                 curr_point = ctcr_shape(:,ind_i)' ;
 
                 arrow3(curr_point-point_coord,curr_point,'5g-',width,width) ;

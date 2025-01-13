@@ -1,6 +1,6 @@
 function mem_deriv_propag_high ...
          = Deriv_Propag_DBDX_Construc(...
-         bool_J , bool_Cs0 , mem_bvp , ctcr_construc , ctcr_carac , ...
+         mem_bvp , ctcr_construc , ctcr_carac , ...
          ctcr_load , bvp_prop , simulation_param , mem_deriv_propag_low , mem_deriv_propag_high)
 
 
@@ -12,8 +12,6 @@ function mem_deriv_propag_high ...
 % ====================
 % ====== INPUTS ====== 
 %
-% bool_J                : (boolean) Compute the Joint Jacobian ?
-% bool_Cs0              : (boolean) Compute the Generalized Compliance Matrix ?
 % mem_bvp               : (class) Memory of the BVP variables 
 % ctcr_construc         : (class) Robot features related to the model settings
 % ctcr_carac            : (class) Robot features
@@ -76,7 +74,7 @@ function mem_deriv_propag_high ...
     % ============== db_dtc and db_bc ============== %
     % (eq 35)
 
-    if bool_J
+    if simulation_param.bool_J
 
         % ========================= %
         % ======== db1_dtc ======== %
@@ -181,7 +179,7 @@ function mem_deriv_propag_high ...
 
     
 
-    if bool_Cs0
+    if simulation_param.bool_Cs0
 
         for tp_is0 = 1:length(simulation_param.pt_s0_LIT)
             is0 = simulation_param.pt_s0_LIT(tp_is0) ;

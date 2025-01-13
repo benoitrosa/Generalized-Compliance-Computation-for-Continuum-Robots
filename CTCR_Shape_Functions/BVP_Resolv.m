@@ -1,5 +1,5 @@
 function [mem_bvp , bvp_prop , ctcr_shape , mem_deriv_propag_low , mem_deriv_propag_high , ...
-          mem_CJ , bool_problem_opt , exitflag , output] ...
+          mem_CJ , simulation_param , exitflag , output] ...
           = BVP_Resolv( ...
           IC , ctcr_construc , simulation_param , ctcr_carac , ...
           ctcr_load , bool_disp_terminal)
@@ -30,7 +30,7 @@ function [mem_bvp , bvp_prop , ctcr_shape , mem_deriv_propag_low , mem_deriv_pro
 % mem_deriv_propag_low      : (class)       Memory of the low-level derivatives 
 % mem_deriv_propag_high     : (class)       Memory of the high-level partial derivatives
 % mem_CJ                    : (class)       Memory of the Generalized Compliance Matrix and the Joint Jacobian
-% bool_problem_opt          : (boolean)     Is there a problem solving the BVP ?
+% simulation_param          : (class)       Model settings
 % exitflag                  : (sign int)    Exitflag of fsolve
 % output                    : (object)      Output of fsolve giving information about the optimization process
 %
@@ -91,12 +91,15 @@ function [mem_bvp , bvp_prop , ctcr_shape , mem_deriv_propag_low , mem_deriv_pro
     % ======================================= %
     % ======== Results of the solver ======== % 
 
+    bvp_prop.nb_iter = output.iterations ;  % Iterations number
+
+
     % ==================
     % ==== Case n°1 : Problem
 
     if exitflag <= -1 || bvp_prop.norm_tol > sqrt(simulation_param.opt_tol)
 
-        bool_problem_opt = true ;
+        simulation_param.bool_problem_opt = true ;
 
         if bool_disp_terminal
             disp(' ======== Optimization problem ======== ')
@@ -108,7 +111,7 @@ function [mem_bvp , bvp_prop , ctcr_shape , mem_deriv_propag_low , mem_deriv_pro
 
     else
 
-        bool_problem_opt = false ;
+        simulation_param.bool_problem_opt = false ;
 
         bvp_prop.Bu = BVP_Bu_Construc(mem_bvp , mem_deriv_propag_low , ctcr_construc , ctcr_carac , ctcr_load) ;
         
@@ -117,8 +120,6 @@ function [mem_bvp , bvp_prop , ctcr_shape , mem_deriv_propag_low , mem_deriv_pro
         for iT = 1:ctcr_carac.nbT
             mem_deriv_propag_low.mem_duzi.mem_duzi_dbcj(iT,iT,ctcr_construc.vect_ind_iT(iT,1)) = - bvp_prop.IC_opt(iT)/ctcr_construc.vect_res(ctcr_construc.vect_ind_iT(iT,1)) ;
         end
-
-        bvp_prop.nb_iter = output.iterations ;  % Iterations number
 
     end
         

@@ -1,35 +1,32 @@
 function mem_CJ ...
          = Deriv_Propag_Comp_CJ(...
-         bool_J , bool_Cs0 , ctcr_construc , ctcr_carac , simulation_param , bvp_prop , mem_CJ , mem_deriv_propag_high)
+         ctcr_construc , ctcr_carac , simulation_param , bvp_prop , ...
+         mem_CJ , mem_deriv_propag_high)
 
 
 % ======================================================================= %
 % ======================================================================= %
-
+%
 % This function computes the Generalized Compliance Matrix and
 % the Joint Jacobian using the High-Level derivatives Ex and Bx
 % obtained thanks to the Low-Level derivatives computed by the Low-Level
 % Derivative Propagation Method
-
+%
 % ====================
 % ====== INPUTS ====== 
-
-% bool_J                : (boolean) Compute the Joint Jacobian ?
-% bool_Cs0              : (boolean) Compute the Generalized Compliance Matrix ?
+%
 % ctcr_construc         : (class) Robot features related to the model settings
 % ctcr_carac            : (class) Robot features
 % simulation_param      : (class) Model settings
 % bvp_prop              : (class) Results of the BVP resolution
 % mem_CJ                : (class) Memory of the Generalized Compliance Matrix and the Joint Jacobian
 % mem_deriv_propag_high : (class) Memory of the high-level partial derivatives
-
-
-
+%
 % ====================
 % ===== OUTPUTS ====== 
-
+%
 % mem_CJ                : (class) Memory of the Generalized Compliance Matrix and the Joint Jacobian
-
+%
 % ======================================================================= %
 % ======================================================================= %
 
@@ -50,7 +47,7 @@ function mem_CJ ...
         pinv_Bu     = pinv(bvp_prop.Bu,simulation_param.opt_tol) ;
         
     
-        if bool_J
+        if simulation_param.bool_J
     
             % ========================================================== %
             % ============= Articular jacobian computation ============= %
@@ -65,7 +62,7 @@ function mem_CJ ...
     
     
     
-        if bool_Cs0
+        if simulation_param.bool_Cs0
     
             % ========================================================== %
             % =============== Compliance Cs0 computation =============== %

@@ -1,22 +1,20 @@
 function mem_deriv_propag_low ...
     = Deriv_Propag_Comp_Low_ODE(...
-    bool_J , bool_Cs0 , is , mem_bvp , ctcr_carac , ctcr_act , ctcr_construc , ...
+    is , mem_bvp , ctcr_carac , ctcr_act , ctcr_construc , ...
     simulation_param , mem_deriv_propag_low)
 
 
 % ======================================================================= %
 % ======================================================================= %
-
+%
 % This function computes the derivative (w.r.t the current is) of 
 % the Low-Level partial derivatives involved in the Joint Jacobian and/or 
 % the Generalized Compliance Matrix computation.
 % Here, there is no derivation w.r.t. the unknown initial state vector values yu(0).
-
+%
 % ====================
 % ====== INPUTS ====== 
-
-% bool_J                : (boolean) Compute the Joint Jacobian ?
-% bool_Cs0              : (boolean) Compute the Generalized Compliance Matrix ?
+%
 % is                    : (int ∊ [1 , nbP]) Index of the current curvilinear abscissa
 % mem_bvp               : (class) Memory of the BVP variables 
 % ctcr_carac            : (class) Robot features
@@ -24,13 +22,12 @@ function mem_deriv_propag_low ...
 % ctcr_construc         : (class) Robot features related to the model settings
 % simulation_param      : (class) Model settings
 % mem_deriv_propag_low  : (class) Memory of the Low-Level derivatives 
-
-
+%
 % ====================
 % ===== OUTPUTS ====== 
-
+%
 % mem_deriv_propag_low  : (class) Memory of the low-level partial derivatives
-
+%
 % ======================================================================= %
 % ======================================================================= %
 
@@ -65,7 +62,7 @@ function mem_deriv_propag_low ...
         % Vector of the tubes involved on the current discretization point
         curr_vectT                  = find(vect_ind_iT(:,1)<=is & is<=vect_ind_iT(:,3)) ;
 
-        if bool_J
+        if simulation_param.bool_J
 
                 
                 % ======================= %
@@ -85,7 +82,7 @@ function mem_deriv_propag_low ...
 
         if is >= ind_origin
 
-            if bool_J
+            if simulation_param.bool_J
                 for j = 1:nbT
                     for iv = 1:length(curr_vectT)
                         i = curr_vectT(iv) ;
@@ -191,7 +188,7 @@ function mem_deriv_propag_low ...
 
 
 
-            if bool_Cs0
+            if simulation_param.bool_Cs0
 
                 pt_s0_LIT_curr = simulation_param.pt_s0_LIT(simulation_param.pt_s0_LIT<= is) ;
 

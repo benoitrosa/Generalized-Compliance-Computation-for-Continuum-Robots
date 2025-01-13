@@ -1,18 +1,16 @@
 function mem_deriv_propag_low ...
         = Deriv_Propag_Comp_Low_Direct( ...
-        bool_J , bool_Cs0 , is , ctcr_construc , ctcr_carac , ctcr_act , simulation_param , ...
+        is , ctcr_construc , ctcr_carac , ctcr_act , simulation_param , ...
         mem_bvp , mem_deriv_propag_low)
 
 % ======================================================================= %
 % ======================================================================= %
-
+%
 % This function computes the Low-Level partial derivatives of u0 and T0
-
+%
 % ====================
 % ====== INPUTS ====== 
-
-% bool_J                : (boolean) Compute the Joint Jacobian ?
-% bool_Cs0              : (boolean) Compute the Generalized Compliance Matrix ?
+%
 % is                    : (int ∊ [1 , nbP]) Index of the current curvilinear abscissa
 % ctcr_construc         : (class) Robot features related to the model settings
 % ctcr_carac            : (class) Robot features
@@ -20,14 +18,12 @@ function mem_deriv_propag_low ...
 % simulation_param      : (class) Model settings
 % mem_bvp               : (class) Memory of the BVP variables 
 % mem_deriv_propag_low  : (class) Memory of the low-level derivatives 
-
-
+%
 % ====================
 % ===== OUTPUTS ====== 
-
+%
 % mem_deriv_propag_low  : (class) Memory of the low-level derivatives 
-
-
+%
 % ======================================================================= %
 % ======================================================================= %
     
@@ -54,7 +50,7 @@ function mem_deriv_propag_low ...
         
         for j = 1:nbT
 
-            if bool_J
+            if simulation_param.bool_J
 
                 
                 % ============================= %
@@ -126,7 +122,7 @@ function mem_deriv_propag_low ...
 
 
 
-        if bool_Cs0
+        if simulation_param.bool_Cs0
 
             pt_s0_LIT_curr = simulation_param.pt_s0_LIT(simulation_param.pt_s0_LIT<= is) ;
 
