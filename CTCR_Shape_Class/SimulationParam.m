@@ -15,6 +15,7 @@ classdef SimulationParam
 % bool_Cs0           : (boolean)                Compute the Generalized Compliance Matrix ?
 % flag_ctcr          : (boolean)                Is the actuation, especially the translation of the tubes, correct ?
 % bool_problem_opt   : (boolean)                Is there a problem solving the BVP ?
+% bool_disp_terminal = (boolean)                Do you want to print the results in the terminal ?
 %
 % ======================================================================= %
 % ======================================================================= %
@@ -32,6 +33,7 @@ classdef SimulationParam
         bool_Cs0            = [] ;
         flag_ctcr           = [] ;
         bool_problem_opt    = [] ;
+        bool_disp_terminal  = [] ;
 
     end
 
@@ -41,46 +43,49 @@ classdef SimulationParam
         function mc = SimulationParam(varargin)
             if (nargin == 1) && (strcmp(varargin{1},'default'))
 
-                mc.res_step         = 0.002 ;
-                mc.opt_tol          = 1e-10 ;
-                mc.epsilon_disct_pt = 1e-5 ;
-                mc.nb_disct_pt      = 3 ;
-                mc.pt_s0_LIT        = [] ;
-                mc.bool_J           = true ;
-                mc.bool_Cs0         = true ;
-                mc.flag_ctcr        = [] ;
-                mc.bool_problem_opt = [] ;
+                mc.res_step             = 0.002 ;
+                mc.opt_tol              = 1e-10 ;
+                mc.epsilon_disct_pt     = 1e-5 ;
+                mc.nb_disct_pt          = 3 ;
+                mc.pt_s0_LIT            = [] ;
+                mc.bool_J               = true ;
+                mc.bool_Cs0             = true ;
+                mc.flag_ctcr            = [] ;
+                mc.bool_problem_opt     = [] ;
+                mc.bool_disp_terminal   = true ;
                 
 
-            elseif nargin == 9
+            elseif nargin == 10
 
-                mc.res_step         = varargin{1} ;
-                mc.opt_tol          = varargin{2} ;
-                mc.epsilon_disct_pt = varargin{3} ;
-                mc.nb_disct_pt      = varargin{4} ;
-                mc.pt_s0_LIT        = varargin{5} ;
-                mc.bool_J           = varargin{6} ;
-                mc.bool_Cs0         = varargin{7} ;
-                mc.flag_ctcr        = varargin{8} ;
-                mc.bool_problem_opt = varargin{9} ;
+                mc.res_step             = varargin{1} ;
+                mc.opt_tol              = varargin{2} ;
+                mc.epsilon_disct_pt     = varargin{3} ;
+                mc.nb_disct_pt          = varargin{4} ;
+                mc.pt_s0_LIT            = varargin{5} ;
+                mc.bool_J               = varargin{6} ;
+                mc.bool_Cs0             = varargin{7} ;
+                mc.flag_ctcr            = varargin{8} ;
+                mc.bool_problem_opt     = varargin{9} ;
+                mc.bool_disp_terminal   = varargin{10} ;
 
             end
         end
 
         % ====== Get all ======
-        function [res_step , opt_tol , epsilon_disct_pt , nb_disct_pt , ...
-                  pt_s0_LIT , bool_J , bool_Cs0 , flag_ctcr , bool_problem_opt] ...
+        function [res_step , opt_tol , epsilon_disct_pt , nb_disct_pt , pt_s0_LIT , ...
+                  bool_J , bool_Cs0 , flag_ctcr , bool_problem_opt , bool_disp_terminal] ...
                   = Get_All_SimulationParam(mc)
 
-            res_step            = mc.res_step           ;
-            opt_tol             = mc.opt_tol            ;
-            epsilon_disct_pt    = mc.epsilon_disct_pt   ;
-            nb_disct_pt         = mc.nb_disct_pt        ;
-            pt_s0_LIT           = mc.pt_s0_LIT          ;
-            bool_J              = mc.bool_J             ;
-            bool_Cs0            = mc.bool_Cs0           ;
-            flag_ctcr           = mc.flag_ctcr          ;
-            bool_problem_opt    = mc.bool_problem_opt   ;
+            res_step                = mc.res_step           ;
+            opt_tol                 = mc.opt_tol            ;
+            epsilon_disct_pt        = mc.epsilon_disct_pt   ;
+            nb_disct_pt             = mc.nb_disct_pt        ;
+            pt_s0_LIT               = mc.pt_s0_LIT          ;
+            bool_J                  = mc.bool_J             ;
+            bool_Cs0                = mc.bool_Cs0           ;
+            flag_ctcr               = mc.flag_ctcr          ;
+            bool_problem_opt        = mc.bool_problem_opt   ;
+            bool_disp_terminal      = mc.bool_disp_terminal ;
            
         end
     

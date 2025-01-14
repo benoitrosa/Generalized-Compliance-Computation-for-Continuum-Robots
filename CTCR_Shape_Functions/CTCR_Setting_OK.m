@@ -46,6 +46,9 @@ function flag_ctcr = CTCR_Setting_OK(ctcr_carac , ctcr_act , bool_disp)
     end
 
     if bool_disp
+
+        disp(' ') ; disp(' ') ;
+        
         % Display the tubes boundaries
         mem_points                                          = zeros(2,3*ctcr_carac.nbT+1) ;
         
@@ -80,33 +83,32 @@ function flag_ctcr = CTCR_Setting_OK(ctcr_carac , ctcr_act , bool_disp)
         string_points(find(mem_points(1,:) == 0)) = '▶ 0 ◀' ;
         if ~flag_ctcr_straight
     
-            disp(' ')
-            disp('==============================================================================')
             disp('================================ //// ! \\\\ =================================')
             disp('======================= Straight lengths tubes problem =======================')
-            disp(' ')
     
             flag_ctcr = false ;
     
         else
     
             if ~flag_ctcr
-                disp(' ')
-                disp('==============================================================================')
                 disp('================================ //// ! \\\\ =================================')
                 disp('========================== Tubes positions problem ===========================')
-                disp(' ')
         
             else
     
-                disp(' ============ Tubes positions OK')
+                disp('============ Tubes positions OK')
 
             end
         
-            str_mem_points = [["Tube n°" ; "s position"], [string_points;string(mem_points(2,:))]] ;
+            str_mem_points = [["Tube n°    " ; "s position [m]"], [string_points;string(mem_points(2,:))]] ;
             disp(str_mem_points)
-        
-            disp('===============================================================================================================================================') ;
+            disp('Legend')
+            disp('"i"     : base of tube i')
+            disp('"▶ 0 ◀" : origin')
+            disp('"▲ i"   : beginning of tube i curvature ')
+            disp('"i"     : tip of tube i')
+            disp(' ')
+            disp('================================================================================================================================') ;
     
         end
     end

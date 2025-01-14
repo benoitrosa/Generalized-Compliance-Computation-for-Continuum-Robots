@@ -1,7 +1,7 @@
 function [ctcr_shape , mem_bvp , bvp_prop , mem_deriv_propag_low , ...
           mem_deriv_propag_high , mem_CJ , simulation_param , exitflag , output] ...
           = CTCR_Shape( ...
-          IC , simulation_param , ctcr_carac , ctcr_load , ctcr_construc , bool_disp_terminal)
+          IC , simulation_param , ctcr_carac , ctcr_load , ctcr_construc)
 
 
 % ======================================================================= %
@@ -17,7 +17,6 @@ function [ctcr_shape , mem_bvp , bvp_prop , mem_deriv_propag_low , ...
 % ctcr_carac            : (class)       Robot features
 % ctcr_load             : (class)       Robot loads
 % ctcr_construc         : (class)       Robot features related to the model settings
-% bool_disp_terminal    : (boolean)     Display the results in the terminal ?
 %
 % ====================
 % ===== OUTPUTS ====== 
@@ -36,15 +35,24 @@ function [ctcr_shape , mem_bvp , bvp_prop , mem_deriv_propag_low , ...
 % ======================================================================= %
     
     
+    % ================
+    % ==== Solving the BVP ====
+
     [mem_bvp , bvp_prop , ctcr_shape , mem_deriv_propag_low , mem_deriv_propag_high , mem_CJ , simulation_param , exitflag , output] ...
     = BVP_Resolv( ...
-    IC , ctcr_construc , simulation_param , ctcr_carac , ctcr_load , bool_disp_terminal) ;
+    IC , ctcr_construc , simulation_param , ctcr_carac , ctcr_load) ;
 
-    if bool_disp_terminal
-        disp(' ') ; disp(' ') ; disp(' ============ Time for CTCR shape') ; disp([' ====  ' , num2str(bvp_prop.clk_bvp), '  [s]'])
-        disp(' ') ; disp(' ') ; disp(' ============ Number of iterations') ; disp([' ====  ' , num2str(bvp_prop.nb_iter)])
-        disp(' ') ; disp(' ') ; disp(' ============ Optimization norm error') ; disp([' ====  ' , num2str(bvp_prop.norm_tol)])
-        disp(' ') ; disp(' ') ; disp(' ============ Number of discretization points') ; disp([' ====  ' , num2str(ctcr_construc.nbP)])
+
+    % ================
+    % ==== Display in the terminal ====
+
+    if simulation_param.bool_disp_terminal
+
+        disp(' ====== Time for CTCR shape') ; disp([' ==  ' , num2str(bvp_prop.clk_bvp), '  [s]'])
+        disp(' ====== Number of iterations') ; disp([' ==  ' , num2str(bvp_prop.nb_iter)])
+        disp(' ====== Optimization norm error') ; disp([' ==  ' , num2str(bvp_prop.norm_tol)])
+        disp(' ====== Number of discretization points') ; disp([' ==  ' , num2str(ctcr_construc.nbP)])
+    
     end
     
 end

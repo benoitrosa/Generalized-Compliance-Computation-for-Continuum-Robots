@@ -39,7 +39,7 @@ function ctcr_shape_def_jacob ...
     % Display computation time
     time_comp_lin_deform = toc(tic_lin_deform) ;
     if bool_disp_terminal
-        disp(' ') ; disp(' ') ; disp(' ============ Computation time for linearized deformations ') ; disp([' ====  ' , num2str(time_comp_lin_deform), '  [s]'])
+        disp(' ====== Computation time for linearized deformations ') ; disp([' ==  ' , num2str(time_comp_lin_deform), '  [s]'])
     end
 
 

@@ -71,8 +71,15 @@ function [] = Write_Config(name)
     % ================
     % ==== Joint Jacobian and/or Genrealized Compliance Matrix ====
     
-    bool_J          = true ;                            % (boolean) Compute the Joint Jacobian ?  
-    bool_Cs0        = true ;                            % (boolean) Compute the Generalized Compliance Matrix ?
+    bool_J              = true ;                        % (boolean) Compute the Joint Jacobian ?  
+    bool_Cs0            = true ;                        % (boolean) Compute the Generalized Compliance Matrix ?
+
+
+    % ================
+    % ==== Display in the terminal ====
+
+    bool_disp_terminal  = true ;
+
 
 
     % ================
@@ -93,8 +100,8 @@ function [] = Write_Config(name)
     ctcr_carac          = CTCRCarac(nbT , stiff , coeff_poiss , Rc , Lr , Lc , Lr+Lc) ;
     ctcr_act            = CTCRAct(beta_c , theta_c) ;
     ctcr_load           = CTCRLoad(tau_tip , f_tip , load_lim_1 , tau_dist_1 , f_dist_1 , load_lim_2 , tau_dist_2 , f_dist_2) ;
-    flag_ctcr           = CTCR_Setting_OK(ctcr_carac , ctcr_act , false) ;
-    simulation_param    = SimulationParam(resolution , tol_opt , resol_pt_disct , nb_pt_dict , [] , bool_J , bool_Cs0 , flag_ctcr , []) ;
+    flag_ctcr           = CTCR_Setting_OK(ctcr_carac , ctcr_act , bool_disp_terminal) ;
+    simulation_param    = SimulationParam(resolution , tol_opt , resol_pt_disct , nb_pt_dict , [] , bool_J , bool_Cs0 , flag_ctcr , [] , bool_disp_terminal) ;
     ctcr_construc       = CTCR_Construc(simulation_param , ctcr_carac , ctcr_act , ctcr_load) ;
 
 
@@ -107,6 +114,7 @@ function [] = Write_Config(name)
     save(strcat(name,'_config.mat'))
     cd ..
 
+    disp(' ') ; disp(' ') ; disp(' Configuration file successfully saved ')
 
 
 end

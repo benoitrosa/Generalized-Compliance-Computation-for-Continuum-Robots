@@ -38,7 +38,7 @@ function [simulation_param , ctcr_carac , ctcr_act , ctcr_load , ...
     % ================
     % ==== Load the config file ====
 
-    if exist(strcat('CTCR_Config/'),'dir') == 0
+    if exist(strcat(['CTCR_Config/',name,'_config.mat'])) == 0
         disp('Configuration file not found, please use Write_Config function')
     else
         cd(['DATA/',name]) ;

@@ -1,7 +1,7 @@
 function [mem_CJ , mem_deriv_propag_high , mem_deriv_propag_low , time_comp_CJ] ...
     = CTCR_Deriv_Propag(...
     ctcr_carac , ctcr_construc , ctcr_act , ctcr_load , mem_bvp , bvp_prop , ...
-    simulation_param , mem_deriv_propag_low , mem_deriv_propag_high , mem_CJ , bool_disp_terminal)
+    simulation_param , mem_deriv_propag_low , mem_deriv_propag_high , mem_CJ)
 
 
 % ======================================================================= %
@@ -23,7 +23,6 @@ function [mem_CJ , mem_deriv_propag_high , mem_deriv_propag_low , time_comp_CJ] 
 % mem_deriv_propag_low  : (class) Memory of the low-level derivatives 
 % mem_deriv_propag_high : (class) Memory of the high-level partial derivatives
 % mem_CJ                : (class) Memory of the Generalized Compliance Matrix and the Joint Jacobian
-% bool_disp_terminal    : (boolean) Display results in the terminal ?
 %
 % ====================
 % ===== OUTPUTS ====== 
@@ -37,6 +36,11 @@ function [mem_CJ , mem_deriv_propag_high , mem_deriv_propag_low , time_comp_CJ] 
 % ======================================================================= %
     
     
+    % ================
+    % ============ Preparing =============
+    
+    simulation_param = CTCR_S0_Manag(ctcr_construc,simulation_param) ;
+
 
     tic_CJ = tic ;
 
@@ -101,10 +105,15 @@ function [mem_CJ , mem_deriv_propag_high , mem_deriv_propag_low , time_comp_CJ] 
 
 
 
-    % Display computation time
+    % ================
+    % ==== Display in the terminal ====
+
     time_comp_CJ = toc(tic_CJ) ;
-    if bool_disp_terminal
-        disp(' ') ; disp(' ') ; disp(' ============ Computation time for Cs0 and J ') ; disp([' ====  ' , num2str(time_comp_CJ), '  [s]'])
+
+    if simulation_param.bool_disp_terminal
+
+        disp(' ====== Computation time for Cs0 and J ') ; disp([' ==  ' , num2str(time_comp_CJ), '  [s]'])
+    
     end
 
     

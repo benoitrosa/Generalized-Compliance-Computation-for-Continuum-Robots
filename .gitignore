@@ -2,4 +2,8 @@
 ._.DS_Store
 **/.DS_Store
 **/._.DS_Store
+.asv
+._.asv
+**/.asv
+**/._.asv
 DATA/

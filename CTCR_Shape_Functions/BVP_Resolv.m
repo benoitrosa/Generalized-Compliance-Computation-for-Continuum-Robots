@@ -2,7 +2,7 @@ function [mem_bvp , bvp_prop , ctcr_shape , mem_deriv_propag_low , mem_deriv_pro
           mem_CJ , simulation_param , exitflag , output] ...
           = BVP_Resolv( ...
           IC , ctcr_construc , simulation_param , ctcr_carac , ...
-          ctcr_load , bool_disp_terminal)
+          ctcr_load)
 
 
 % ======================================================================= %
@@ -19,7 +19,6 @@ function [mem_bvp , bvp_prop , ctcr_shape , mem_deriv_propag_low , mem_deriv_pro
 % ctcr_carac                : (class)       Robot features
 % ctcr_act                  : (class)       Robot actuation
 % ctcr_load                 : (class)       Robot loads
-% bool_disp_terminal        : (boolean)     Display the results in the terminal ?
 %
 % ====================
 % ===== OUTPUTS ====== 
@@ -101,7 +100,7 @@ function [mem_bvp , bvp_prop , ctcr_shape , mem_deriv_propag_low , mem_deriv_pro
 
         simulation_param.bool_problem_opt = true ;
 
-        if bool_disp_terminal
+        if simulation_param.bool_disp_terminal
             disp(' ======== Optimization problem ======== ')
         end
 
