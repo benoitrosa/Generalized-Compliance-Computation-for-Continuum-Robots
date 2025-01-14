@@ -10,9 +10,17 @@
 
 **This code requires "Matlab R2023a", or a more recent version, as well as the installation of the "Optimization Toolbox".**
 
+## There are 2 main scripts : 
+**“main.m” is a the standard Matlab code**
+- Advantage : You have access to all the internal comments of the functions.
+- Drawback  : The computation time is quite long.
+**“main_cpp.m” is a the Matlab code using MEX functions and C++ compiled functions.**
+- Advantage : The computation time is is greatly reduced.
+- Drawback  : You do not have access to all the internal comments of the functions.
+
 **The “variable_mapping.pdf” file shows the correspondences between article and code variables**
 
-**We provide several configuration files that enable you to run the code on simple examples :**
+**Several configuration files are provided to let you to run the code on simple examples :**
 - "Demo_11" : CTCR n°1 composed of 2 tubes
 - "Demo_12" : CTCR n°1 with a tip external force
 - "Demo_13" : CTCR n°1 with a mid-length external force
@@ -23,8 +31,6 @@
 - "Demo_25" : CTCR n°2 with a tip and two mid-length external forces
 - "Demo_26" : CTCR n°2 with a 1-force deformation linearization
 - "Demo_27" : CTCR n°2 with a 2-forces deformation linearization
-
-**We are currently preparing C++ compilations of the Matlab functions via the Matlab Coder application, as well as MEX functions to reduce the computation time of the models.**
 
 **Do not hesitate to contact us if you have any questions.**
 
