@@ -63,7 +63,7 @@ function [] = Write_Config(name)
     % ======== Solving parameters ========
     
     tol_opt         = 1e-15 ;                           % Stopping criterion for solving the BVP (𝜖 in the paper see Table 5)
-    resolution      = 0.005 ;                           % [m] Discretization step away from discontinuity points (𝛥(𝑠) in the paper see Table 5)
+    resolution      = 0.001 ;                           % [m] Discretization step away from discontinuity points (𝛥(𝑠) in the paper see Table 5)
     nb_pt_dict      = 3 ;                               % Number of points before and after each discontinuity points (see Table 5)
     resol_pt_disct  = 1e-05 ;                           % [m] Discretization step near discontinuity points (𝛥(𝑠) in the paper see Table 5)
     
@@ -97,13 +97,13 @@ function [] = Write_Config(name)
     % ============================================================== %
     % ======================== Initialization ====================== %
      
-    ctcr_carac          = CTCRCarac(nbT , stiff , coeff_poiss , Rc , Lr , Lc , Lr+Lc) ;
-    ctcr_act            = CTCRAct(beta_c , theta_c) ;
-    ctcr_load           = CTCRLoad(tau_tip , f_tip , load_lim_1 , tau_dist_1 , f_dist_1 , load_lim_2 , tau_dist_2 , f_dist_2) ;
-    flag_ctcr           = CTCR_Setting_OK(ctcr_carac , ctcr_act , bool_disp_terminal) ;
-    simulation_param    = SimulationParam(resolution , tol_opt , resol_pt_disct , nb_pt_dict , [] , bool_J , bool_Cs0 , flag_ctcr , [] , bool_disp_terminal) ;
-    ctcr_construc       = CTCR_Construc(simulation_param , ctcr_carac , ctcr_act , ctcr_load) ;
-
+    ctcr_carac                  = CTCRCarac(nbT , stiff , coeff_poiss , Rc , Lr , Lc , Lr+Lc) ;
+    ctcr_act                    = CTCRAct(beta_c , theta_c) ;
+    ctcr_load                   = CTCRLoad(tau_tip , f_tip , load_lim_1 , tau_dist_1 , f_dist_1 , load_lim_2 , tau_dist_2 , f_dist_2) ;
+    flag_ctcr                   = CTCR_Setting_OK(ctcr_carac , ctcr_act , bool_disp_terminal) ;
+    simulation_param            = SimulationParam(resolution , tol_opt , resol_pt_disct , nb_pt_dict , 1 , bool_J , bool_Cs0 , flag_ctcr , false , bool_disp_terminal) ;
+    ctcr_construc               = CTCR_Construc(simulation_param , ctcr_carac , ctcr_act , ctcr_load) ;
+    simulation_param.pt_s0_LIT  = linspace(ctcr_construc.ind_origin,ctcr_construc.nbP,ctcr_construc.nbP-ctcr_construc.ind_origin+1) ; 
 
 
     

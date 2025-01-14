@@ -1,6 +1,6 @@
-function ctcr_shape_def_jacob ...
+function [ctcr_shape_def_jacob , time_comp_lin_deform] ...
          = Lin_Deform( ...
-         mem_is0,delta_f0,ctcr_shape_init,ctcr_construc_init,mem_Cs0_init,simulation_param)
+         mem_is0,delta_f0,ctcr_shape_init,ctcr_construc_init,mem_Cs0_init)
 
 % ======================================================================= %
 % ======================================================================= %
@@ -11,17 +11,19 @@ function ctcr_shape_def_jacob ...
 % ====================
 % ====== INPUTS ====== 
 %
-% mem_is0               : (int) (_ x 1)         Vector with the index of the loaded points
-% delta_f0              : (_ x 3)               Matrix with the force variaitons vectors (row i for force i)
-% ctcr_shape_init       : (3 x _)               Initial CTCR shape before applying the force variation
+% mem_is0               : (int) (nbF x 1)       Vector with the index of the loaded points
+% delta_f0              : (nbF x 3)             Matrix with the force variaitons vectors (row i for force i)
+%                       | with nbF : the number of forces applied on the CTCR
+% ctcr_shape_init       : (3 x nbP)             Initial CTCR shape before applying the force variation
 % ctcr_construc_init    : (class)               Robot features related to the model settings for the initial shape
 % mem_Cs0_init          : (3 x 3 x nbP x nbP)   The Generalized Compliance Matrix associated to the initial shape
-% simulation_param      : (class)               Model settings
 %
 % ====================
 % ===== OUTPUTS ====== 
 %
-% ctcr_shape_def_jacob  : (3 x _)               Deformed CTCR shape, due to the force variations, computed using the Generalized Compliance Matrix
+% ctcr_shape_def_jacob  : (3 x nbF)             Deformed CTCR shape, due to the force variations, computed using the Generalized Compliance Matrix
+%                       | with nbF : the number of forces applied on the CTCR
+% time_comp_lin_deform  : (float)               [s] Computation time to linearize the CTCR deformations
 %
 % ======================================================================= %
 % ======================================================================= %
@@ -37,11 +39,8 @@ function ctcr_shape_def_jacob ...
         end
     end
 
-    % Display computation time
     time_comp_lin_deform = toc(tic_lin_deform) ;
-    if simulation_param.bool_disp_terminal
-        fprintf(' == Computation time for linearized deformations : %.2e [s] \n', time_comp_lin_deform) ;
-    end
+    
 
 
 end

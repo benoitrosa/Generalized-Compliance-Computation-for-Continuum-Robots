@@ -35,12 +35,6 @@ function [mem_CJ , mem_deriv_propag_high , mem_deriv_propag_low , time_comp_CJ] 
 % ======================================================================= %
 % ======================================================================= %
     
-    
-    % ================
-    % ============ Preparing =============
-    
-    simulation_param = CTCR_S0_Manag(ctcr_construc,simulation_param) ;
-
 
     tic_CJ = tic ;
 
@@ -104,15 +98,7 @@ function [mem_CJ , mem_deriv_propag_high , mem_deriv_propag_low , time_comp_CJ] 
     ctcr_construc , ctcr_carac , simulation_param , bvp_prop , mem_CJ , mem_deriv_propag_high) ;
 
 
-
-    % ================
-    % ==== Display in the terminal ====
-
     time_comp_CJ = toc(tic_CJ) ;
-
-    if simulation_param.bool_disp_terminal
-        fprintf(' == Computation time for Cs0 and J : %.2e [s] \n', time_comp_CJ) ;
-    end
 
     
 end

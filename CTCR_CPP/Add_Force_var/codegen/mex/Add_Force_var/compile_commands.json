@@ -1,0 +1,68 @@
+[
+  {
+    "directory": "/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions/codegen/mex/Add_Force_var",
+    "command": "/usr/bin/xcrun -sdk macosx13.3 clang++ -fno-common -arch x86_64 -mmacosx-version-min=10.15 -fexceptions -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -fobjc-arc -std=c++14 -stdlib=libc++ -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -fvisibility=hidden -std=c++11 -I \".\" -I \"/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions\" -I \"./interface\" -I \"/Applications/MATLAB_R2023a.app/extern/include\" -I \".\" -DMODEL=Add_Force_var_mex -DMW_NEEDS_VERSION_H -c  Add_Force_var_data.cpp -o build/maci64/Add_Force_var_data.o",
+    "file": "Add_Force_var_data.cpp",
+    "output": "build/maci64/Add_Force_var_data.o"
+  },
+  {
+    "directory": "/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions/codegen/mex/Add_Force_var",
+    "command": "/usr/bin/xcrun -sdk macosx13.3 clang++ -fno-common -arch x86_64 -mmacosx-version-min=10.15 -fexceptions -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -fobjc-arc -std=c++14 -stdlib=libc++ -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -fvisibility=hidden -std=c++11 -I \".\" -I \"/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions\" -I \"./interface\" -I \"/Applications/MATLAB_R2023a.app/extern/include\" -I \".\" -DMODEL=Add_Force_var_mex -DMW_NEEDS_VERSION_H -c  rt_nonfinite.cpp -o build/maci64/rt_nonfinite.o",
+    "file": "rt_nonfinite.cpp",
+    "output": "build/maci64/rt_nonfinite.o"
+  },
+  {
+    "directory": "/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions/codegen/mex/Add_Force_var",
+    "command": "/usr/bin/xcrun -sdk macosx13.3 clang++ -fno-common -arch x86_64 -mmacosx-version-min=10.15 -fexceptions -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -fobjc-arc -std=c++14 -stdlib=libc++ -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -fvisibility=hidden -std=c++11 -I \".\" -I \"/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions\" -I \"./interface\" -I \"/Applications/MATLAB_R2023a.app/extern/include\" -I \".\" -DMODEL=Add_Force_var_mex -DMW_NEEDS_VERSION_H -c  Add_Force_var_initialize.cpp -o build/maci64/Add_Force_var_initialize.o",
+    "file": "Add_Force_var_initialize.cpp",
+    "output": "build/maci64/Add_Force_var_initialize.o"
+  },
+  {
+    "directory": "/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions/codegen/mex/Add_Force_var",
+    "command": "/usr/bin/xcrun -sdk macosx13.3 clang++ -fno-common -arch x86_64 -mmacosx-version-min=10.15 -fexceptions -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -fobjc-arc -std=c++14 -stdlib=libc++ -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -fvisibility=hidden -std=c++11 -I \".\" -I \"/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions\" -I \"./interface\" -I \"/Applications/MATLAB_R2023a.app/extern/include\" -I \".\" -DMODEL=Add_Force_var_mex -DMW_NEEDS_VERSION_H -c  Add_Force_var_terminate.cpp -o build/maci64/Add_Force_var_terminate.o",
+    "file": "Add_Force_var_terminate.cpp",
+    "output": "build/maci64/Add_Force_var_terminate.o"
+  },
+  {
+    "directory": "/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions/codegen/mex/Add_Force_var",
+    "command": "/usr/bin/xcrun -sdk macosx13.3 clang++ -fno-common -arch x86_64 -mmacosx-version-min=10.15 -fexceptions -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -fobjc-arc -std=c++14 -stdlib=libc++ -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -fvisibility=hidden -std=c++11 -I \".\" -I \"/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions\" -I \"./interface\" -I \"/Applications/MATLAB_R2023a.app/extern/include\" -I \".\" -DMODEL=Add_Force_var_mex -DMW_NEEDS_VERSION_H -c  Add_Force_var.cpp -o build/maci64/Add_Force_var.o",
+    "file": "Add_Force_var.cpp",
+    "output": "build/maci64/Add_Force_var.o"
+  },
+  {
+    "directory": "/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions/codegen/mex/Add_Force_var",
+    "command": "/usr/bin/xcrun -sdk macosx13.3 clang++ -fno-common -arch x86_64 -mmacosx-version-min=10.15 -fexceptions -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -fobjc-arc -std=c++14 -stdlib=libc++ -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -fvisibility=hidden -std=c++11 -I \".\" -I \"/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions\" -I \"./interface\" -I \"/Applications/MATLAB_R2023a.app/extern/include\" -I \".\" -DMODEL=Add_Force_var_mex -DMW_NEEDS_VERSION_H -c  interface/_coder_Add_Force_var_api.cpp -o build/maci64/_coder_Add_Force_var_api.o",
+    "file": "interface/_coder_Add_Force_var_api.cpp",
+    "output": "build/maci64/_coder_Add_Force_var_api.o"
+  },
+  {
+    "directory": "/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions/codegen/mex/Add_Force_var",
+    "command": "/usr/bin/xcrun -sdk macosx13.3 clang++ -fno-common -arch x86_64 -mmacosx-version-min=10.15 -fexceptions -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -fobjc-arc -std=c++14 -stdlib=libc++ -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -fvisibility=hidden -std=c++11 -I \".\" -I \"/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions\" -I \"./interface\" -I \"/Applications/MATLAB_R2023a.app/extern/include\" -I \".\" -DMODEL=Add_Force_var_mex -DMW_NEEDS_VERSION_H -c  interface/_coder_Add_Force_var_mex.cpp -o build/maci64/_coder_Add_Force_var_mex.o",
+    "file": "interface/_coder_Add_Force_var_mex.cpp",
+    "output": "build/maci64/_coder_Add_Force_var_mex.o"
+  },
+  {
+    "directory": "/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions/codegen/mex/Add_Force_var",
+    "command": "/usr/bin/xcrun -sdk macosx13.3 clang++ -fno-common -arch x86_64 -mmacosx-version-min=10.15 -fexceptions -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -fobjc-arc -std=c++14 -stdlib=libc++ -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -fvisibility=hidden -std=c++11 -I \".\" -I \"/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions\" -I \"./interface\" -I \"/Applications/MATLAB_R2023a.app/extern/include\" -I \".\" -DMODEL=Add_Force_var_mex -DMW_NEEDS_VERSION_H -c  eml_int_forloop_overflow_check.cpp -o build/maci64/eml_int_forloop_overflow_check.o",
+    "file": "eml_int_forloop_overflow_check.cpp",
+    "output": "build/maci64/eml_int_forloop_overflow_check.o"
+  },
+  {
+    "directory": "/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions/codegen/mex/Add_Force_var",
+    "command": "/usr/bin/xcrun -sdk macosx13.3 clang++ -fno-common -arch x86_64 -mmacosx-version-min=10.15 -fexceptions -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -fobjc-arc -std=c++14 -stdlib=libc++ -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -fvisibility=hidden -std=c++11 -I \".\" -I \"/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions\" -I \"./interface\" -I \"/Applications/MATLAB_R2023a.app/extern/include\" -I \".\" -DMODEL=Add_Force_var_mex -DMW_NEEDS_VERSION_H -c  indexShapeCheck.cpp -o build/maci64/indexShapeCheck.o",
+    "file": "indexShapeCheck.cpp",
+    "output": "build/maci64/indexShapeCheck.o"
+  },
+  {
+    "directory": "/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions/codegen/mex/Add_Force_var",
+    "command": "/usr/bin/xcrun -sdk macosx13.3 clang++ -fno-common -arch x86_64 -mmacosx-version-min=10.15 -fexceptions -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -fobjc-arc -std=c++14 -stdlib=libc++ -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -fvisibility=hidden -std=c++11 -I \".\" -I \"/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions\" -I \"./interface\" -I \"/Applications/MATLAB_R2023a.app/extern/include\" -I \".\" -DMODEL=Add_Force_var_mex -DMW_NEEDS_VERSION_H -c  interface/_coder_Add_Force_var_info.cpp -o build/maci64/_coder_Add_Force_var_info.o",
+    "file": "interface/_coder_Add_Force_var_info.cpp",
+    "output": "build/maci64/_coder_Add_Force_var_info.o"
+  },
+  {
+    "directory": "/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions/codegen/mex/Add_Force_var",
+    "command": "/usr/bin/xcrun -sdk macosx13.3 clang++ -fno-common -arch x86_64 -mmacosx-version-min=10.15 -fexceptions -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -fobjc-arc -std=c++14 -stdlib=libc++ -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -fvisibility=hidden -std=c++11 -I \".\" -I \"/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions\" -I \"./interface\" -I \"/Applications/MATLAB_R2023a.app/extern/include\" -I \".\" -DMODEL=Add_Force_var_mex -DMW_NEEDS_VERSION_H -c  /Applications/MATLAB_R2023a.app/extern/version/cpp_mexapi_version.cpp -o build/maci64/cpp_mexapi_version.o",
+    "file": "/Applications/MATLAB_R2023a.app/extern/version/cpp_mexapi_version.cpp",
+    "output": "build/maci64/cpp_mexapi_version.o"
+  }
+]

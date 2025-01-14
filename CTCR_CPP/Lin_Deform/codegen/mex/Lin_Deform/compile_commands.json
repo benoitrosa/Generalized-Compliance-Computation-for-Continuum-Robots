@@ -1,0 +1,68 @@
+[
+  {
+    "directory": "/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions/codegen/mex/Lin_Deform",
+    "command": "/usr/bin/xcrun -sdk macosx13.3 clang++ -fno-common -arch x86_64 -mmacosx-version-min=10.15 -fexceptions -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -fobjc-arc -std=c++14 -stdlib=libc++ -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -fvisibility=hidden -std=c++11 -I \".\" -I \"/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions\" -I \"./interface\" -I \"/Applications/MATLAB_R2023a.app/extern/include\" -I \".\" -DMODEL=Lin_Deform_mex -DMW_NEEDS_VERSION_H -c  Lin_Deform_data.cpp -o build/maci64/Lin_Deform_data.o",
+    "file": "Lin_Deform_data.cpp",
+    "output": "build/maci64/Lin_Deform_data.o"
+  },
+  {
+    "directory": "/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions/codegen/mex/Lin_Deform",
+    "command": "/usr/bin/xcrun -sdk macosx13.3 clang++ -fno-common -arch x86_64 -mmacosx-version-min=10.15 -fexceptions -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -fobjc-arc -std=c++14 -stdlib=libc++ -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -fvisibility=hidden -std=c++11 -I \".\" -I \"/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions\" -I \"./interface\" -I \"/Applications/MATLAB_R2023a.app/extern/include\" -I \".\" -DMODEL=Lin_Deform_mex -DMW_NEEDS_VERSION_H -c  rt_nonfinite.cpp -o build/maci64/rt_nonfinite.o",
+    "file": "rt_nonfinite.cpp",
+    "output": "build/maci64/rt_nonfinite.o"
+  },
+  {
+    "directory": "/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions/codegen/mex/Lin_Deform",
+    "command": "/usr/bin/xcrun -sdk macosx13.3 clang++ -fno-common -arch x86_64 -mmacosx-version-min=10.15 -fexceptions -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -fobjc-arc -std=c++14 -stdlib=libc++ -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -fvisibility=hidden -std=c++11 -I \".\" -I \"/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions\" -I \"./interface\" -I \"/Applications/MATLAB_R2023a.app/extern/include\" -I \".\" -DMODEL=Lin_Deform_mex -DMW_NEEDS_VERSION_H -c  Lin_Deform_initialize.cpp -o build/maci64/Lin_Deform_initialize.o",
+    "file": "Lin_Deform_initialize.cpp",
+    "output": "build/maci64/Lin_Deform_initialize.o"
+  },
+  {
+    "directory": "/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions/codegen/mex/Lin_Deform",
+    "command": "/usr/bin/xcrun -sdk macosx13.3 clang++ -fno-common -arch x86_64 -mmacosx-version-min=10.15 -fexceptions -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -fobjc-arc -std=c++14 -stdlib=libc++ -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -fvisibility=hidden -std=c++11 -I \".\" -I \"/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions\" -I \"./interface\" -I \"/Applications/MATLAB_R2023a.app/extern/include\" -I \".\" -DMODEL=Lin_Deform_mex -DMW_NEEDS_VERSION_H -c  Lin_Deform_terminate.cpp -o build/maci64/Lin_Deform_terminate.o",
+    "file": "Lin_Deform_terminate.cpp",
+    "output": "build/maci64/Lin_Deform_terminate.o"
+  },
+  {
+    "directory": "/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions/codegen/mex/Lin_Deform",
+    "command": "/usr/bin/xcrun -sdk macosx13.3 clang++ -fno-common -arch x86_64 -mmacosx-version-min=10.15 -fexceptions -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -fobjc-arc -std=c++14 -stdlib=libc++ -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -fvisibility=hidden -std=c++11 -I \".\" -I \"/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions\" -I \"./interface\" -I \"/Applications/MATLAB_R2023a.app/extern/include\" -I \".\" -DMODEL=Lin_Deform_mex -DMW_NEEDS_VERSION_H -c  Lin_Deform.cpp -o build/maci64/Lin_Deform.o",
+    "file": "Lin_Deform.cpp",
+    "output": "build/maci64/Lin_Deform.o"
+  },
+  {
+    "directory": "/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions/codegen/mex/Lin_Deform",
+    "command": "/usr/bin/xcrun -sdk macosx13.3 clang++ -fno-common -arch x86_64 -mmacosx-version-min=10.15 -fexceptions -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -fobjc-arc -std=c++14 -stdlib=libc++ -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -fvisibility=hidden -std=c++11 -I \".\" -I \"/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions\" -I \"./interface\" -I \"/Applications/MATLAB_R2023a.app/extern/include\" -I \".\" -DMODEL=Lin_Deform_mex -DMW_NEEDS_VERSION_H -c  tic.cpp -o build/maci64/tic.o",
+    "file": "tic.cpp",
+    "output": "build/maci64/tic.o"
+  },
+  {
+    "directory": "/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions/codegen/mex/Lin_Deform",
+    "command": "/usr/bin/xcrun -sdk macosx13.3 clang++ -fno-common -arch x86_64 -mmacosx-version-min=10.15 -fexceptions -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -fobjc-arc -std=c++14 -stdlib=libc++ -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -fvisibility=hidden -std=c++11 -I \".\" -I \"/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions\" -I \"./interface\" -I \"/Applications/MATLAB_R2023a.app/extern/include\" -I \".\" -DMODEL=Lin_Deform_mex -DMW_NEEDS_VERSION_H -c  toc.cpp -o build/maci64/toc.o",
+    "file": "toc.cpp",
+    "output": "build/maci64/toc.o"
+  },
+  {
+    "directory": "/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions/codegen/mex/Lin_Deform",
+    "command": "/usr/bin/xcrun -sdk macosx13.3 clang++ -fno-common -arch x86_64 -mmacosx-version-min=10.15 -fexceptions -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -fobjc-arc -std=c++14 -stdlib=libc++ -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -fvisibility=hidden -std=c++11 -I \".\" -I \"/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions\" -I \"./interface\" -I \"/Applications/MATLAB_R2023a.app/extern/include\" -I \".\" -DMODEL=Lin_Deform_mex -DMW_NEEDS_VERSION_H -c  interface/_coder_Lin_Deform_api.cpp -o build/maci64/_coder_Lin_Deform_api.o",
+    "file": "interface/_coder_Lin_Deform_api.cpp",
+    "output": "build/maci64/_coder_Lin_Deform_api.o"
+  },
+  {
+    "directory": "/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions/codegen/mex/Lin_Deform",
+    "command": "/usr/bin/xcrun -sdk macosx13.3 clang++ -fno-common -arch x86_64 -mmacosx-version-min=10.15 -fexceptions -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -fobjc-arc -std=c++14 -stdlib=libc++ -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -fvisibility=hidden -std=c++11 -I \".\" -I \"/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions\" -I \"./interface\" -I \"/Applications/MATLAB_R2023a.app/extern/include\" -I \".\" -DMODEL=Lin_Deform_mex -DMW_NEEDS_VERSION_H -c  interface/_coder_Lin_Deform_mex.cpp -o build/maci64/_coder_Lin_Deform_mex.o",
+    "file": "interface/_coder_Lin_Deform_mex.cpp",
+    "output": "build/maci64/_coder_Lin_Deform_mex.o"
+  },
+  {
+    "directory": "/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions/codegen/mex/Lin_Deform",
+    "command": "/usr/bin/xcrun -sdk macosx13.3 clang++ -fno-common -arch x86_64 -mmacosx-version-min=10.15 -fexceptions -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -fobjc-arc -std=c++14 -stdlib=libc++ -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -fvisibility=hidden -std=c++11 -I \".\" -I \"/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions\" -I \"./interface\" -I \"/Applications/MATLAB_R2023a.app/extern/include\" -I \".\" -DMODEL=Lin_Deform_mex -DMW_NEEDS_VERSION_H -c  interface/_coder_Lin_Deform_info.cpp -o build/maci64/_coder_Lin_Deform_info.o",
+    "file": "interface/_coder_Lin_Deform_info.cpp",
+    "output": "build/maci64/_coder_Lin_Deform_info.o"
+  },
+  {
+    "directory": "/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions/codegen/mex/Lin_Deform",
+    "command": "/usr/bin/xcrun -sdk macosx13.3 clang++ -fno-common -arch x86_64 -mmacosx-version-min=10.15 -fexceptions -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -fobjc-arc -std=c++14 -stdlib=libc++ -DMATLAB_MEX_FILE  -O2 -fwrapv -DNDEBUG -fvisibility=hidden -std=c++11 -I \".\" -I \"/Users/guillaume/Desktop/Seafile/THESE_LODS_COMPLET/PERSO/Generalized-Compliance-Computation-for-Continuum-Robots/CTCR_Shape_Functions\" -I \"./interface\" -I \"/Applications/MATLAB_R2023a.app/extern/include\" -I \".\" -DMODEL=Lin_Deform_mex -DMW_NEEDS_VERSION_H -c  /Applications/MATLAB_R2023a.app/extern/version/cpp_mexapi_version.cpp -o build/maci64/cpp_mexapi_version.o",
+    "file": "/Applications/MATLAB_R2023a.app/extern/version/cpp_mexapi_version.cpp",
+    "output": "build/maci64/cpp_mexapi_version.o"
+  }
+]

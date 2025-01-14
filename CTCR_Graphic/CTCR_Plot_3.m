@@ -15,13 +15,14 @@ function CTCR_Plot_3(curr_ax , ctcr_shape_init , ctcr_shape_def_1 , ctcr_shape_d
 % ====== INPUTS ====== 
 %
 % curr_ax               : (axes object) Axes of the figure on which the graph is plotted
-% ctcr_shape_init       : (3 x _)       Initial CTCR shape before applying the force variation
-% ctcr_shape_def_1      : (3 x _)       Deformed CTCR shape, due to the force variations, computed using the model
-% ctcr_shape_def_2      : (3 x _)       Deformed CTCR shape, due to the force variations, computed using the Generalized Compliance Matrix
+% ctcr_shape_init       : (3 x nbP)     Initial CTCR shape before applying the force variation
+% ctcr_shape_def_1      : (3 x nbP)     Deformed CTCR shape, due to the force variations, computed using the model
+% ctcr_shape_def_2      : (3 x nbP)     Deformed CTCR shape, due to the force variations, computed using the Generalized Compliance Matrix
 % ctcr_carac            : (class)       Robot features
 % ctcr_construc         : (class)       Robot features related to the model settings
-% mem_is0               : (_ x 1)       Vector with the index of the loaded points
-% delta_f0              : (_ x 3)       Matrix with the force variaitons vectors (row i for force i)
+% mem_is0               : (nbF x 1)     Vector with the index of the loaded points
+% delta_f0              : (nbF x 3)     Matrix with the force variaitons vectors (row i for force i)
+%                       | with nbF : the number of forces applied on the CTCR
 %
 % ====================
 % ===== OUTPUTS ====== 
@@ -39,9 +40,9 @@ function CTCR_Plot_3(curr_ax , ctcr_shape_init , ctcr_shape_def_1 , ctcr_shape_d
     ctcr_shape_def_2        = ctcr_shape_def_2*1e3 ;
     R                       = [2,1.75,1.5] ;
     numPointsCircle         = 50 ;
-    clr_init                = [[40,78,153] ; [84,114,174]  ; [135,156,198]]/255 ;
-    clr_1                   = [[69,152,62] ; [112,176,107] ; [165,205,161]]/255 ;
-    clr_2                   = [[161,66,33] ; [188,119,96]  ; [213,171,156]]/255 ;
+    clr_init                = [[40,78,153] ; [84,114,174]  ; [135,156,198] ; [175,186,213] ; [203,210,227]]/255 ;
+    clr_1                   = [[69,152,62] ; [112,176,107] ; [165,205,161] ; [191,215,185] ; [206,225,202]]/255 ;
+    clr_2                   = [[161,66,33] ; [188,119,96]  ; [213,171,156] ; [216,189,177] ; [228,210,201]]/255 ;
 
     global fig ax
     fig     = gcf ;

@@ -9,17 +9,19 @@ function [ctcr_construc_new,ctcr_load_new,mem_is0] = Add_Force_var(prc_s0,delta_
 % ====================
 % ====== INPUTS ====== 
 %
-% prc_s0                : (_ x 1)   Vector with the curvilinear abscissa of the loaded points in pourcent of the CTCR length
-% delta_f0              : (_ x 3)   Matrix with the force variaitons vectors (row i for force i)
-% ctcr_construc         : (class)   Robot features related to the model settings
-% ctcr_load             : (class)   Robot loads
+% prc_s0                : (nbF x 1)     Vector with the curvilinear abscissa of the loaded points in pourcent of the CTCR length
+% delta_f0              : (nbF x 3)     Matrix with the force variaitons vectors (row i for force i)
+%                       | with nbF : the number of forces applied on the CTCR
+% ctcr_construc         : (class)       Robot features related to the model settings
+% ctcr_load             : (class)       Robot loads
 %
 % ====================
 % ===== OUTPUTS ====== 
 %
-% ctcr_construc_new     : (class)   Robot features related to the model settings after including the force variations
-% ctcr_load_new         : (class)   Robot loads after including the force variations
-% mem_is0               : (_ x 1)   Vector of the index of the loaded points 
+% ctcr_construc_new     : (class)       Robot features related to the model settings after including the force variations
+% ctcr_load_new         : (class)       Robot loads after including the force variations
+% mem_is0               : (nbF x 1)     Vector of the index of the loaded points 
+%                       | with nbF : the number of forces applied on the CTCR
 %
 % ======================================================================= %
 % ======================================================================= %
@@ -42,8 +44,7 @@ function [ctcr_construc_new,ctcr_load_new,mem_is0] = Add_Force_var(prc_s0,delta_
         % ========= Add vectors forces in ctcr_construc ========= %
     
         if mem_is0(i_f) == ctcr_construc.nbP
-            ctcr_load_new.f_tip                             = ctcr_load_new.f_tip ...
-                                                              + delta_f0(i_f,1:3)' ;
+            ctcr_load_new.f_tip(1:3,1)                     = ctcr_load_new.f_tip(1:3,1) + delta_f0(i_f,1:3)' ;
         else
             ctcr_construc_new.vect_f_dist(:,mem_is0(i_f))  = ctcr_construc_new.vect_f_dist(:,mem_is0(i_f)) ...
                                                               + delta_f0(i_f,1:3)'/ctcr_construc_new.vect_res(mem_is0(i_f)) ;

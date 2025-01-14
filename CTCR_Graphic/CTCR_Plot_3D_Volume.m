@@ -23,9 +23,13 @@ function CTCR_Plot_3D_Volume(curr_ax,ctcr_shape,ctcr_carac,ctcr_construc)
 
     
     ctcr_shape      = ctcr_shape*1e3 ;
-    R               = [2,1.75,1.5] ;
+    R               = [2,1.75,1.5,1.25,1] ;
     numPointsCircle = 50 ;
-    couleur         = [[0.56,0.17,0.14] ; [0.07,0.13,0.64] ; [0.27,0.44,0.20]] ;
+    couleur                     = [[0.56,0.17,0.14] ; ...
+                                   [0.07,0.13,0.64] ; ...
+                                   [0.27,0.44,0.20] ; ...
+                                   [0.14,0.49,0.64] ; ...
+                                   [0.64,0.43,0.74]] ;
 
     hold(curr_ax,'on') ;
 

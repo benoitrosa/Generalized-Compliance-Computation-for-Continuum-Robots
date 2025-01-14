@@ -1,10 +1,14 @@
 # Generalized-Compliance-Computation-for-Continuum-Robots
 
-## This code is associated to the following paper. Please cite this reference if reusing the code :
+## This code is associated to the following paper, please cite this reference if reusing the code :
 
-> Guillaume Lods, Benoît Rosa, Bernard Bayle and Florent Nageotte (2024): “Exact Derivative Propagation Method to compute the Generalized Compliance Matrix for Continuum Robots: Application to Concentric Tubes Continuum Robots”. Mechanism and Machine Theory, to appear.
+> Guillaume Lods, Benoit Rosa, Bernard Bayle et Florent Nageotte, "Exact derivative propagation method to compute the generalized compliance matrix for continuum robots : Application to concentric tubes continuum robots", Mechanism and Machine Theory, Volume 200, 15 September 2024
+> DOI : https://doi.org/10.1016/j.mechmachtheory.2024.105696
+> HAL link : https://hal.science/hal-04626541/
 
 **This code computes the Quasistatic Model, the Generalized Compliance Matrix and the Joint Jacobian of a concentric tubes continuum robot. An example is also provided showing how to linearize the robot's deformations when one or more forces are applied to it.**
+
+**This code requires "Matlab R2023a", or a more recent version, as well as the installation of the "Optimization Toolbox".**
 
 **The “variable_mapping.pdf” file shows the correspondences between article and code variables**
 

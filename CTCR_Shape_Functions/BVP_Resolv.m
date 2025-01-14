@@ -25,7 +25,7 @@ function [mem_bvp , bvp_prop , ctcr_shape , mem_deriv_propag_low , mem_deriv_pro
 %
 % mem_bvp                   : (class)       Memory of the BVP variables 
 % bvp_prop                  : (class)       Results of the BVP resolution
-% ctcr_shape                : (3 x _)       Robot shape
+% ctcr_shape                : (3 x nbP)     Robot shape
 % mem_deriv_propag_low      : (class)       Memory of the low-level derivatives 
 % mem_deriv_propag_high     : (class)       Memory of the high-level partial derivatives
 % mem_CJ                    : (class)       Memory of the Generalized Compliance Matrix and the Joint Jacobian
@@ -93,7 +93,7 @@ function [mem_bvp , bvp_prop , ctcr_shape , mem_deriv_propag_low , mem_deriv_pro
     % ==================
     % ==== Case n°1 : Problem
 
-    if exitflag <= -1 || bvp_prop.norm_tol > sqrt(simulation_param.opt_tol)
+    if exitflag <= -1
 
         simulation_param.bool_problem_opt = true ;
 
