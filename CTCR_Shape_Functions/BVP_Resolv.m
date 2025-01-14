@@ -63,7 +63,7 @@ function [mem_bvp , bvp_prop , ctcr_shape , mem_deriv_propag_low , mem_deriv_pro
     opts = optimoptions('fsolve','Display','off','Algorithm','levenberg-marquardt', ...
            'MaxIter',500,'FunctionTolerance',10*eps, ...
            'InitDamping',1,'SpecifyObjectiveGradient',true, ...
-           'MaxFunctionEvaluations',(2*ctcr_carac.nbT+6)*500) ;
+           'MaxFunctionEvaluations',1000) ;
 
 
     % ========================================= %
@@ -72,18 +72,15 @@ function [mem_bvp , bvp_prop , ctcr_shape , mem_deriv_propag_low , mem_deriv_pro
     myfun = @(IC) BVP_BC_Comp_Fsolve( ...
                 IC , ctcr_construc , ctcr_carac , ctcr_load , bvp_prop , ...
                 mem_bvp , mem_deriv_propag_low) ;
-    %try
 
-        [IC_opt,~,exitflag,output,jacobian] = fsolve(myfun,IC,opts) ;
+    [IC_opt,~,exitflag,output,jacobian] = fsolve(myfun,IC,opts) ;
 
-        [error , jacobianMatrix , bvp_prop , mem_bvp , mem_deriv_propag_low] ...
-        = BVP_BC_Comp_Fsolve( ...
-        IC_opt , ctcr_construc , ctcr_carac , ctcr_load , bvp_prop , ...
-        mem_bvp , mem_deriv_propag_low) ;
+    [error , jacobianMatrix , bvp_prop , mem_bvp , mem_deriv_propag_low] ...
+    = BVP_BC_Comp_Fsolve( ...
+    IC_opt , ctcr_construc , ctcr_carac , ctcr_load , bvp_prop , ...
+    mem_bvp , mem_deriv_propag_low) ;
 
-    % catch exception
-    %     exitflag = -1 ;
-    % end
+
 
 
 
@@ -101,7 +98,7 @@ function [mem_bvp , bvp_prop , ctcr_shape , mem_deriv_propag_low , mem_deriv_pro
         simulation_param.bool_problem_opt = true ;
 
         if simulation_param.bool_disp_terminal
-            disp(' ======== Optimization problem ======== ')
+            fprintf(' == Optimization problem \n') ;
         end
 
 

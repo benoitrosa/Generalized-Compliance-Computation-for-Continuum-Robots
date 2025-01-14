@@ -50,8 +50,8 @@ classdef SimulationParam
                 mc.pt_s0_LIT            = [] ;
                 mc.bool_J               = true ;
                 mc.bool_Cs0             = true ;
-                mc.flag_ctcr            = [] ;
-                mc.bool_problem_opt     = [] ;
+                mc.flag_ctcr            = true ;
+                mc.bool_problem_opt     = false ;
                 mc.bool_disp_terminal   = true ;
                 
 

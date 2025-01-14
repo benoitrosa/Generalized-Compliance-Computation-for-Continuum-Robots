@@ -48,11 +48,11 @@ function [ctcr_shape , mem_bvp , bvp_prop , mem_deriv_propag_low , ...
 
     if simulation_param.bool_disp_terminal
 
-        disp(' ====== Time for CTCR shape') ; disp([' ==  ' , num2str(bvp_prop.clk_bvp), '  [s]'])
-        disp(' ====== Number of iterations') ; disp([' ==  ' , num2str(bvp_prop.nb_iter)])
-        disp(' ====== Optimization norm error') ; disp([' ==  ' , num2str(bvp_prop.norm_tol)])
-        disp(' ====== Number of discretization points') ; disp([' ==  ' , num2str(ctcr_construc.nbP)])
-    
+        fprintf(' == Time for CTCR shape : %.2e [s] \n', bvp_prop.clk_bvp) ;
+        fprintf(' == Number of iterations : %.2e \n', bvp_prop.nb_iter) ;
+        fprintf(' == Optimization norm error : %.2e \n', bvp_prop.norm_tol) ;
+        fprintf(' == Number of discretization points : %.2e \n', ctcr_construc.nbP) ;
+
     end
     
 end

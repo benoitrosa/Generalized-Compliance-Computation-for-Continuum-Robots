@@ -40,9 +40,11 @@ addpath('CTCR_Maths_Functions', 'CTCR_Shape_Functions', ...
 % ================
 % =============== File ===============
 
-name = 'Demo_27' ;                               % Name of the folder created to store the results and the graphs
+name = 'Demo_11' ;                               % Name of the folder created to store the results and the graphs
 
-% Load the config file
+
+fprintf('\n ========== \n ============== LOADING THE CONFIG FILE \n') ;
+
 [simulation_param , ctcr_carac , ctcr_act , ctcr_load , ...
     ctcr_construc , prc_s0 , delta_f0] = Load_Config(name) ;
 
@@ -68,8 +70,7 @@ name = 'Demo_27' ;                               % Name of the folder created to
 
 if simulation_param.flag_ctcr
 
-    disp(' ') ;
-    disp(' ========= COMPUTING THE CTCR SHAPE ========= ')
+    fprintf('\n ========== \n ============== COMPUTING THE CTCR SHAPE \n') ;
     
     IC = zeros(ctcr_carac.nbT+6,1) ;            % Initial value for yu(0) (see Table 5) 
 
@@ -108,8 +109,7 @@ if simulation_param.flag_ctcr
     
     if simulation_param.bool_J || simulation_param.bool_Cs0
             
-        disp(' ') ;
-        disp(' ========= COMPUTING THE JOINT JACOBIAN AND THE GENERALIZED COMPLINCE MATRIX ========= ')
+        fprintf('\n ========== \n ============== COMPUTING THE JOINT JACOBIAN AND THE GENERALIZED COMPLINCE MATRIX \n') ;
 
         [mem_CJ , mem_deriv_propag_high , mem_deriv_propag_low , time_comp_CJ] ...
         = CTCR_Deriv_Propag(...
@@ -134,8 +134,7 @@ if simulation_param.flag_ctcr
     
     if simulation_param.flag_ctcr && ~simulation_param.bool_problem_opt
     
-        disp(' ') ;
-        disp(' ========= PLOTTING THE INITIAL TUBES ========= ')
+        fprintf('\n ============= \n ==== PLOTTING THE INITIAL TUBES \n') ;
 
         fig_init_tub                = figure('units','normalized','outerposition',[0 0 1 1]) ;
         fig_init_tub.Color          = 'w';
@@ -156,8 +155,7 @@ if simulation_param.flag_ctcr
     
     if simulation_param.flag_ctcr && ~simulation_param.bool_problem_opt
         
-        disp(' ') ;
-        disp(' ========= PLOTTING THE CTCR 3D SHAPE ========= ')
+        fprintf('\n ============= \n ==== PLOTTING THE CTCR 3D SHAPE \n') ;
 
         fig_robot               = figure('units','normalized','outerposition',[0 0 1 1]) ;
         fig_robot.Color         = 'w';
@@ -184,8 +182,7 @@ if simulation_param.flag_ctcr
        ~isequal(ctcr_load.tau_dist_2, zeros(1,3)) || ...
        ~isequal(ctcr_load.f_dist_2, zeros(1,3)))
      
-        disp(' ') ;
-        disp(' ========= PLOTTING THE CTCR 3D SHAPE AND THE EXTERNAL LOADS ========= ')
+        fprintf('\n ============= \n ==== PLOTTING THE CTCR 3D SHAPE AND THE EXTERNAL LOADS \n') ;
 
         cd(['DATA/',name])
         filename        = strcat(name,'_shape.fig') ;
@@ -220,8 +217,7 @@ if simulation_param.flag_ctcr
         % ================
         % ============== Adding the vector force to ctcr_construc ===============
     
-        disp(' ') ;
-        disp(' ========= ADDIND THE FORCE VARIATION ========= ')
+        fprintf('\n ============= \n ==== ADDIND THE FORCE VARIATION \n') ;
 
         [ctcr_construc_new,ctcr_load_new,mem_is0] ...
         = Add_Force_var( ...
@@ -231,8 +227,7 @@ if simulation_param.flag_ctcr
         % ================
         % ============== Compute the model again ===============
     
-        disp(' ') ;
-        disp(' ========= COMPUTING THE DEFORMED CTCR SHAPE USING TO THE SHAPE MODEL ========= ')
+        fprintf('\n ============= \n ==== COMPUTING THE DEFORMED CTCR SHAPE USING TO THE SHAPE MODEL \n') ;
 
         [ctcr_shape_def_mod , mem_bvp_def_mod , bvp_prop_def_mod , mem_deriv_propag_low_def_mod , ...
         mem_deriv_propag_high_def_mod , mem_CJ_def_mod , simulation_param_def_mod , exitflag , output] ...
@@ -243,20 +238,18 @@ if simulation_param.flag_ctcr
         % ================
         % ============== Compute the deformation using the Generalized Compliance Matrix ===============
     
-        disp(' ') ;
-        disp(' ========= COMPUTING THE DEFORMED CTCR SHAPE BY LINEARIZATION USING THE GENERALIZED COMPLIANCE MATRIX ========= ')
+        fprintf('\n ============= \n ==== COMPUTING THE DEFORMED CTCR SHAPE BY LINEARIZATION USING THE GENERALIZED COMPLIANCE MATRIX \n') ;
 
         ctcr_shape_def_jacob ...
         = Lin_Deform( ...
-        mem_is0,delta_f0,ctcr_shape,ctcr_construc,mem_CJ.mem_Cs0,true) ;
+        mem_is0,delta_f0,ctcr_shape,ctcr_construc,mem_CJ.mem_Cs0,simulation_param) ;
     
     
 
         % ================
         % ============== Visualize the two shapes on the same graph ===============
     
-        disp(' ') ;
-        disp(' ========= PLOTTING THE CTCR 3D DEFORMED SHAPES ========= ')
+        fprintf('\n ============= \n ==== PLOTTING THE CTCR 3D DEFORMED SHAPES \n') ;
 
         fig_deform                  = figure('units','normalized','outerposition',[0 0 1 1]) ;
         fig_deform.Color            = 'w';
@@ -274,7 +267,7 @@ if simulation_param.flag_ctcr
 
 
 else
-    disp('CTCR features not compatible with the given actuation')
+    fprintf('CTCR features not compatible with the given actuation \n') ;
 end
 
 
@@ -283,8 +276,7 @@ end
 % ========== Saving the data ============ %
 % ======================================= %
     
-disp(' ') ;
-disp(' ========= SAVING THE DATA ========= ')
+fprintf('\n ============= \n ==== SAVING THE DATA \n') ;
 
 cd(['DATA/',name]) ;
 save(strcat(name,'_data.mat'))
