@@ -38,7 +38,7 @@ function CTCR_Plot_3(curr_ax , ctcr_shape_init , ctcr_shape_def_1 , ctcr_shape_d
     ctcr_shape_init         = ctcr_shape_init*1e3 ;
     ctcr_shape_def_1        = ctcr_shape_def_1*1e3 ;
     ctcr_shape_def_2        = ctcr_shape_def_2*1e3 ;
-    R                       = [2,1.75,1.5] ;
+    R                       = [2,1.75,1.5,1.25,1] ;
     numPointsCircle         = 50 ;
     clr_init                = [[40,78,153] ; [84,114,174]  ; [135,156,198] ; [175,186,213] ; [203,210,227]]/255 ;
     clr_1                   = [[69,152,62] ; [112,176,107] ; [165,205,161] ; [191,215,185] ; [206,225,202]]/255 ;
