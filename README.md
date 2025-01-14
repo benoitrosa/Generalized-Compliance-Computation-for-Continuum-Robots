@@ -3,7 +3,9 @@
 ## This code is associated to the following paper, please cite this reference if reusing the code :
 
 > Guillaume Lods, Benoit Rosa, Bernard Bayle et Florent Nageotte, "Exact derivative propagation method to compute the generalized compliance matrix for continuum robots : Application to concentric tubes continuum robots", Mechanism and Machine Theory, Volume 200, 15 September 2024
+
 > DOI : https://doi.org/10.1016/j.mechmachtheory.2024.105696
+
 > HAL link : https://hal.science/hal-04626541/
 
 **This code computes the Quasistatic Model, the Generalized Compliance Matrix and the Joint Jacobian of a concentric tubes continuum robot. An example is also provided showing how to linearize the robot's deformations when one or more forces are applied to it.**
@@ -14,6 +16,7 @@
 **“main.m” is a the standard Matlab code**
 - Advantage : You have access to all the internal comments of the functions.
 - Drawback  : The computation time is quite long.
+
 **“main_cpp.m” is a the Matlab code using MEX functions and C++ compiled functions.**
 - Advantage : The computation time is is greatly reduced.
 - Drawback  : You do not have access to all the internal comments of the functions.
