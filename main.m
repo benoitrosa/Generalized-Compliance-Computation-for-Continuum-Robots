@@ -144,73 +144,73 @@ if simulation_param.flag_ctcr
     % ============================================================== %
 
 
-    % % ================
-    % % ====== Plot initial tubes =======
-    % 
-    % if simulation_param.flag_ctcr && ~simulation_param.bool_problem_opt
-    % 
-    %     fprintf('\n ============= \n ==== PLOTTING THE INITIAL TUBES \n') ;
-    % 
-    %     fig_init_tub                = figure('units','normalized','outerposition',[0 0 1 1]) ;
-    %     fig_init_tub.Color          = 'w';
-    %     fig_init_tub.WindowState    = 'fullscreen' ;
-    %     ax_fig                      = axes(fig_init_tub) ;
-    % 
-    %     CTCR_Plot_Tubes(ax_fig , ctcr_carac , ctcr_construc) ;
-    %     cd(['DATA/',name])
-    %     saveas(fig_init_tub,strcat(name,'_init_tubes.fig')) ;
-    %     saveas(fig_init_tub,strcat(name,'_init_tubes.png')) ;
-    %     cd ../..
-    %     close gcf
-    % 
-    % end
-    % 
-    % % ================
-    % % ====== Plot robot shape =======
-    % 
-    % if simulation_param.flag_ctcr && ~simulation_param.bool_problem_opt
-    % 
-    %     fprintf('\n ============= \n ==== PLOTTING THE CTCR 3D SHAPE \n') ;
-    % 
-    %     fig_robot               = figure('units','normalized','outerposition',[0 0 1 1]) ;
-    %     fig_robot.Color         = 'w';
-    %     fig_robot.WindowState   = 'fullscreen' ;
-    %     ax_fig                  = axes(fig_robot) ;
-    % 
-    %     CTCR_Plot_3D_Volume(ax_fig,ctcr_shape,ctcr_carac,ctcr_construc) ;
-    %     cd(['DATA/',name])
-    %     saveas(fig_robot,strcat(name,'_shape.fig')) ;  
-    %     saveas(fig_robot,strcat(name,'_shape.png')) ;
-    %     cd ../..
-    %     close gcf
-    % 
-    % end
-    % 
-    % % ================
-    % % ========== Plot robot shape with loads =========
-    % 
-    % if simulation_param.flag_ctcr && ~simulation_param.bool_problem_opt && ...
-    %    (~isequal(ctcr_load.tau_tip, zeros(1,3)) || ...
-    %    ~isequal(ctcr_load.f_tip, zeros(1,3)) || ...
-    %    ~isequal(ctcr_load.tau_dist_1, zeros(1,3)) || ...
-    %    ~isequal(ctcr_load.f_dist_1, zeros(1,3)) || ...
-    %    ~isequal(ctcr_load.tau_dist_2, zeros(1,3)) || ...
-    %    ~isequal(ctcr_load.f_dist_2, zeros(1,3)))
-    % 
-    %     fprintf('\n ============= \n ==== PLOTTING THE CTCR 3D SHAPE AND THE EXTERNAL LOADS \n') ;
-    % 
-    %     cd(['DATA/',name])
-    %     filename        = strcat(name,'_shape.fig') ;
-    %     fig_robot_load  = CTCR_Load_Plot(filename,simulation_param,ctcr_carac,ctcr_load,ctcr_construc,ctcr_shape) ;
-    % 
-    %     cd ../..
-    %     cd(['DATA/',name])
-    %     saveas(fig_robot_load,strcat(name,'_shape_loads.fig')) ;
-    %     saveas(fig_robot_load,strcat(name,'_shape_loads.png')) ;
-    %     cd ../..
-    %     close gcf
-    % 
-    % end
+    % ================
+    % ====== Plot initial tubes =======
+
+    if simulation_param.flag_ctcr && ~simulation_param.bool_problem_opt
+
+        fprintf('\n ============= \n ==== PLOTTING THE INITIAL TUBES \n') ;
+
+        fig_init_tub                = figure('units','normalized','outerposition',[0 0 1 1]) ;
+        fig_init_tub.Color          = 'w';
+        fig_init_tub.WindowState    = 'fullscreen' ;
+        ax_fig                      = axes(fig_init_tub) ;
+
+        CTCR_Plot_Tubes(ax_fig , ctcr_carac , ctcr_construc) ;
+        cd(['DATA/',name])
+        saveas(fig_init_tub,strcat(name,'_init_tubes.fig')) ;
+        saveas(fig_init_tub,strcat(name,'_init_tubes.png')) ;
+        cd ../..
+        close gcf
+
+    end
+
+    % ================
+    % ====== Plot robot shape =======
+
+    if simulation_param.flag_ctcr && ~simulation_param.bool_problem_opt
+
+        fprintf('\n ============= \n ==== PLOTTING THE CTCR 3D SHAPE \n') ;
+
+        fig_robot               = figure('units','normalized','outerposition',[0 0 1 1]) ;
+        fig_robot.Color         = 'w';
+        fig_robot.WindowState   = 'fullscreen' ;
+        ax_fig                  = axes(fig_robot) ;
+
+        CTCR_Plot_3D_Volume(ax_fig,ctcr_shape,ctcr_carac,ctcr_construc) ;
+        cd(['DATA/',name])
+        saveas(fig_robot,strcat(name,'_shape.fig')) ;  
+        saveas(fig_robot,strcat(name,'_shape.png')) ;
+        cd ../..
+        close gcf
+
+    end
+
+    % ================
+    % ========== Plot robot shape with loads =========
+
+    if simulation_param.flag_ctcr && ~simulation_param.bool_problem_opt && ...
+       (~isequal(ctcr_load.tau_tip, zeros(1,3)) || ...
+       ~isequal(ctcr_load.f_tip, zeros(1,3)) || ...
+       ~isequal(ctcr_load.tau_dist_1, zeros(1,3)) || ...
+       ~isequal(ctcr_load.f_dist_1, zeros(1,3)) || ...
+       ~isequal(ctcr_load.tau_dist_2, zeros(1,3)) || ...
+       ~isequal(ctcr_load.f_dist_2, zeros(1,3)))
+
+        fprintf('\n ============= \n ==== PLOTTING THE CTCR 3D SHAPE AND THE EXTERNAL LOADS \n') ;
+
+        cd(['DATA/',name])
+        filename        = strcat(name,'_shape.fig') ;
+        fig_robot_load  = CTCR_Load_Plot(filename,simulation_param,ctcr_carac,ctcr_load,ctcr_construc,ctcr_shape) ;
+
+        cd ../..
+        cd(['DATA/',name])
+        saveas(fig_robot_load,strcat(name,'_shape_loads.fig')) ;
+        saveas(fig_robot_load,strcat(name,'_shape_loads.png')) ;
+        cd ../..
+        close gcf
+
+    end
        
     
     % ============================================================== %
@@ -279,22 +279,22 @@ if simulation_param.flag_ctcr
         end
 
 
-        % % ================
-        % % ============== Visualize the two shapes on the same graph ===============
-        % 
-        % fprintf('\n ============= \n ==== PLOTTING THE CTCR 3D DEFORMED SHAPES \n') ;
-        % 
-        % fig_deform                  = figure('units','normalized','outerposition',[0 0 1 1]) ;
-        % fig_deform.Color            = 'w';
-        % fig_deform.WindowState      = 'fullscreen' ;
-        % curr_ax                     = axes(fig_deform) ;
-        % 
-        % CTCR_Plot_3(curr_ax , ctcr_shape , ctcr_shape_def_mod , ctcr_shape_def_jacob  , ctcr_carac , ctcr_construc , mem_is0 , delta_f0) ;   
-        % cd(['DATA/',name])
-        % saveas(fig_deform,strcat(name,'_deform_shape.fig')) ;  
-        % saveas(fig_deform,strcat(name,'_deform_shape.png')) ;
-        % cd ../..
-        % close gcf
+        % ================
+        % ============== Visualize the two shapes on the same graph ===============
+
+        fprintf('\n ============= \n ==== PLOTTING THE CTCR 3D DEFORMED SHAPES \n') ;
+
+        fig_deform                  = figure('units','normalized','outerposition',[0 0 1 1]) ;
+        fig_deform.Color            = 'w';
+        fig_deform.WindowState      = 'fullscreen' ;
+        curr_ax                     = axes(fig_deform) ;
+
+        CTCR_Plot_3(curr_ax , ctcr_shape , ctcr_shape_def_mod , ctcr_shape_def_jacob  , ctcr_carac , ctcr_construc , mem_is0 , delta_f0) ;   
+        cd(['DATA/',name])
+        saveas(fig_deform,strcat(name,'_deform_shape.fig')) ;  
+        saveas(fig_deform,strcat(name,'_deform_shape.png')) ;
+        cd ../..
+        close gcf
 
     end
 

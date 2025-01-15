@@ -39,10 +39,11 @@ addpath('CTCR_Maths_Functions', 'CTCR_Shape_Functions', ...
 % ================
 % =============== File ===============
 
-name = 'Demo_mex' ;                               % Name of the folder created to store the results and the graphs
+name = 'Demo_11' ;                               % Name of the folder created to store the results and the graphs
 
 
-fprintf('\n ========== \n ============== LOADING THE CONFIG FILE \n') ;
+fprintf('\n ============= \n ==== LOADING THE CONFIG FILE \n') ;
+fprintf([' == ',name,'_config.mat \n']) ;
 
 [simulation_param , ctcr_carac , ctcr_act , ctcr_load , ...
     ctcr_construc , prc_s0 , delta_f0] = Load_Config(name) ;
@@ -69,7 +70,7 @@ fprintf('\n ========== \n ============== LOADING THE CONFIG FILE \n') ;
 
 if simulation_param.flag_ctcr
 
-    fprintf('\n ========== \n ============== COMPUTING THE CTCR SHAPE \n') ;
+    fprintf('\n ============= \n ==== COMPUTING THE CTCR SHAPE \n') ;
     
     IC = zeros(ctcr_carac.nbT+6,1) ;            % Initial value for yu(0) (see Table 5) 
 
@@ -119,7 +120,7 @@ if simulation_param.flag_ctcr
     
     if simulation_param.bool_J || simulation_param.bool_Cs0
             
-        fprintf('\n ========== \n ============== COMPUTING THE JOINT JACOBIAN AND THE GENERALIZED COMPLIANCE MATRIX \n') ;
+        fprintf('\n ============= \n ==== COMPUTING THE JOINT JACOBIAN AND THE GENERALIZED COMPLIANCE MATRIX \n') ;
 
         [mem_CJ , mem_deriv_propag_high , mem_deriv_propag_low , time_comp_CJ] ...
         = CTCR_Deriv_Propag_mex(...
@@ -234,7 +235,7 @@ if simulation_param.flag_ctcr
         fprintf('\n ============= \n ==== ADDIND THE FORCE VARIATION \n') ;
 
         [ctcr_construc_new,ctcr_load_new,mem_is0] ...
-        = Add_Force_var_mex( ...
+        = Add_Force_var( ...
         prc_s0,delta_f0,ctcr_construc,ctcr_load) ;
     
     
@@ -266,7 +267,7 @@ if simulation_param.flag_ctcr
         fprintf('\n ============= \n ==== COMPUTING THE DEFORMED CTCR SHAPE BY LINEARIZATION USING THE GENERALIZED COMPLIANCE MATRIX \n') ;
 
         [ctcr_shape_def_jacob , time_comp_lin_deform] ...
-        = Lin_Deform_mex( ...
+        = Lin_Deform( ...
         mem_is0,delta_f0,ctcr_shape,ctcr_construc,mem_CJ.mem_Cs0) ;
     
 
