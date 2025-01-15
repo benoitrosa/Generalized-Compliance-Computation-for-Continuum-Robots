@@ -29,9 +29,7 @@
 - Change the line n°42 of the "main.m" (or "main_cpp.m") as "name = '<your_config_name>' ;
 - Run "main.m" (or "main_cpp.m")
 
-**The “variable_mapping.pdf” file shows the correspondences between article and code variables**
-
-**Several configuration files are provided to let you to run the code on simple examples :**
+## Configuration files examples provided in the folder "CTCR_Config" :
 - "Demo_11"  : CTCR n°1 composed of 2 tubes
 - "Demo_12"  : CTCR n°1 with a tip external force
 - "Demo_13"  : CTCR n°1 with a mid-length external force
@@ -42,9 +40,10 @@
 - "Demo_25"  : CTCR n°2 with a tip external force and two mid-length distributed external forces
 - "Demo_26"  : CTCR n°2 with a 1-force deformation linearization
 - "Demo_27"  : CTCR n°2 with a 2-forces deformation linearization
-- "Demo_mex" : CTCR composed of 5 tubes used to generate the MEX functions
+- "Demo_mex" : CTCR composed of T tubes used to generate the MEX functions
 
-**Do not hesitate to contact us if you have any questions.**
+**The “variable_mapping.pdf” file shows the correspondences between article and code variables**
 
 ## Contact : 
+**Do not hesitate to contact us if you have any questions.**
 **Guillaume Lods | g.lods@unistra.fr**
