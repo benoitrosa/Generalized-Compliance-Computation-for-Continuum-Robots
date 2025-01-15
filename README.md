@@ -20,7 +20,8 @@
 **“main_cpp.m” is a the Matlab code using MEX functions and C++ compiled functions.**
 - Advantage : The computation time is is greatly reduced.
 - Drawback  : You do not have access to all the internal comments of the functions.
-The MEX functions are provided for Macintosh, Windows and Linux. 
+
+**The MEX functions are provided for Macintosh, Windows and Linux.** 
 
 ## Configuration files examples provided in the folder "CTCR_Config" :
 - "Demo_11"  : CTCR n°1 composed of 2 tubes
