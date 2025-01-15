@@ -21,14 +21,6 @@
 - Advantage : The computation time is is greatly reduced.
 - Drawback  : You do not have access to all the internal comments of the functions.
 
-## How to use your custom configuration file : 
-- Open "CTCR_Shape_Functions/Write_Config.m"
-- Change the parameters you want
-- Set the folder "Generalized-Compliance-Computation-for-Continuum-Robots" as the Matlab workspace
-- Run "Write_Config(<your_config_name>)" in the Matlab terminal
-- Change the line n°42 of the "main.m" (or "main_cpp.m") as "name = '<your_config_name>' ;
-- Run "main.m" (or "main_cpp.m")
-
 ## Configuration files examples provided in the folder "CTCR_Config" :
 - "Demo_11"  : CTCR n°1 composed of 2 tubes
 - "Demo_12"  : CTCR n°1 with a tip external force
@@ -42,7 +34,16 @@
 - "Demo_27"  : CTCR n°2 with a 2-forces deformation linearization
 - "Demo_mex" : CTCR composed of T tubes used to generate the MEX functions
 
-**The “variable_mapping.pdf” file shows the correspondences between article and code variables**
+## How to use your custom configuration file : 
+- Open "CTCR_Shape_Functions/Write_Config.m"
+- Change the parameters you want
+- Set the folder "Generalized-Compliance-Computation-for-Continuum-Robots" as the Matlab workspace
+- Run "Write_Config(<your_config_name>)" in the Matlab terminal
+- Change the line n°42 of the "main.m" (or "main_cpp.m") as "name = '<your_config_name>'" ;
+- Run "main.m" (or "main_cpp.m")
+
+## Extra ressources :
+- The file “variable_mapping.pdf” shows the correspondences between article and code variables
 
 ## Contact : 
 **Do not hesitate to contact us if you have any questions.**
