@@ -39,7 +39,7 @@ addpath('CTCR_Maths_Functions', 'CTCR_Shape_Functions', ...
 % ================
 % =============== File ===============
 
-name = 'Demo_11' ;                               % Name of the folder created to store the results and the graphs
+name = 'Demo_mex' ;                               % Name of the folder created to store the results and the graphs
 
 
 fprintf('\n ========== \n ============== LOADING THE CONFIG FILE \n') ;
@@ -241,7 +241,7 @@ if simulation_param.flag_ctcr
         % ================
         % ============== Compute the model again ===============
     
-        fprintf('\n ============= \n ==== COMPUTING THE DEFORMED CTCR SHAPE USING TO THE SHAPE MODEL \n') ;
+        fprintf('\n ============= \n ==== COMPUTING THE DEFORMED CTCR SHAPE USING THE SHAPE MODEL \n') ;
 
         [ctcr_shape_def_mod , mem_bvp_def_mod , bvp_prop_def_mod , mem_deriv_propag_low_def_mod , ...
         mem_deriv_propag_high_def_mod , mem_CJ_def_mod , simulation_param_def_mod , ctcr_construc_new , ~ , ~] ...

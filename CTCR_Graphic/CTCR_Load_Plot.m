@@ -32,6 +32,14 @@ function fig = CTCR_Load_Plot(filename , simulation_param , ctcr_carac , ctcr_lo
     width               = 2 ;
     ctcr_shape          = ctcr_shape*1e3 ;
 
+    couleur             = [[135,69,50]   ; ...
+                           [54,22,179]   ; ...
+                           [100,125,67]  ; ...
+                           [91,122,161]  ; ...
+                           [152,110,188] ; ...
+                           [198,183,33]  ; ...
+                           [51,158,160]  ; ]/255 ;
+
     if isfile(filename)
     
         if ~isequal(ctcr_load.tau_tip,zeros(1,3)) || ...
@@ -230,14 +238,7 @@ function fig = CTCR_Load_Plot(filename , simulation_param , ctcr_carac , ctcr_lo
             
             end
     
-                
-            % Matrix color plot initialization
-            couleur = zeros(ctcr_carac.nbT,3) ;
-            temp = colormap('jet') ;
-            for iT = 1:ctcr_carac.nbT
-                couleur(iT,:) = temp(round(iT*256/ctcr_carac.nbT) , :) ;
-            end
-            
+                        
             lgd = [] ;
             for i = 1:ctcr_carac.nbT
                 iT = ctcr_carac.nbT-i+1 ;

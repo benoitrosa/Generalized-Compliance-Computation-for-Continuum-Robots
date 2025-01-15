@@ -38,11 +38,31 @@ function CTCR_Plot_3(curr_ax , ctcr_shape_init , ctcr_shape_def_1 , ctcr_shape_d
     ctcr_shape_init         = ctcr_shape_init*1e3 ;
     ctcr_shape_def_1        = ctcr_shape_def_1*1e3 ;
     ctcr_shape_def_2        = ctcr_shape_def_2*1e3 ;
-    R                       = [2,1.75,1.5,1.25,1] ;
+    R                       = [2.5,2.15,2,1.75,1.5,1.25,1] ;
     numPointsCircle         = 50 ;
-    clr_init                = [[40,78,153] ; [84,114,174]  ; [135,156,198] ; [175,186,213] ; [203,210,227]]/255 ;
-    clr_1                   = [[69,152,62] ; [112,176,107] ; [165,205,161] ; [191,215,185] ; [206,225,202]]/255 ;
-    clr_2                   = [[161,66,33] ; [188,119,96]  ; [213,171,156] ; [216,189,177] ; [228,210,201]]/255 ;
+    color_init              = [[35,51,99]    ; ...
+                               [44,66,126]   ; ...
+                               [51,75,145]   ; ...
+                               [54,81,155]   ; ...
+                               [61,90,174]   ; ...
+                               [71,105,203]  ; ...
+                               [82,121,232]]/255 ;
+
+    color_1                 = [[61,100,49]   ; ...
+                               [76,126,61]   ; ...
+                               [88,146,71]   ; ...
+                               [100,165,80]  ; ...
+                               [108,180,87]  ; ...
+                               [124,206,100] ; ...
+                               [141,235,114]]/255 ;
+
+    color_2                 = [[101,48,28]   ; ...
+                               [127,60,36]   ; ...
+                               [145,69,41]   ; ...
+                               [156,74,44]   ; ...
+                               [179,84,50]   ; ...
+                               [208,98,59]   ; ...
+                               [235,111,66]]/255 ;
 
     global fig ax
     fig     = gcf ;
@@ -56,11 +76,10 @@ function CTCR_Plot_3(curr_ax , ctcr_shape_init , ctcr_shape_def_1 , ctcr_shape_d
 
     % ====== Shape init ====== % 
     for iT = 1:ctcr_carac.nbT
-        Plot_Tube_3D(curr_ax,ctcr_shape_init(:,ctcr_construc.vect_ind_iT(iT,1):ctcr_construc.vect_ind_iT(iT,3))',R(iT), numPointsCircle,clr_init(iT,:));
-        % Add a virtual square for beautiful legend
-        lgd(iT)         = fill3(curr_ax,NaN*zeros(1,4),NaN*zeros(1,4),NaN*zeros(1,4),clr_init(iT,:),'DisplayName',['Tube n$^{\circ}$',num2str(iT),' initial']) ;
+        Plot_Tube_3D(curr_ax,ctcr_shape_init(:,ctcr_construc.vect_ind_iT(iT,1):ctcr_construc.vect_ind_iT(iT,3))',R(iT), numPointsCircle,color_init(iT,:)) ;
     end
-
+    % Add a virtual square for beautiful legend
+    lgd(1)  = fill3(curr_ax,NaN*zeros(1,4),NaN*zeros(1,4),NaN*zeros(1,4),color_init(4,:),'DisplayName','CTCR initial') ;
 
 
     % ====================================================== %
@@ -68,19 +87,18 @@ function CTCR_Plot_3(curr_ax , ctcr_shape_init , ctcr_shape_def_1 , ctcr_shape_d
 
     % ====== Shape 1 ====== % 
     for iT = 1:ctcr_carac.nbT
-        Plot_Tube_3D(curr_ax,ctcr_shape_def_1(:,ctcr_construc.vect_ind_iT(iT,1):ctcr_construc.vect_ind_iT(iT,3))',R(iT), numPointsCircle,clr_1(iT,:));
-        % Add a virtual square for beautiful legend
-        lgd(iT+ctcr_carac.nbT)      = fill3(curr_ax,NaN*zeros(1,4),NaN*zeros(1,4),NaN*zeros(1,4),clr_1(iT,:),'DisplayName',['Tube n$^{\circ}$',num2str(iT),' deformed model']) ;
+        Plot_Tube_3D(curr_ax,ctcr_shape_def_1(:,ctcr_construc.vect_ind_iT(iT,1):ctcr_construc.vect_ind_iT(iT,3))',R(iT), numPointsCircle,color_1(iT,:)) ;
     end
+    % Add a virtual square for beautiful legend
+    lgd(2)  = fill3(curr_ax,NaN*zeros(1,4),NaN*zeros(1,4),NaN*zeros(1,4),color_1(4,:),'DisplayName','CTCR deformed model') ;
+
 
     % ====== Shape 2 ====== % 
     for iT = 1:ctcr_carac.nbT
-        Plot_Tube_3D(curr_ax,ctcr_shape_def_2(:,ctcr_construc.vect_ind_iT(iT,1):ctcr_construc.vect_ind_iT(iT,3))',R(iT), numPointsCircle,clr_2(iT,:));
-        % Add a virtual square for beautiful legend
-        lgd(iT+2*ctcr_carac.nbT)    = fill3(curr_ax,NaN*zeros(1,4),NaN*zeros(1,4),NaN*zeros(1,4),clr_2(iT,:),'DisplayName',['Tube n$^{\circ}$',num2str(iT),' deformed compliance']) ;
-
+        Plot_Tube_3D(curr_ax,ctcr_shape_def_2(:,ctcr_construc.vect_ind_iT(iT,1):ctcr_construc.vect_ind_iT(iT,3))',R(iT), numPointsCircle,color_2(iT,:)) ;
     end
-
+    % Add a virtual square for beautiful legend
+    lgd(3)  = fill3(curr_ax,NaN*zeros(1,4),NaN*zeros(1,4),NaN*zeros(1,4),color_2(4,:),'DisplayName','CTCR deformed compliance') ;
 
 
     % ================================= %
