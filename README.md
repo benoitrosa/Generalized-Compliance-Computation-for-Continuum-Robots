@@ -50,11 +50,11 @@
 
 - **"CTCR_Shape_Class/" : Contains the classes involved in the quasistatic model computation.**
 
-- **"CTCR_Shape_Functions/" :Contains the functions involved in the quasistatic model computation.**
+- **"CTCR_Shape_Functions/" : Contains the functions involved in the quasistatic model computation.**
 
 - **"DOCS/" : Contains helpful files.**
-	- “variable_mapping.pdf”      : explains some of the correspondences between article and code variables
-	- "tutorial_matlab_coder.mp4" : explains how to generate a MEX function from a Matlab code
+	- “Variable_mapping.pdf”      : explains some of the correspondences between article and code variables
+	- "Tutorial_matlab_coder.mp4" : explains how to generate a MEX function from a Matlab code
 
 ## How to use your custom configuration file : 
 1. Open "CTCR_Shape_Functions/Write_Config.m"
