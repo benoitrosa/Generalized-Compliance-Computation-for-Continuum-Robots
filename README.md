@@ -24,6 +24,7 @@
 ## Folders :
 
 - **"CTCR_CPP" : Contains the MEX functions used to run the C++ compiled functions. The MEX functions are provided for Macintosh, Windows and Linux.**
+
 - ** "CTCR_Config" : Contains several configuration files examples can can be used to test the code.**
 -- "Demo_11"  : CTCR n°1 composed of 2 tubes
 -- "Demo_12"  : CTCR n°1 with a tip external force
