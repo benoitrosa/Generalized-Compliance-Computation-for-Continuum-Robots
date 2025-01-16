@@ -21,22 +21,21 @@
 - Advantage : The computation time is is greatly reduced.
 - Drawback  : You do not have access to all the internal comments of the functions.
 
-## Folder "CTCR_CPP" :
-**Contains the MEX functions used to run the C++ compiled functions. The MEX functions are provided for Macintosh, Windows and Linux.**
+## Folders :
 
-## Folder "CTCR_Config" :
-**Contains several configuration files examples can can be used to test the code.**
-- "Demo_11"  : CTCR n°1 composed of 2 tubes
-- "Demo_12"  : CTCR n°1 with a tip external force
-- "Demo_13"  : CTCR n°1 with a mid-length external force
-- "Demo_21"  : CTCR n°2 composed of 3 tubes
-- "Demo_22"  : CTCR n°2 with a tip external force
-- "Demo_23"  : CTCR n°2 with a mid-length external force
-- "Demo_24"  : CTCR n°2 with a tip external force and a mid-length distributed external force
-- "Demo_25"  : CTCR n°2 with a tip external force and two mid-length distributed external forces
-- "Demo_26"  : CTCR n°2 with a 1-force deformation linearization
-- "Demo_27"  : CTCR n°2 with a 2-forces deformation linearization
-- "Demo_mex" : CTCR composed of T tubes used to generate the MEX functions
+- **"CTCR_CPP" : Contains the MEX functions used to run the C++ compiled functions. The MEX functions are provided for Macintosh, Windows and Linux.**
+- ** "CTCR_Config" : Contains several configuration files examples can can be used to test the code.**
+-- "Demo_11"  : CTCR n°1 composed of 2 tubes
+-- "Demo_12"  : CTCR n°1 with a tip external force
+-- "Demo_13"  : CTCR n°1 with a mid-length external force
+-- "Demo_21"  : CTCR n°2 composed of 3 tubes
+-- "Demo_22"  : CTCR n°2 with a tip external force
+-- "Demo_23"  : CTCR n°2 with a mid-length external force
+-- "Demo_24"  : CTCR n°2 with a tip external force and a mid-length distributed external force
+-- "Demo_25"  : CTCR n°2 with a tip external force and two mid-length distributed external forces
+-- "Demo_26"  : CTCR n°2 with a 1-force deformation linearization
+-- "Demo_27"  : CTCR n°2 with a 2-forces deformation linearization
+-- "Demo_mex" : CTCR composed of T tubes used to generate the MEX functions
 
 ## Folder "CTCR_Deriv_Propag_Class" :
 **Contains the classes involved in the Low-Level Derivative Propagation Method computation.**
