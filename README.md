@@ -21,9 +21,11 @@
 - Advantage : The computation time is is greatly reduced.
 - Drawback  : You do not have access to all the internal comments of the functions.
 
-**The MEX functions are provided for Macintosh, Windows and Linux.** 
+## Folder "CTCR_CPP" :
+**Contains the MEX functions used to run the C++ compiled functions. The MEX functions are provided for Macintosh, Windows and Linux.**
 
-## Configuration files examples provided in the folder "CTCR_Config" :
+## Folder "CTCR_Config" :
+**Contains several configuration files examples can can be used to test the code.**
 - "Demo_11"  : CTCR n°1 composed of 2 tubes
 - "Demo_12"  : CTCR n°1 with a tip external force
 - "Demo_13"  : CTCR n°1 with a mid-length external force
@@ -36,6 +38,32 @@
 - "Demo_27"  : CTCR n°2 with a 2-forces deformation linearization
 - "Demo_mex" : CTCR composed of T tubes used to generate the MEX functions
 
+## Folder "CTCR_Deriv_Propag_Class" :
+**Contains the classes involved in the Low-Level Derivative Propagation Method computation.**
+
+## Folder "CTCR_Deriv_Propag_Functions" :
+**Contains the functions involved in the Low-Level Derivative Propagation Method computation.**
+
+## Folder "CTCR_Graphic" :
+**Contains the functions used to generate plots.**
+
+## Folder "CTCR_Graphic" :
+**Contains the functions used to generate plots.**
+
+## Folder "CTCR_Maths_Functions" :
+**Contains some elementary maths functions.**
+
+## Folder "CTCR_Shape_Class" :
+**Contains the classes involved in the quasistatic model computation.**
+
+## Folder "CTCR_Shape_Functions" :
+**Contains the functions involved in the quasistatic model computation.**
+
+## Folder "DOCS" :
+**Contains some helpful files.**
+- “variable_mapping.pdf”      : explains some of the correspondences between article and code variables
+- "tutorial_matlab_coder.mp4" : explains how to generate a MEX function from a Matlab code
+
 ## How to use your custom configuration file : 
 - Open "CTCR_Shape_Functions/Write_Config.m"
 - Change the parameters you want
@@ -43,9 +71,6 @@
 - Run "Write_Config(<your_config_name>)" in the Matlab terminal
 - Change the line n°42 of the "main.m" (or "main_cpp.m") as "name = '<your_config_name>'" ;
 - Run "main.m" (or "main_cpp.m")
-
-## Extra ressources :
-- The file “variable_mapping.pdf” shows the correspondences between article and code variables
 
 ## Contact : 
 **Do not hesitate to contact us if you have any questions.**
