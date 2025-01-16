@@ -21,7 +21,7 @@
 - Advantage : The computation time is is greatly reduced.
 - Drawback  : You do not have access to all the internal comments of the functions.
 
-## Folders :
+## Folder contents :
 
 - **"CTCR_CPP/" : Contains the MEX functions used to run the C++ compiled functions. The MEX functions are provided for Macintosh, Windows and Linux.**
 
@@ -38,21 +38,21 @@
 	- "Demo_27"  : CTCR n°2 with a 2-forces deformation linearization
 	- "Demo_mex" : CTCR composed of T tubes used to generate the MEX functions
 
-**"CTCR_Deriv_Propag_Class/" : Contains the classes involved in the Low-Level Derivative Propagation Method computation.**
+- **"CTCR_Deriv_Propag_Class/" : Contains the classes involved in the Low-Level Derivative Propagation Method computation.**
 
-**"CTCR_Deriv_Propag_Functions/" : Contains the functions involved in the Low-Level Derivative Propagation Method computation.**
+- **"CTCR_Deriv_Propag_Functions/" : Contains the functions involved in the Low-Level Derivative Propagation Method computation.**
 
-**"CTCR_Graphic/" :Contains the functions used to generate plots.**
+- **"CTCR_Graphic/" :Contains the functions used to generate plots.**
 
-**"CTCR_Graphic/" : Contains the functions used to generate plots.**
+- **"CTCR_Graphic/" : Contains the functions used to generate plots.**
 
-**"CTCR_Maths_Functions"/ : Contains some elementary maths functions.**
+- **"CTCR_Maths_Functions"/ : Contains some elementary maths functions.**
 
-**"CTCR_Shape_Class/" : Contains the classes involved in the quasistatic model computation.**
+- **"CTCR_Shape_Class/" : Contains the classes involved in the quasistatic model computation.**
 
-**"CTCR_Shape_Functions/" :Contains the functions involved in the quasistatic model computation.**
+- **"CTCR_Shape_Functions/" :Contains the functions involved in the quasistatic model computation.**
 
-**"DOCS/" : Contains helpful files.**
+- **"DOCS/" : Contains helpful files.**
 	- “variable_mapping.pdf”      : explains some of the correspondences between article and code variables
 	- "tutorial_matlab_coder.mp4" : explains how to generate a MEX function from a Matlab code
 
