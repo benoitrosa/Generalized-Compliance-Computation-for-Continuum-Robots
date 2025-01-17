@@ -6,12 +6,12 @@ classdef MemYS
 %
 % This class contains the partial derivatives of dy(s)_ds
 %
-% mem_ts    : (class) Object containing the d_thetai_ds(s) values
-% mem_uzs   : (class) Object containing the d_uzi_ds(s) values
-% mem_m0s   : (class) Object containing the d_m0_ds(s) values
-% mem_n0s   : (class) Object containing the d_n0_ds(s) values
-% mem_R0s   : (class) Object containing the d_R0_ds(s) values
-% mem_p0s   : (class) Object containing the d_p0_ds(s) values
+% mem_ts    : (nbT x nbP)       Matrix containing the d_thetai_ds(s) values
+% mem_uzs   : (nbT x nbP)       Matrix containing the d_uzi_ds(s) values
+% mem_m0s   : (3 x nbP)         Matrix containing the d_m0_ds(s) values
+% mem_n0s   : (3 x nbP)         Matrix containing the d_n0_ds(s) values
+% mem_R0s   : (3 x 3 x nbP)     Matrix containing the d_R0_ds(s) values
+% mem_p0s   : (3 x nbP)         Matrix containing the d_p0_ds(s) values
 %
 % ======================================================================= %
 % ======================================================================= %
