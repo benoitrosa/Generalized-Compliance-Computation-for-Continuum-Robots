@@ -49,7 +49,6 @@ classdef MemCJ
                 = Get_All_MemCJ(mc)
 
             mem_Cs0 = mc.mem_Cs0    ;
-            
             mem_J   = mc.mem_J      ;
 
         end

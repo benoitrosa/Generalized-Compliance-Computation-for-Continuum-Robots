@@ -49,7 +49,7 @@ function [mem_bvp , bvp_prop , ctcr_shape , mem_deriv_propag_low , mem_deriv_pro
 
     bvp_prop                = BVPProp() ;           % BVP prop initialization
     bvp_prop.IC_opt         = IC ;                  % IC initialization
-    bvp_prop.nb_iter        = 0 ; % 1               % Iteration number initialzation
+    bvp_prop.nb_iter        = 0 ;                   % Iteration number initialzation
 
     
     % Memories initialization
@@ -73,9 +73,9 @@ function [mem_bvp , bvp_prop , ctcr_shape , mem_deriv_propag_low , mem_deriv_pro
                 IC , ctcr_construc , ctcr_carac , ctcr_load , bvp_prop , ...
                 mem_bvp , mem_deriv_propag_low) ;
 
-    [IC_opt,~,exitflag,output,jacobian] = fsolve(myfun,IC,opts) ;
+    [IC_opt,~,exitflag,output,jacobian_num] = fsolve(myfun,IC,opts) ;
 
-    [error , jacobianMatrix , bvp_prop , mem_bvp , mem_deriv_propag_low] ...
+    [error , jacobian_lit , bvp_prop , mem_bvp , mem_deriv_propag_low] ...
     = BVP_BC_Comp_Fsolve( ...
     IC_opt , ctcr_construc , ctcr_carac , ctcr_load , bvp_prop , ...
     mem_bvp , mem_deriv_propag_low) ;
@@ -107,11 +107,10 @@ function [mem_bvp , bvp_prop , ctcr_shape , mem_deriv_propag_low , mem_deriv_pro
 
     else
 
-        simulation_param.bool_problem_opt = false ;
-
-        bvp_prop.Bu = BVP_Bu_Construc(mem_bvp , mem_deriv_propag_low , ctcr_construc , ctcr_carac , ctcr_load) ;
+        simulation_param.bool_problem_opt               = false ;
+        mem_deriv_propag_high.mem_B(1:nbT+6,1:nbT+6)    = BVP_Bu_Construc(mem_deriv_propag_low , mem_bvp , tacr_load , tacr_construc , tacr_act) ;
+        bvp_prop.Bu                                     = mem_deriv_propag_high.mem_B(1:nbT+6,1:nbT+6) ;
         
-
         % Update the partial derivative duzi_dbcj since it depends on the optimal yu(0)
         for iT = 1:ctcr_carac.nbT
             mem_deriv_propag_low.mem_duzi.mem_duzi_dbcj(iT,iT,ctcr_construc.vect_ind_iT(iT,1)) = - bvp_prop.IC_opt(iT)/ctcr_construc.vect_res(ctcr_construc.vect_ind_iT(iT,1)) ;

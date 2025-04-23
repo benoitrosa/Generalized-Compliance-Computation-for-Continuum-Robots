@@ -36,13 +36,12 @@ function [ctcr_construc_new,ctcr_load_new,mem_is0] = Add_Force_var(prc_s0,delta_
     % For each vector force, find the corresponding discretization point
     for i_f = 1:length(prc_s0)
     
-        % ========= Points d'application ========= %
+        % ========= Loaded points ========= %
         mem_des_s0      = ctcr_construc.vect_z(end)*prc_s0(i_f)/100 ;
         mem_is0(i_f)    = find(ctcr_construc.vect_z(:) >= mem_des_s0,1,'first') ;
         mem_s0(i_f)     = ctcr_construc.vect_z(mem_is0(i_f)) ;
         
         % ========= Add vectors forces in ctcr_construc ========= %
-    
         if mem_is0(i_f) == ctcr_construc.nbP
             ctcr_load_new.f_tip(1:3,1)                     = ctcr_load_new.f_tip(1:3,1) + delta_f0(i_f,1:3)' ;
         else

@@ -9,7 +9,7 @@ classdef SimulationParam
 % res_step           : (float) [m]              Discretization step away from discontinuity points (𝛥(𝑠) in the paper see Table 5)
 % opt_tol            : (float)                  Stopping criterion for solving the BVP (𝜖 in the paper see Table 5)
 % epsilon_disct_pt   : (float) [m]              Discretization step near discontinuity points (𝛥(𝑠) in the paper see Table 5)
-% nb_disct_pt        : (int > 0)                Number of points before and after each discontinuity points (see Table 5) ;
+% nb_disct_pt        : (int > 0)                Number of points before and after each discontinuity points (see Table 5)
 % pt_s0_LIT          : (int ∊ [1 , nbP]) (1x_)  Vector of the point indexes (s0) on which the generalized compliance matrix will be computed
 % bool_J             : (boolean)                Compute the Joint Jacobian ?  
 % bool_Cs0           : (boolean)                Compute the Generalized Compliance Matrix ?

@@ -50,7 +50,7 @@ function mem_CJ ...
         if simulation_param.bool_J
     
             % ========================================================== %
-            % ============= Articular jacobian computation ============= %
+            % =============== Joint jacobian computation =============== %
             % (eq 16)
         
             Eq                   = mem_deriv_propag_high.mem_E(:,nbT+7:3*nbT+6,is) ;

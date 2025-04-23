@@ -249,6 +249,8 @@ if simulation_param.flag_ctcr
         = CTCR_Shape( ...
         IC , simulation_param , ctcr_carac , ctcr_load_new , ctcr_construc_new) ;
     
+
+        
         % ================
         % ==== Display in the terminal ====
     

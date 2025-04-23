@@ -14,7 +14,6 @@ function [error , jacobianMatrix , bvp_prop , mem_bvp , mem_deriv_propag_low] = 
 % ====== INPUTS ====== 
 %
 % IC                    : (nbT+6 x 1)       Initial value for yu(0) (see Table 5) 
-% simulation_param      : (class)           Model settings
 % ctcr_construc         : (class)           Robot features related to the model settings
 % ctcr_carac            : (class)           Robot features
 % ctcr_load             : (class)           Robot loads
