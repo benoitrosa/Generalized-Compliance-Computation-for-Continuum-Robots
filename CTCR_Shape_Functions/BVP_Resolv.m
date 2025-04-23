@@ -107,9 +107,9 @@ function [mem_bvp , bvp_prop , ctcr_shape , mem_deriv_propag_low , mem_deriv_pro
 
     else
 
-        simulation_param.bool_problem_opt               = false ;
-        mem_deriv_propag_high.mem_B(1:nbT+6,1:nbT+6)    = BVP_Bu_Construc(mem_deriv_propag_low , mem_bvp , tacr_load , tacr_construc , tacr_act) ;
-        bvp_prop.Bu                                     = mem_deriv_propag_high.mem_B(1:nbT+6,1:nbT+6) ;
+        simulation_param.bool_problem_opt                                   = false ;
+        mem_deriv_propag_high.mem_B(1:ctcr_carac.nbT+6,1:ctcr_carac.nbT+6)  = BVP_Bu_Construc(mem_bvp , mem_deriv_propag_low , ctcr_construc , ctcr_carac , ctcr_load) ;
+        bvp_prop.Bu                                                         = mem_deriv_propag_high.mem_B(1:ctcr_carac.nbT+6,1:ctcr_carac.nbT+6) ;
         
         % Update the partial derivative duzi_dbcj since it depends on the optimal yu(0)
         for iT = 1:ctcr_carac.nbT
