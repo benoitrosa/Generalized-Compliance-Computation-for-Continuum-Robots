@@ -29,8 +29,8 @@ function ctcr_construc ...
     % ================== Getting input values ================== %
     
     res_step                = simulation_param.res_step ;
-    epsilon_disct_pt        = simulation_param.epsilon_disct_pt ;
-    nb_disct_pt             = simulation_param.nb_disct_pt ;
+    resol_pt_disct          = simulation_param.resol_pt_disct ;
+    nb_pt_dict              = simulation_param.nb_pt_dict ;
     nbT                     = ctcr_carac.nbT ;
     stiff                   = ctcr_carac.stiff ;
     coeff_poiss             = ctcr_carac.coeff_poiss ;
@@ -61,30 +61,30 @@ function ctcr_construc ...
     % ========================================================== %
 
     % Initialization of the discontinuity points
-    disct_pt = zeros(1,(2*nb_disct_pt+1)*(nbT*3+1)) ;
+    disct_pt = zeros(1,(2*nb_pt_dict+1)*(nbT*3+1)) ;
 
     mem_lim_z = NaN*zeros(3*nbT,2) ;
 
     for iT = 1:nbT
 
         % Lower end
-        disct_pt(((iT-1)*3+0)*(2*nb_disct_pt+1)+1 : ((iT-1)*3+1)*(2*nb_disct_pt+1)) = (beta_c(iT)-L(iT))*ones(1,2*nb_disct_pt+1) + linspace(-nb_disct_pt,nb_disct_pt,2*nb_disct_pt+1)*epsilon_disct_pt ;
+        disct_pt(((iT-1)*3+0)*(2*nb_pt_dict+1)+1 : ((iT-1)*3+1)*(2*nb_pt_dict+1)) = (beta_c(iT)-L(iT))*ones(1,2*nb_pt_dict+1) + linspace(-nb_pt_dict,nb_pt_dict,2*nb_pt_dict+1)*resol_pt_disct ;
 
         % Upper end
-        disct_pt(((iT-1)*3+1)*(2*nb_disct_pt+1)+1 : ((iT-1)*3+2)*(2*nb_disct_pt+1)) = (beta_c(iT))*ones(1,2*nb_disct_pt+1) + linspace(-nb_disct_pt,nb_disct_pt,2*nb_disct_pt+1)*epsilon_disct_pt ;
+        disct_pt(((iT-1)*3+1)*(2*nb_pt_dict+1)+1 : ((iT-1)*3+2)*(2*nb_pt_dict+1)) = (beta_c(iT))*ones(1,2*nb_pt_dict+1) + linspace(-nb_pt_dict,nb_pt_dict,2*nb_pt_dict+1)*resol_pt_disct ;
         
         % Curvature
-        disct_pt(((iT-1)*3+2)*(2*nb_disct_pt+1)+1 : ((iT-1)*3+3)*(2*nb_disct_pt+1)) = (max(0,beta_c(iT)-Lc(iT)))*ones(1,2*nb_disct_pt+1) + linspace(-nb_disct_pt,nb_disct_pt,2*nb_disct_pt+1)*epsilon_disct_pt ;
+        disct_pt(((iT-1)*3+2)*(2*nb_pt_dict+1)+1 : ((iT-1)*3+3)*(2*nb_pt_dict+1)) = (max(0,beta_c(iT)-Lc(iT)))*ones(1,2*nb_pt_dict+1) + linspace(-nb_pt_dict,nb_pt_dict,2*nb_pt_dict+1)*resol_pt_disct ;
         
         % Memorize the limit z for each discontinuity point
-        mem_lim_z((iT-1)*3+1,:) = (beta_c(iT)-L(iT))*ones(1,2) + [-nb_disct_pt,nb_disct_pt]*epsilon_disct_pt ;
-        mem_lim_z((iT-1)*3+2,:) = (beta_c(iT))*ones(1,2) + [-nb_disct_pt,nb_disct_pt]*epsilon_disct_pt ;
-        mem_lim_z((iT-1)*3+3,:) = (beta_c(iT)-Lc(iT))*ones(1,2) + [-nb_disct_pt,nb_disct_pt]*epsilon_disct_pt ;
+        mem_lim_z((iT-1)*3+1,:) = (beta_c(iT)-L(iT))*ones(1,2) + [-nb_pt_dict,nb_pt_dict]*resol_pt_disct ;
+        mem_lim_z((iT-1)*3+2,:) = (beta_c(iT))*ones(1,2) + [-nb_pt_dict,nb_pt_dict]*resol_pt_disct ;
+        mem_lim_z((iT-1)*3+3,:) = (beta_c(iT)-Lc(iT))*ones(1,2) + [-nb_pt_dict,nb_pt_dict]*resol_pt_disct ;
 
     end
 
     % Adding the origin
-    disct_pt(end-(2*nb_disct_pt+1)+1:end) = linspace(-nb_disct_pt,nb_disct_pt,2*nb_disct_pt+1)*epsilon_disct_pt ;
+    disct_pt(end-(2*nb_pt_dict+1)+1:end) = linspace(-nb_pt_dict,nb_pt_dict,2*nb_pt_dict+1)*resol_pt_disct ;
 
     % Remaining positive points
     nbP_plus = floor(max(beta_c)/res_step) ;
@@ -116,7 +116,7 @@ function ctcr_construc ...
     vect_z = [vect_z , disct_pt] ;
 
     % Removing points outside the robot except the first outside the robot
-    vect_z = vect_z( vect_z >= - (L(nbT) - beta_c(nbT)) & vect_z <= beta_c(nbT) + epsilon_disct_pt) ;
+    vect_z = vect_z( vect_z >= - (L(nbT) - beta_c(nbT)) & vect_z <= beta_c(nbT) + resol_pt_disct) ;
 
     % Sort by ascending order
     vect_z = sort(vect_z) ;
@@ -131,8 +131,8 @@ function ctcr_construc ...
     vect_res = diff(vect_z) ;
 
     % Deleting points too close
-    tp_vect_z   = [vect_z(vect_res     > simulation_param.opt_tol),vect_z(end)] ;
-    tp_vect_res = vect_res(vect_res    > simulation_param.opt_tol) ;
+    tp_vect_z   = [vect_z(vect_res     > resol_pt_disct),vect_z(end)] ;
+    tp_vect_res = vect_res(vect_res    > resol_pt_disct) ;
     %clear vect_z vect_res
     vect_z      = tp_vect_z ;
     vect_res    = tp_vect_res ;

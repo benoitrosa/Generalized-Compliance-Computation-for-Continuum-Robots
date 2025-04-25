@@ -9,7 +9,7 @@
 disp(' ')
 clear all
 close all
-clc
+%clc
 
 addpath('CTCR_Maths_Functions', 'CTCR_Shape_Functions', ...
     'CTCR_Shape_Class', 'CTCR_Deriv_Propag_Class', 'CTCR_Deriv_Propag_Functions', ...
@@ -39,7 +39,7 @@ addpath('CTCR_Maths_Functions', 'CTCR_Shape_Functions', ...
 % ================
 % =============== File ===============
 
-name = 'Demo_mex' ;                               % Name of the folder created to store the results and the graphs
+name = 'CTCR_mex' ;                               % Name of the folder created to store the results and the graphs
 
 
 fprintf('\n ============= \n ==== LOADING THE CONFIG FILE \n') ;
@@ -70,10 +70,20 @@ fprintf([' == ',name,'_config.mat \n']) ;
 
 if simulation_param.flag_ctcr
 
+    fprintf('\n ============= \n ==== SMART INITIAL GUESS : %s \n' , string(simulation_param.bool_SIC)) ;
+
+    if simulation_param.bool_SIC
+        n0_init = - ctcr_load.f_tip' - ctcr_load.f_dist_1' - ctcr_load.f_dist_2' ;
+        m0_init = zeros(3,1) ;
+        IC      = [zeros(ctcr_carac.nbT,1) ; m0_init ; n0_init] ;
+    else
+        IC      = zeros(ctcr_carac.nbT+6,1) ;            % Initial value for yu(0) (see Table 5) 
+    end
+    
+
+
     fprintf('\n ============= \n ==== COMPUTING THE CTCR SHAPE \n') ;
     
-    IC = zeros(ctcr_carac.nbT+6,1) ;            % Initial value for yu(0) (see Table 5) 
-
     [ctcr_shape , mem_bvp , bvp_prop , mem_deriv_propag_low , ...
     mem_deriv_propag_high , mem_CJ , simulation_param , ctcr_construc ,  ~ , ~] ...
     = CTCR_Shape( ...

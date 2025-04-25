@@ -59,11 +59,36 @@ function [mem_bvp , bvp_prop , ctcr_shape , mem_deriv_propag_low , mem_deriv_pro
 
 
     % ========================================= %
-    % ======== Settings for the solver ======== % 
-    opts = optimoptions('fsolve','Display','off','Algorithm','levenberg-marquardt', ...
-           'MaxIter',500,'FunctionTolerance',10*eps, ...
-           'InitDamping',1,'SpecifyObjectiveGradient',true, ...
-           'MaxFunctionEvaluations',1000) ;
+    % ======== Settings for the solver ======== %
+
+    if simulation_param.bool_opt_lit
+
+        % ======= Computing the optimization jacobian using the LLDPM ======= %
+
+        opts = optimoptions('fsolve','Display','iter','Algorithm','levenberg-marquardt', ...
+               'MaxIter',1000, 'FunctionTolerance',10*eps, 'StepTolerance',10*eps , ...
+               'MaxFunctionEvaluations',6000, ...
+               'ScaleProblem','jacobian' , 'SpecifyObjectiveGradient',true) ; 
+        
+    else
+
+        % ======= Computing the optimization jacobian using the DF ======= %
+
+        opts = optimoptions('fsolve','Display','iter','Algorithm','levenberg-marquardt', ...
+               'MaxIter',1000, 'FunctionTolerance',10*eps, 'StepTolerance',10*eps , ...
+               'MaxFunctionEvaluations',6000, ...
+               'ScaleProblem','jacobian') ;
+
+    end
+
+
+    % Custom optimization settings
+    opts.Display                = simulation_param.Display                  ;
+    opts.FunctionTolerance      = simulation_param.FunctionTolerance        ;
+    opts.StepTolerance          = simulation_param.FunctionTolerance        ; 
+    opts.MaxIter                = simulation_param.MaxIter                  ;
+    opts.MaxFunctionEvaluations = simulation_param.MaxFunctionEvaluations   ;
+
 
 
     % ========================================= %

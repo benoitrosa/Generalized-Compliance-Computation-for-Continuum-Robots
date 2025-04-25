@@ -65,10 +65,23 @@ fprintf([' == ',name,'_config.mat \n']) ;
     tacr_construc , prc_s0 , delta_f0] = Load_Config(name) ;
 
 
+
+fprintf('\n ============= \n ==== SMART INITIAL GUESS : %s \n' , simulation_param.bool_SIC) ;
+
+if simulation_param.bool_SIC
+    n0_init = - tacr_load.f_tip' - tacr_load.f_dist_1' - tacr_load.f_dist_2' - sum([zeros(2,tacr_carac.nbT);tacr_act.ti],2) ;
+    m0_init = - tacr_load.tau_tip' - tacr_load.tau_dist_1' - tacr_load.tau_dist_2' ...
+              - hat([0;0;tacr_carac.L])*tacr_load.f_tip' ...
+              - hat([0;0;mean(tacr_load.load_lim_1)])*tacr_load.f_dist_1' ...
+              - hat([0;0;mean(tacr_load.load_lim_2)])*tacr_load.f_dist_2' ;
+    IC      = [m0_init;n0_init] ;
+else
+    IC      = zeros(6,1) ;
+end
+
+
+
 fprintf('\n ============= \n ==== COMPUTING THE TACR SHAPE \n') ;
-
-
-IC = rand(6,1)*1e-3 ;
 
 [tacr_shape , mem_bvp , bvp_prop , mem_deriv_propag_low , ...
 mem_deriv_propag_high , mem_CJ , simulation_param , tacr_construc ,  ~ , ~] ...
@@ -261,98 +274,98 @@ end
 % 
 % 
 % 
-% 
-% 
-% % ============================================================= %
-% % ============================================================== %
-% % =========================== Extra ============================ %
-% %                                                                %
-% %                  For a given force variation                   %
-% %     visualize the shape deformation computed by the model      %
-% %                             versus                             %
-% %         the shape deformation computed by linearization        %
-% %            using the Generalized Compliance Matrix             %
-% %                                                                %
-% % ============================================================== %
-% % ============================================================== %
-% 
-% if ~isempty(prc_s0) && ~isempty(delta_f0)
-% 
-% 
-%     % ================
-%     % ============== Adding the vector force to tacr_construc ===============
-% 
-%     fprintf('\n ============= \n ==== ADDIND THE FORCE VARIATION \n') ;
-% 
-%     [tacr_construc_def_mod , tacr_load_new , mem_is0] ...
-%     = Add_Force_var( ...
-%     prc_s0 , delta_f0 , tacr_construc , tacr_load) ;
-% 
-% 
-% 
-%     % ================
-%     % ============== Compute the model again ===============
-% 
-%     fprintf('\n ============= \n ==== COMPUTING THE DEFORMED TACR SHAPE USING THE SHAPE MODEL \n') ;
-% 
-%     [tacr_shape_def_mod , mem_bvp_def_mod , bvp_prop_def_mod , mem_deriv_propag_low_def_mod , ...
-%     mem_deriv_propag_high_def_mod , mem_CJ_def_mod , simulation_param_def_mod , tacr_construc_def_mod , ~ , ~] ...
-%     = TACR_Shape( ...
-%     IC , simulation_param , tacr_carac , tacr_act , tacr_load_new , tacr_construc_def_mod) ;
-% 
-% 
-%     % ================
-%     % ==== Display in the terminal ====
-% 
-%     if simulation_param.bool_disp_terminal
-%         fprintf(' == Time for TACR shape : %.2e [s] \n', bvp_prop.clk_bvp) ;
-%         fprintf(' == Number of iterations : %.2e \n', bvp_prop.nb_iter) ;
-%         fprintf(' == Optimization norm error : %.2e \n', bvp_prop.norm_tol) ;
-%         fprintf(' == Number of discretization points : %.2e \n', tacr_construc_def_mod.nbP) ;
-%     end
-% 
-% 
-% 
-%     % ================
-%     % ============== Compute the deformation using the Generalized Compliance Matrix ===============
-% 
-%     fprintf('\n ============= \n ==== COMPUTING THE DEFORMED TACR SHAPE BY LINEARIZATION USING THE GENERALIZED COMPLIANCE MATRIX \n') ;
-% 
-%     [tacr_shape_def_jacob , time_comp_lin_deform , tacr_construc_def_jacob , mem_bvp_def_jacob] ...
-%     = Lin_Deform( ...
-%     mem_is0 , delta_f0 , tacr_carac , tacr_shape , tacr_construc , mem_CJ.mem_Cs0 , mem_bvp) ;
-% 
-% 
-%     % ================
-%     % ==== Display in the terminal ====
-% 
-%     if simulation_param.bool_disp_terminal
-%         fprintf(' == Computation time for linearized deformations : %.2e [s] \n', time_comp_lin_deform) ;
-%     end
-% 
-% 
-%     % ================
-%     % ============== Visualize the two shapes on the same graph ===============
-% 
-%     fprintf('\n ============= \n ==== PLOTTING THE TACR 3D DEFORMED SHAPES \n') ;
-% 
-%     fig_deform                  = figure('units','normalized','outerposition',[0 0 1 1]) ;
-%     fig_deform.Color            = 'w';
-%     fig_deform.WindowState      = 'fullscreen' ;
-%     curr_ax                     = axes(fig_deform) ;
-% 
-%     TACR_Plot_3(curr_ax , ...
-%                 mem_bvp.mem_y.mem_R0 , mem_bvp_def_mod.mem_y.mem_R0 , mem_bvp_def_jacob.mem_y.mem_R0 , ...
-%                 tacr_construc , tacr_construc_def_mod , tacr_construc_def_jacob , ...
-%                 tacr_carac , mem_is0 , delta_f0) ;  
-% 
-%     cd(['DATA/',name])
-%     saveas(fig_deform,strcat(name,'_deform_shape.fig')) ;  
-%     saveas(fig_deform,strcat(name,'_deform_shape.png')) ;
-%     cd ../..
-%     close gcf
-% 
-% end
+
+
+% ============================================================= %
+% ============================================================== %
+% =========================== Extra ============================ %
+%                                                                %
+%                  For a given force variation                   %
+%     visualize the shape deformation computed by the model      %
+%                             versus                             %
+%         the shape deformation computed by linearization        %
+%            using the Generalized Compliance Matrix             %
+%                                                                %
+% ============================================================== %
+% ============================================================== %
+
+if ~isempty(prc_s0) && ~isempty(delta_f0)
+
+
+    % ================
+    % ============== Adding the vector force to tacr_construc ===============
+
+    fprintf('\n ============= \n ==== ADDIND THE FORCE VARIATION \n') ;
+
+    [tacr_construc_def_mod , tacr_load_new , mem_is0] ...
+    = Add_Force_var( ...
+    prc_s0 , delta_f0 , tacr_construc , tacr_load) ;
+
+
+
+    % ================
+    % ============== Compute the model again ===============
+
+    fprintf('\n ============= \n ==== COMPUTING THE DEFORMED TACR SHAPE USING THE SHAPE MODEL \n') ;
+
+    [tacr_shape_def_mod , mem_bvp_def_mod , bvp_prop_def_mod , mem_deriv_propag_low_def_mod , ...
+    mem_deriv_propag_high_def_mod , mem_CJ_def_mod , simulation_param_def_mod , tacr_construc_def_mod , ~ , ~] ...
+    = TACR_Shape_mex( ...
+    IC , simulation_param , tacr_carac , tacr_act , tacr_load_new , tacr_construc_def_mod) ;
+
+
+    % ================
+    % ==== Display in the terminal ====
+
+    if simulation_param.bool_disp_terminal
+        fprintf(' == Time for TACR shape : %.2e [s] \n', bvp_prop.clk_bvp) ;
+        fprintf(' == Number of iterations : %.2e \n', bvp_prop.nb_iter) ;
+        fprintf(' == Optimization norm error : %.2e \n', bvp_prop.norm_tol) ;
+        fprintf(' == Number of discretization points : %.2e \n', tacr_construc_def_mod.nbP) ;
+    end
+
+
+
+    % ================
+    % ============== Compute the deformation using the Generalized Compliance Matrix ===============
+
+    fprintf('\n ============= \n ==== COMPUTING THE DEFORMED TACR SHAPE BY LINEARIZATION USING THE GENERALIZED COMPLIANCE MATRIX \n') ;
+
+    [tacr_shape_def_jacob , time_comp_lin_deform , tacr_construc_def_jacob , mem_bvp_def_jacob] ...
+    = Lin_Deform( ...
+    mem_is0 , delta_f0 , tacr_carac , tacr_shape , tacr_construc , mem_CJ.mem_Cs0 , mem_bvp) ;
+
+
+    % ================
+    % ==== Display in the terminal ====
+
+    if simulation_param.bool_disp_terminal
+        fprintf(' == Computation time for linearized deformations : %.2e [s] \n', time_comp_lin_deform) ;
+    end
+
+
+    % ================
+    % ============== Visualize the two shapes on the same graph ===============
+
+    fprintf('\n ============= \n ==== PLOTTING THE TACR 3D DEFORMED SHAPES \n') ;
+
+    fig_deform                  = figure('units','normalized','outerposition',[0 0 1 1]) ;
+    fig_deform.Color            = 'w';
+    fig_deform.WindowState      = 'fullscreen' ;
+    curr_ax                     = axes(fig_deform) ;
+
+    TACR_Plot_3(curr_ax , ...
+                mem_bvp.mem_y.mem_R0 , mem_bvp_def_mod.mem_y.mem_R0 , mem_bvp_def_jacob.mem_y.mem_R0 , ...
+                tacr_construc , tacr_construc_def_mod , tacr_construc_def_jacob , ...
+                tacr_carac , mem_is0 , delta_f0) ;  
+
+    cd(['DATA/',name])
+    saveas(fig_deform,strcat(name,'_deform_shape.fig')) ;  
+    saveas(fig_deform,strcat(name,'_deform_shape.png')) ;
+    cd ../..
+    close gcf
+
+end
 
 
 

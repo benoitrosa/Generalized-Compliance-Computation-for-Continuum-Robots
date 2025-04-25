@@ -69,8 +69,8 @@ function tacr_construc = TACR_Construc(simulation_param , tacr_carac , tacr_load
     vect_res    = diff(vect_z) ;
 
     % Deleting points too close
-    tp_vect_z   = [vect_z(vect_res     > simulation_param.opt_tol),vect_z(end)] ;
-    tp_vect_res = vect_res(vect_res    > simulation_param.opt_tol) ;
+    tp_vect_z   = [vect_z(vect_res     > simulation_param.StepTolerance),vect_z(end)] ;
+    tp_vect_res = vect_res(vect_res    > simulation_param.StepTolerance) ;
     
     vect_z          = tp_vect_z ;
     vect_res        = tp_vect_res ;

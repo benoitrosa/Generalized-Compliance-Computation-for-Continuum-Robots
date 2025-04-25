@@ -44,7 +44,7 @@ function mem_CJ ...
    for is = ctcr_construc.ind_origin:ctcr_construc.nbP
 
         Eu          = mem_deriv_propag_high.mem_E(:,1:nbT+6,is)  ;
-        pinv_Bu     = pinv(bvp_prop.Bu,simulation_param.opt_tol) ;
+        pinv_Bu     = pinv(bvp_prop.Bu,simulation_param.resol_pt_disct) ;
         
     
         if simulation_param.bool_J
