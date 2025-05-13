@@ -1,7 +1,7 @@
 function [ctcr_shape , mem_bvp , bvp_prop , mem_deriv_propag_low , ...
           mem_deriv_propag_high , mem_CJ , simulation_param , ctcr_construc , exitflag , output] ...
           = CTCR_Shape( ...
-          IC , simulation_param , ctcr_carac , ctcr_load , ctcr_construc)
+          simulation_param , ctcr_carac , ctcr_load , ctcr_construc)
 
 
 % ======================================================================= %
@@ -35,12 +35,25 @@ function [ctcr_shape , mem_bvp , bvp_prop , mem_deriv_propag_low , ...
 % ======================================================================= %
 % ======================================================================= %
     
-    
+
+    fprintf('\n ============= \n ==== SMART INITIAL GUESS : %s \n' , string(simulation_param.bool_SIC)) ;
+
+    if simulation_param.bool_SIC
+        n0_init = - ctcr_load.f_tip' - ctcr_load.f_dist_1' - ctcr_load.f_dist_2' ;
+        m0_init = zeros(3,1) ;
+        IC      = [zeros(ctcr_carac.nbT,1) ; m0_init ; n0_init] ;
+    else
+        IC      = zeros(ctcr_carac.nbT+6,1) ;            % Initial value for yu(0) (see Table 5) 
+    end
+
+
+
     % ================
     % ==== Solving the BVP ====
 
     [mem_bvp , bvp_prop , ctcr_shape , mem_deriv_propag_low , mem_deriv_propag_high , mem_CJ , simulation_param , exitflag , output] ...
     = BVP_Resolv( ...
     IC , ctcr_construc , simulation_param , ctcr_carac , ctcr_load) ;
+    
     
 end

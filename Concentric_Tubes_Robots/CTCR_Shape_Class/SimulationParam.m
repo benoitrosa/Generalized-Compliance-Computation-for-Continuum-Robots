@@ -7,7 +7,7 @@ classdef SimulationParam
 % This class contains the model settings
 %
 % res_step                  : (float) [m]               Discretization step away from discontinuity points (𝛥(𝑠) in the paper see Table 5)
-% Display                   : (string)                  'Display' options of optimoptions
+% bool_display_iter         : (boolean)                 Display the iteration of fsolve ?
 % FunctionTolerance         : (float)                   'FunctionTolerance' options of optimoptions (𝜖 in the paper see Table 5)
 % StepTolerance             : (float)                   'StepTolerance' options of optimoptions
 % MaxIter                   : (int)                     'MaxIter' options of optimoptions
@@ -31,7 +31,7 @@ classdef SimulationParam
     properties
 
         res_step                = [] ;
-        Display                 = [] ;
+        bool_display_iter       = [] ;
         FunctionTolerance       = [] ;
         StepTolerance           = [] ;
         MaxIter                 = [] ;
@@ -56,7 +56,7 @@ classdef SimulationParam
             if (nargin == 1) && (strcmp(varargin{1},'default'))
 
                 mc.res_step                 = 0.002 ;
-                mc.Display                  = 'off' ;
+                mc.bool_display_iter        = false ;
                 mc.FunctionTolerance        = 1e-10 ;
                 mc.StepTolerance            = 1e-10 ;
                 mc.MaxIter                  = 1000  ;
@@ -76,7 +76,7 @@ classdef SimulationParam
             elseif nargin == 16
 
                 mc.res_step                 = varargin{1} ;
-                mc.Display                  = varargin{2} ;
+                mc.bool_display_iter        = varargin{2} ;
                 mc.FunctionTolerance        = varargin{3} ;
                 mc.StepTolerance            = varargin{4} ;
                 mc.MaxIter                  = varargin{5} ;
@@ -96,16 +96,16 @@ classdef SimulationParam
         end
 
         % ====== Get all ======
-        function [res_step         , Display          , FunctionTolerance      , ...
-                  StepTolerance    , MaxIter          , MaxFunctionEvaluations , ...
-                  bool_opt_lit     , bool_SIC         , ...
-                  nb_pt_dict       , resol_pt_disct   , ...
-                  pt_s0_LIT        , bool_J           , bool_Cs0               , ...
-                  flag_ctcr        , bool_problem_opt , bool_disp_terminal] ...
+        function [res_step         , bool_display_iter , FunctionTolerance      , ...
+                  StepTolerance    , MaxIter           , MaxFunctionEvaluations , ...
+                  bool_opt_lit     , bool_SIC          , ...
+                  nb_pt_dict       , resol_pt_disct    , ...
+                  pt_s0_LIT        , bool_J            , bool_Cs0               , ...
+                  flag_ctcr        , bool_problem_opt  , bool_disp_terminal] ...
                   = Get_All_SimulationParam(mc)
 
             res_step                = mc.res_step               ;
-            Display                 = mc.Display                ;
+            bool_display_iter       = mc.bool_display_iter      ;
             FunctionTolerance       = mc.FunctionTolerance      ;
             StepTolerance           = mc.StepTolerance          ;
             MaxIter                 = mc.MaxIter                ;

@@ -23,32 +23,25 @@ function flag_ctcr = CTCR_Setting_OK(ctcr_carac , ctcr_act , bool_disp)
 
 
     % Flags initialization
-    flag_ctcr = true ;
-    flag_ctcr_straight = true ;
+    flag_ctcr           = true ;
+    flag_ctcr_straight  = true ;
 
     % Checking relatives tubes positions
     for iT = 1:ctcr_carac.nbT-1
-        if ~(ctcr_act.beta_c(iT) - ctcr_carac.L(iT) >= ctcr_act.beta_c(iT+1) - ctcr_carac.L(iT+1)) ...
-                || ~(ctcr_act.beta_c(iT) <= ctcr_act.beta_c(iT+1))
-            
+        if ~(ctcr_act.beta_c(iT) - ctcr_carac.L(iT) >= ctcr_act.beta_c(iT+1) - ctcr_carac.L(iT+1)) || ~(ctcr_act.beta_c(iT) <= ctcr_act.beta_c(iT+1))
             flag_ctcr = false ;
-
         end
     end
 
     % Checking absolute tubes positions
     for iT = 1:ctcr_carac.nbT
         if ctcr_act.beta_c(iT) - ctcr_carac.L(iT) >= 0
-
             flag_ctcr = false ;
-
         end
     end
 
     if bool_disp
 
-        disp(' ') ; disp(' ') ;
-        
         % Display the tubes boundaries
         mem_points                                          = zeros(2,3*ctcr_carac.nbT+1) ;
         
@@ -80,6 +73,8 @@ function flag_ctcr = CTCR_Setting_OK(ctcr_carac , ctcr_act , bool_disp)
             string_points(ind) = strcat({'▲ '},string(mem_points(1,ind))) ;
         end
         
+        disp(' ') ; disp(' ') ;
+
         string_points(find(mem_points(1,:) == 0)) = '▶ 0 ◀' ;
         if ~flag_ctcr_straight
     
@@ -93,11 +88,8 @@ function flag_ctcr = CTCR_Setting_OK(ctcr_carac , ctcr_act , bool_disp)
             if ~flag_ctcr
                 disp('================================ //// ! \\\\ =================================')
                 disp('========================== Tubes positions problem ===========================')
-        
             else
-    
                 disp('============ Tubes positions OK')
-
             end
         
             str_mem_points = [["Tube n°    " ; "s position [m]"], [string_points;string(mem_points(2,:))]] ;
@@ -112,5 +104,4 @@ function flag_ctcr = CTCR_Setting_OK(ctcr_carac , ctcr_act , bool_disp)
     
         end
     end
-
 end

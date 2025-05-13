@@ -17,7 +17,6 @@ function [mem_bvp , bvp_prop , ctcr_shape , mem_deriv_propag_low , mem_deriv_pro
 % ctcr_construc             : (class)       Robot features related to the model settings
 % simulation_param          : (class)       Model settings
 % ctcr_carac                : (class)       Robot features
-% ctcr_act                  : (class)       Robot actuation
 % ctcr_load                 : (class)       Robot loads
 %
 % ====================
@@ -83,7 +82,11 @@ function [mem_bvp , bvp_prop , ctcr_shape , mem_deriv_propag_low , mem_deriv_pro
 
 
     % Custom optimization settings
-    opts.Display                = simulation_param.Display                  ;
+    if simulation_param.bool_display_iter
+        opts.Display = 'iter'                                               ;
+    else
+        opts.Display = 'off'                                                ;
+    end 
     opts.FunctionTolerance      = simulation_param.FunctionTolerance        ;
     opts.StepTolerance          = simulation_param.FunctionTolerance        ; 
     opts.MaxIter                = simulation_param.MaxIter                  ;
@@ -96,14 +99,14 @@ function [mem_bvp , bvp_prop , ctcr_shape , mem_deriv_propag_low , mem_deriv_pro
 
     myfun = @(IC) BVP_BC_Comp_Fsolve( ...
                 IC , ctcr_construc , ctcr_carac , ctcr_load , bvp_prop , ...
-                mem_bvp , mem_deriv_propag_low) ;
+                mem_bvp , mem_deriv_propag_low , simulation_param) ;
 
     [IC_opt,~,exitflag,output,jacobian_num] = fsolve(myfun,IC,opts) ;
 
     [error , jacobian_lit , bvp_prop , mem_bvp , mem_deriv_propag_low] ...
     = BVP_BC_Comp_Fsolve( ...
     IC_opt , ctcr_construc , ctcr_carac , ctcr_load , bvp_prop , ...
-    mem_bvp , mem_deriv_propag_low) ;
+    mem_bvp , mem_deriv_propag_low , simulation_param) ;
 
 
 

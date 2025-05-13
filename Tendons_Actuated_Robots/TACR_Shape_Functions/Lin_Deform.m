@@ -45,23 +45,29 @@ function [tacr_shape_def_jacob , time_comp_lin_deform , tacr_construc_def_jacob 
 
             for j = 1:3
 
-                inv_hat_dR0s_df0s0  = mem_Cs0_init(4:6,3+j,is,is0) ;
-                u                   = inv_hat_dR0s_df0s0/norm(inv_hat_dR0s_df0s0) ;
-                t                   = delta_f0(i,j)'*norm(inv_hat_dR0s_df0s0) ;
-                delta_R0s           = eye(3) * cos(t) + u * u'*(1-cos(t)) + hat(u) * sin(t) ;
-    
-                %delta_R0s = hat(mem_Cs0_init(4:6,4:6,is,is0)*delta_f0(i,1:3)') ;
-    
-                mem_bvp_def_jacob.mem_y.mem_R0(:,:,is) = delta_R0s*mem_bvp_def_jacob.mem_y.mem_R0(:,:,is) ;
+                % ==========
+                % Use of the Euler-Rodriguez formula
+
+                inv_hat_dR0s_df0s0                          = mem_Cs0_init(4:6,3+j,is,is0) ;
+                u                                           = inv_hat_dR0s_df0s0/norm(inv_hat_dR0s_df0s0) ;
+                t                                           = delta_f0(i,j)'*norm(inv_hat_dR0s_df0s0) ;
+                delta_R0s                                   = eye(3) * cos(t) + u * u'*(1-cos(t)) + hat(u) * sin(t) ;
+                mem_bvp_def_jacob.mem_y.mem_R0(:,:,is)      = delta_R0s*mem_bvp_def_jacob.mem_y.mem_R0(:,:,is) ;
+
+                % ==========
+                % Direct one order linearization
+                % 
+                % delta_R0s                                 = hat(mem_Cs0_init(4:6,4:6,is,is0)*delta_f0(i,1:3)') ;
+                % mem_bvp_def_jacob.mem_y.mem_R0(:,:,is)    = mem_bvp_def_jacob.mem_y.mem_R0(:,:,is) + delta_R0s ;
             end
 
         end
     end
 
-    time_comp_lin_deform = toc(tic_lin_deform) ;
+    time_comp_lin_deform            = toc(tic_lin_deform)  ;
     
-    tacr_construc_def_jacob         = tacr_construc_init ;
-    tacr_construc_def_jacob.mem_p0  = tacr_shape_def_jacob                                ;
+    tacr_construc_def_jacob         = tacr_construc_init   ;
+    tacr_construc_def_jacob.mem_p0  = tacr_shape_def_jacob ;
 
     % Re-computing the tendon routings
     for iT = 1:tacr_carac.nbT

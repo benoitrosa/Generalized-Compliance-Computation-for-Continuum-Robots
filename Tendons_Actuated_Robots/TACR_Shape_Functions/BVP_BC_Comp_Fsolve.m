@@ -1,10 +1,8 @@
 function [error , jacobianMatrix , bvp_prop , mem_bvp , mem_deriv_propag_low] = ...
     BVP_BC_Comp_Fsolve( ...
     IC , tacr_construc , tacr_carac , tacr_act , tacr_load , bvp_prop , ...
-    mem_bvp , mem_deriv_propag_low , bool_opt_lit)
+    mem_bvp , mem_deriv_propag_low , simulation_param)
 
-
-% jacobianMatrix
 
 % ======================================================================= %
 % ======================================================================= %
@@ -24,7 +22,7 @@ function [error , jacobianMatrix , bvp_prop , mem_bvp , mem_deriv_propag_low] = 
 % bvp_prop              : (class)           Results of the BVP resolution
 % mem_bvp               : (class)           Memory of the BVP variables 
 % mem_deriv_propag_low  : (class)           Memory of the low-level derivatives
-% bool_opt_lit          : (boolean)         Compute the derivatives thanks to the LLDPM ?
+% simulation_param      : (class)           Model settings
 %
 % ====================
 % ===== OUTPUTS ====== 
@@ -39,30 +37,17 @@ function [error , jacobianMatrix , bvp_prop , mem_bvp , mem_deriv_propag_low] = 
 % ======================================================================= %
 
 
-    % IC initialization
-    bvp_prop.IC_opt = IC ;
-
-    % disp(IC)
-    
-    % Including the IC in the BVP memories
-    mem_bvp = BVP_Init_IC(bvp_prop , mem_bvp , tacr_carac) ;
-
-    % IVP integration
-    [mem_bvp , mem_deriv_propag_low] = IVP_Int(tacr_construc , tacr_carac , tacr_act , mem_bvp , mem_deriv_propag_low , bool_opt_lit) ;
-       
-    if bool_opt_lit
-        % Computing manually the BVP optimization Jacobian
-        bvp_prop.Bu = BVP_Bu_Construc(mem_deriv_propag_low , mem_bvp , tacr_load , tacr_construc , tacr_act) ;
+    bvp_prop.IC_opt                     = IC ;    
+    mem_bvp                             = BVP_Init_IC(bvp_prop , mem_bvp , tacr_construc , tacr_carac) ;
+    [mem_bvp , mem_deriv_propag_low]    = IVP_Int(tacr_construc , tacr_carac , tacr_act , mem_bvp , mem_deriv_propag_low , simulation_param.bool_opt_lit) ;
+    if simulation_param.bool_opt_lit
+        bvp_prop.Bu                     = BVP_Bu_Construc(mem_deriv_propag_low , mem_bvp , tacr_load , tacr_construc , tacr_act) ;
     end
+    bvp_prop                            = BVP_Comp_BC(mem_bvp , bvp_prop , tacr_load , tacr_construc , tacr_act) ;
+    error                               = bvp_prop.vect_tol ;
 
-    % Distal boundaries conditions comparaison expected / calculated from IC
-    bvp_prop = BVP_Comp_BC(mem_bvp , bvp_prop , tacr_load , tacr_construc , tacr_act) ;
-
-    % Setting the output
-    error = bvp_prop.vect_tol ;
-
-    if bool_opt_lit && nargout>1
-        % Setting the manually computed optimization jacobian
+    % Setting the manually computed optimization jacobian
+    if simulation_param.bool_opt_lit && nargout>1
         jacobianMatrix = bvp_prop.Bu ;
     else
         jacobianMatrix = [] ;

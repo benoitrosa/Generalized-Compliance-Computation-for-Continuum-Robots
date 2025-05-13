@@ -179,19 +179,6 @@ function [mem_bvp , mem_deriv_propag_low] ...
                 iT = vectT(i) ;
             
 
-                % ====================
-                % ==== Pre-computing iT and j dependent variables
-
-                ddpi_dm0j           = mem_deriv_propag_low.mem_ddpi_ds.mem_ddpi_dm0_ds(:,iT,j,is) ;
-                ddpi_dn0j           = mem_deriv_propag_low.mem_ddpi_ds.mem_ddpi_dn0_ds(:,iT,j,is) ;
-                hat_ddpi_dm0j       = hat(ddpi_dm0j) ;
-                hat_ddpi_dn0j       = hat(ddpi_dn0j) ;
-                
-                
-
-                
-
-
 
                 % ====================
                 % ==== Preliminary computations for derivatives wrt m0(0)
@@ -200,7 +187,14 @@ function [mem_bvp , mem_deriv_propag_low] ...
                                                 hat_du0_dm0j * tacr_construc.mem_ri(:,iT,is) ...
                                                 + mem_deriv_propag_low.mem_dv0.mem_dv0_dm0(:,j,is) ;
                         
-                dA_i_dm0j           = - tacr_act.ti(iT)*( (hat_ddpi_dm0j*hat_dpi(:,:,iT)+hat_dpi(:,:,iT)*hat_ddpi_dm0j)*norm_dpi(iT)^2 - 3*((hat_dpi(:,:,iT))^2)*(ddpi_dm0j'*mem_bvp.mem_dpi_ds(:,iT,is))  )/(norm_dpi(iT)^5) ;
+                % ====================
+                % ==== Pre-computing iT and j dependent variables
+
+                ddpi_dm0j           = mem_deriv_propag_low.mem_ddpi_ds.mem_ddpi_dm0_ds(:,iT,j,is) ;
+                hat_ddpi_dm0j       = hat(ddpi_dm0j) ;
+
+                
+                dA_i_dm0j           = - tacr_act.ti(iT)*( (hat_ddpi_dm0j*hat_dpi(:,:,iT) + hat_dpi(:,:,iT)*hat_ddpi_dm0j)*norm_dpi(iT)^2 - 3*((hat_dpi(:,:,iT))^2)*(ddpi_dm0j'*mem_bvp.mem_dpi_ds(:,iT,is))  )/(norm_dpi(iT)^5) ;
     
                 mem_deriv_propag_low.mem_dAi.mem_dAi_dm0(:,:,iT,j,is) = dA_i_dm0j ;
     
@@ -228,16 +222,24 @@ function [mem_bvp , mem_deriv_propag_low] ...
     
 
     
-    
+                
                 % ====================
                 % ==== Preliminary computations for derivatives wrt n0(0)
                     
-                dA_i_dn0j           = - tacr_act.ti(iT)*( (hat_ddpi_dn0j*hat_dpi(:,:,iT)+hat_dpi(:,:,iT)*hat_ddpi_dn0j)*norm_dpi(iT)^2 - 3*(hat_dpi(:,:,iT)^2)*(ddpi_dn0j'*mem_bvp.mem_dpi_ds(:,iT,is))  )/(norm_dpi(iT)^5) ;
-
                 mem_deriv_propag_low.mem_ddpi_ds.mem_ddpi_dn0_ds(:,iT,j,is) = ...
                                                 hat_du0_dn0j * tacr_construc.mem_ri(:,iT,is) ...
                                                 + mem_deriv_propag_low.mem_dv0.mem_dv0_dn0(:,j,is) ;
                 
+
+                % ====================
+                % ==== Pre-computing iT and j dependent variables
+
+                ddpi_dn0j           = mem_deriv_propag_low.mem_ddpi_ds.mem_ddpi_dn0_ds(:,iT,j,is) ;
+                hat_ddpi_dn0j       = hat(ddpi_dn0j) ;
+
+    
+                dA_i_dn0j           = - tacr_act.ti(iT)*( (hat_ddpi_dn0j*hat_dpi(:,:,iT)+hat_dpi(:,:,iT)*hat_ddpi_dn0j)*norm_dpi(iT)^2 - 3*(hat_dpi(:,:,iT)^2)*(ddpi_dn0j'*mem_bvp.mem_dpi_ds(:,iT,is))  )/(norm_dpi(iT)^5) ;
+
                 mem_deriv_propag_low.mem_dAi.mem_dAi_dn0(:,:,iT,j,is) = dA_i_dn0j ;
     
                 dB_i_dn0j           = hat_ri(:,:,iT)*dA_i_dn0j ;

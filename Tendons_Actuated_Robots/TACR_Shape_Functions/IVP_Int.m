@@ -29,8 +29,7 @@ function [mem_bvp , mem_deriv_propag_low] ...
 
     for is = 1:tacr_construc.nbP
 
-        [mem_bvp , mem_deriv_propag_low]    = IVP_MaJ_Mem_curr(is , mem_bvp , tacr_carac , tacr_construc , ...
-                                                               tacr_act , mem_deriv_propag_low , bool_opt_lit) ;
+        [mem_bvp , mem_deriv_propag_low]    = IVP_MaJ_Mem_curr(is , mem_bvp , tacr_carac , tacr_construc , tacr_act , mem_deriv_propag_low , bool_opt_lit) ;
         
         mem_bvp                             = IVP_ODE(is , mem_bvp) ;
 

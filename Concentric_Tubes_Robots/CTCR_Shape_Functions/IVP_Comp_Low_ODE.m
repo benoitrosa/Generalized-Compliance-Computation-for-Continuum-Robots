@@ -48,50 +48,33 @@ function mem_deriv_propag_low ...
     
     for j = 1:nbT
 
-        
-        % ======================== %
-        % ===== ddm0(s)ds_duz ==== %
         % (eq 31c)
-
         mem_deriv_propag_low.mem_dm0_ds.mem_dm0_duzj0_ds(:,j,is)            = hat(mem_deriv_propag_low.mem_du0.mem_du0_duzj0(:,j,is))*mem_bvp.mem_y.mem_m0(:,is) ...
                                                                               + hat(mem_bvp.mem_u0(:,is))*mem_deriv_propag_low.mem_dm0.mem_dm0_duzj0(:,j,is) ...
                                                                               - hat([0;0;1])*mem_deriv_propag_low.mem_dn0.mem_dn0_duzj0(:,j,is) ...
                                                                               - mem_deriv_propag_low.mem_dR0.mem_dR0_duzj0(:,:,j,is)'*ctcr_construc.vect_tau_dist(:,is) ;
         
 
-        % ======================== %
-        % ==== ddn0(s)ds_duz ===== %
         % (eq 31d)
-
         mem_deriv_propag_low.mem_dn0_ds.mem_dn0_duzj0_ds(:,j,is)            = hat(mem_deriv_propag_low.mem_du0.mem_du0_duzj0(:,j,is))*mem_bvp.mem_y.mem_n0(:,is) ...
                                                                               + hat(mem_bvp.mem_u0(:,is))*mem_deriv_propag_low.mem_dn0.mem_dn0_duzj0(:,j,is) ...
                                                                               - mem_deriv_propag_low.mem_dR0.mem_dR0_duzj0(:,:,j,is)'*ctcr_construc.vect_f_dist(:,is) ;
 
 
 
-        % ======================== %
-        % ==== dduzi(s)ds_duz ==== %
-        % (eq 31b)
 
         for iv = 1:length(vectT)
             i = vectT(iv) ;
 
+            % (eq 31b)
             mem_deriv_propag_low.mem_duzi_ds.mem_duzi_duzj0_ds(i,j,is)  =  K(1,1,i)/K(3,3,i)*((mem_deriv_propag_low.mem_du0.mem_du0_duzj0(:,j,is))'*rotz(theta(i))*[ui_init(2,is,i);-ui_init(1,is,i);0] + u0'*hat([0;0;1])*rotz(theta(i))*mem_deriv_propag_low.mem_dti.mem_dti_duzj0(i,j,is)*[ui_init(2,is,i);-ui_init(1,is,i);0]) ;
         
         end
 
-
-        % ======================== %
-        % ===== ddti(s)ds_duz ==== %
         % (eq 31a)
-
-        mem_deriv_propag_low.mem_dti_ds.mem_dti_duzj0_ds(:,j,is)            = mem_deriv_propag_low.mem_duzi.mem_duzi_duzj0(:,j,is) ;
+        mem_deriv_propag_low.mem_dti_ds.mem_dti_duzj0_ds(:,j,is)        = mem_deriv_propag_low.mem_duzi.mem_duzi_duzj0(:,j,is) ;
         
-
-        % ======================== %
-        % ===== ddR0(s)ds_duz ==== %
         % (eq 31e)
-
         mem_deriv_propag_low.mem_dR0_ds.mem_dR0_duzj0_ds(:,:,j,is)      = mem_deriv_propag_low.mem_dR0.mem_dR0_duzj0(:,:,j,is)*hat(u0) ...
                                                                               + mem_bvp.mem_T(1:3,1:3,is)*hat(mem_deriv_propag_low.mem_du0.mem_du0_duzj0(:,j,is)) ;
 
@@ -105,10 +88,7 @@ function mem_deriv_propag_low ...
 
         for j = 1:nbT
     
-            % ======================== %
-            % ===== ddp0(s)ds_duz ==== %
             % (eq 31f)
-
             mem_deriv_propag_low.mem_dP0_ds.mem_dP0_duzj0_ds(:,j,is)    =  mem_deriv_propag_low.mem_dR0.mem_dR0_duzj0(:,:,j,is)*[0;0;1] ;
 
         end
@@ -119,102 +99,49 @@ function mem_deriv_propag_low ...
             for iv = 1:length(vectT)
                 i = vectT(iv) ;
 
-                % ======================== %
-                % ===== dduz(s)ds_dm0 ==== %
                 % (eq 31b)
-
                 mem_deriv_propag_low.mem_duzi_ds.mem_duzi_dm0j0_ds(i,j,is)  =  K(1,1,i)/K(3,3,i)*((mem_deriv_propag_low.mem_du0.mem_du0_dm0j0(:,j,is))'*rotz(theta(i))*[ui_init(2,is,i);-ui_init(1,is,i);0] ...
                                                                                + u0'*hat([0;0;1])*rotz(theta(i))*mem_deriv_propag_low.mem_dti.mem_dti_dm0j0(i,j,is)*[ui_init(2,is,i);-ui_init(1,is,i);0]) ;
             
-                
-                % ======================== %
-                % ===== dduz(s)ds_dn0 ==== %
                 % (eq 31b)
-
                 mem_deriv_propag_low.mem_duzi_ds.mem_duzi_dn0j0_ds(i,j,is)  =  K(1,1,i)/K(3,3,i)*((mem_deriv_propag_low.mem_du0.mem_du0_dn0j0(:,j,is))'*rotz(theta(i))*[ui_init(2,is,i);-ui_init(1,is,i);0] ...
                                                                                + u0'*hat([0;0;1])*rotz(theta(i))*mem_deriv_propag_low.mem_dti.mem_dti_dn0j0(i,j,is)*[ui_init(2,is,i);-ui_init(1,is,i);0]) ;
             
             end
 
-
-            % ======================== %
-            % ===== ddti(s)ds_dm0 ==== %
             % (eq 31a)
-
             mem_deriv_propag_low.mem_dti_ds.mem_dti_dm0j0_ds(:,:,is)        = mem_deriv_propag_low.mem_duzi.mem_duzi_dm0j0(:,:,is) ;
-
-
-            % ======================== %
-            % ===== ddti(s)ds_dn0 ==== %
-            % (eq 31a)
-
             mem_deriv_propag_low.mem_dti_ds.mem_dti_dn0j0_ds(:,:,is)        = mem_deriv_propag_low.mem_duzi.mem_duzi_dn0j0(:,:,is) ;
 
-
-            % ======================== %
-            % ===== ddm0(s)ds_dm0 ==== %
             % (eq 31c)
-
             mem_deriv_propag_low.mem_dm0_ds.mem_dm0_dm0j0_ds(:,j,is)        = hat(mem_deriv_propag_low.mem_du0.mem_du0_dm0j0(:,j,is))*mem_bvp.mem_y.mem_m0(:,is) ...
                                                                               + hat(mem_bvp.mem_u0(:,is))*mem_deriv_propag_low.mem_dm0.mem_dm0_dm0j0(:,j,is) ...
                                                                               - hat([0;0;1])*mem_deriv_propag_low.mem_dn0.mem_dn0_dm0j0(:,j,is) ...
                                                                               - mem_deriv_propag_low.mem_dR0.mem_dR0_dm0j0(:,:,j,is)'*ctcr_construc.vect_tau_dist(:,is) ;
-            % ======================== %
-            % ===== ddm0(s)ds_dn0 ==== %
-            % (eq 31c)
-
             mem_deriv_propag_low.mem_dm0_ds.mem_dm0_dn0j0_ds(:,j,is)        = hat(mem_deriv_propag_low.mem_du0.mem_du0_dn0j0(:,j,is))*mem_bvp.mem_y.mem_m0(:,is) ...
                                                                               + hat(mem_bvp.mem_u0(:,is))*mem_deriv_propag_low.mem_dm0.mem_dm0_dn0j0(:,j,is) ...
                                                                               - hat([0;0;1])*mem_deriv_propag_low.mem_dn0.mem_dn0_dn0j0(:,j,is) ...
                                                                               - mem_deriv_propag_low.mem_dR0.mem_dR0_dn0j0(:,:,j,is)'*ctcr_construc.vect_tau_dist(:,is) ;
             
-            % ======================== %
-            % ===== ddn0(s)ds_dm0 ==== %
             % (eq 31d)
-
             mem_deriv_propag_low.mem_dn0_ds.mem_dn0_dm0j0_ds(:,j,is)        = hat(mem_deriv_propag_low.mem_du0.mem_du0_dm0j0(:,j,is))*mem_bvp.mem_y.mem_n0(:,is) ...
                                                                               + hat(mem_bvp.mem_u0(:,is))*mem_deriv_propag_low.mem_dn0.mem_dn0_dm0j0(:,j,is) ...
                                                                               - mem_deriv_propag_low.mem_dR0.mem_dR0_dm0j0(:,:,j,is)'*ctcr_construc.vect_f_dist(:,is) ;
-
-            % ======================== %
-            % ===== ddn0(s)ds_dn0 ==== %
-            % (eq 31d)
-
             mem_deriv_propag_low.mem_dn0_ds.mem_dn0_dn0j0_ds(:,j,is)        = hat(mem_deriv_propag_low.mem_du0.mem_du0_dn0j0(:,j,is))*mem_bvp.mem_y.mem_n0(:,is) ...
                                                                               + hat(mem_bvp.mem_u0(:,is))*mem_deriv_propag_low.mem_dn0.mem_dn0_dn0j0(:,j,is) ...
                                                                               - mem_deriv_propag_low.mem_dR0.mem_dR0_dn0j0(:,:,j,is)'*ctcr_construc.vect_f_dist(:,is) ;
 
-            
-            % ======================== %
-            % ===== ddR0(s)ds_dm0 ==== %
             % (eq 31e)
-
             mem_deriv_propag_low.mem_dR0_ds.mem_dR0_dm0j0_ds(:,:,j,is)  = mem_deriv_propag_low.mem_dR0.mem_dR0_dm0j0(:,:,j,is)*hat(u0) ...
                                                                               + mem_bvp.mem_T(1:3,1:3,is)*hat(mem_deriv_propag_low.mem_du0.mem_du0_dm0j0(:,j,is)) ;
-           
-            
-            % ======================== %
-            % ===== ddR0(s)ds_dn0 ==== %
-            % (eq 31e)
-
             mem_deriv_propag_low.mem_dR0_ds.mem_dR0_dn0j0_ds(:,:,j,is)  = mem_deriv_propag_low.mem_dR0.mem_dR0_dn0j0(:,:,j,is)*hat(u0) ...
                                                                               + mem_bvp.mem_T(1:3,1:3,is)*hat(mem_deriv_propag_low.mem_du0.mem_du0_dn0j0(:,j,is)) ;
 
             
-            % ======================== %
-            % ===== ddp0(s)ds_dm0 ==== %
             % (eq 31f)
-
             mem_deriv_propag_low.mem_dP0_ds.mem_dP0_dm0j0_ds(:,j,is)    =  mem_deriv_propag_low.mem_dR0.mem_dR0_dm0j0(:,:,j,is)*[0;0;1] ;
-
-
-            % ======================== %
-            % ===== ddp0(s)ds_dn0 ==== %
-            % (eq 31f)
-
             mem_deriv_propag_low.mem_dP0_ds.mem_dP0_dn0j0_ds(:,j,is)    =  mem_deriv_propag_low.mem_dR0.mem_dR0_dn0j0(:,:,j,is)*[0;0;1] ;
                 
-
         end
     end
 end

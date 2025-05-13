@@ -1,7 +1,7 @@
 function [error , jacobianMatrix , bvp_prop , mem_bvp , mem_deriv_propag_low] = ...
     BVP_BC_Comp_Fsolve( ...
     IC , ctcr_construc , ctcr_carac , ctcr_load , bvp_prop , ...
-    mem_bvp , mem_deriv_propag_low)
+    mem_bvp , mem_deriv_propag_low , simulation_param)
 
 
 % ======================================================================= %
@@ -21,6 +21,7 @@ function [error , jacobianMatrix , bvp_prop , mem_bvp , mem_deriv_propag_low] = 
 % bvp_prop              : (class)           Results of the BVP resolution
 % mem_bvp               : (class)           Memory of the BVP variables 
 % mem_deriv_propag_low  : (class)           Memory of the low-level derivatives 
+% simulation_param      : (class)           Model settings
 %
 % ====================
 % ===== OUTPUTS ====== 
@@ -35,27 +36,20 @@ function [error , jacobianMatrix , bvp_prop , mem_bvp , mem_deriv_propag_low] = 
 % ======================================================================= %
 
 
-    % IC initialization
-    bvp_prop.IC_opt = IC ;
-
-    % Including the IC in the BVP memories
-    mem_bvp = BVP_Init_IC(bvp_prop , mem_bvp , ctcr_construc , ctcr_carac) ;
-
-    % IVP integration
-    [mem_bvp , mem_deriv_propag_low] = IVP_Int(ctcr_construc , ctcr_carac , mem_bvp , mem_deriv_propag_low) ;
-  
-    % Computing manually the BVP optimization Jacobian
-    bvp_prop.Bu = BVP_Bu_Construc(mem_bvp , mem_deriv_propag_low , ctcr_construc , ctcr_carac , ctcr_load) ;
-
-    % Distal boundaries conditions comparaison expected / calculated from IC
-    bvp_prop = BVP_Comp_BC(mem_bvp , bvp_prop , ctcr_carac , ctcr_construc , ctcr_load) ;
-
-    % Setting the output
-    error = bvp_prop.vect_tol ;
+    bvp_prop.IC_opt                     = IC ;
+    mem_bvp                             = BVP_Init_IC(bvp_prop , mem_bvp , ctcr_construc , ctcr_carac) ;
+    [mem_bvp , mem_deriv_propag_low]    = IVP_Int(ctcr_construc , ctcr_carac , mem_bvp , mem_deriv_propag_low , simulation_param.bool_opt_lit) ;
+    if simulation_param.bool_opt_lit
+        bvp_prop.Bu                     = BVP_Bu_Construc(mem_bvp , mem_deriv_propag_low , ctcr_construc , ctcr_carac , ctcr_load) ;
+    end
+    bvp_prop                            = BVP_Comp_BC(mem_bvp , bvp_prop , ctcr_carac , ctcr_construc , ctcr_load) ;
+    error                               = bvp_prop.vect_tol ;
 
     % Setting the manually computed optimization jacobian
     if nargout>1
         jacobianMatrix = bvp_prop.Bu ;
+    else
+        jacobianMatrix = [] ;
     end
     
 end

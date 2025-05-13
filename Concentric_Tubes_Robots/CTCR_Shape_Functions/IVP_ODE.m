@@ -44,60 +44,33 @@ function mem_bvp = IVP_ODE(is , ctcr_construc , mem_bvp)
     vectT = find(vect_ind_iT(:,1)<=is & is<=vect_ind_iT(:,3)) ;   
 
     for i = 1:length(vectT)
-        iT = vectT(i) ;
-        
-        % ================== %
-        % ===== dti_ds ===== %
-        % (eq 26a)
+        iT = vectT(i) ;        
 
-        mem_bvp.mem_ys.mem_ts(iT,is)    = uz(iT) ;
+        mem_bvp.mem_ys.mem_ts(iT,is)    = uz(iT) ; % (eq 26a)
 
-
-
-        % ================== %
-        % ===== duzi_ds ==== %
-        % (eq 26b)
 
         temp                            = rotz(mem_bvp.mem_y.mem_t(iT,is))'*u0 ;
         mem_bvp.mem_uixy(:,iT,is)       = temp(1:2,1) ;
-        mem_bvp.mem_ys.mem_uzs(iT,is)   = K(1,1,iT)/K(3,3,iT)*(mem_bvp.mem_uixy(:,iT,is)'*[ui_init(2,is,iT);-ui_init(1,is,iT)]) ; 
+        mem_bvp.mem_ys.mem_uzs(iT,is)   = K(1,1,iT)/K(3,3,iT)*(mem_bvp.mem_uixy(:,iT,is)'*[ui_init(2,is,iT);-ui_init(1,is,iT)]) ; % (eq 26b) 
 
      end  
 
 
     if (is >= ctcr_construc.ind_origin) && ~(is == ctcr_construc.nbP)
 
-        % ================== %
-        % ===== dm0_ds ===== %
-        % (eq 26c)
-
         mem_bvp.mem_ys.mem_m0s(:,is)    = hat(u0)*m0 ...
                                           - hat([0;0;1])*n0 ...
-                                          - R0'*ctcr_construc.vect_tau_dist(:,is) ;
-
-
-        % ================== %
-        % ===== dn0_ds ===== %
-        % (eq 26d) 
+                                          - R0'*ctcr_construc.vect_tau_dist(:,is) ; % (eq 26c)
 
         mem_bvp.mem_ys.mem_n0s(:,is)    = hat(u0)*n0 ...
-                                          - R0'*ctcr_construc.vect_f_dist(:,is) ;
-
+                                          - R0'*ctcr_construc.vect_f_dist(:,is) ; % (eq 26d) 
 
     end
 
-    % ================== %
-    % ===== dR0_ds ===== %
-    % (eq 26e) 
 
-    mem_bvp.mem_ys.mem_R0s(:,:,is)  = R0*hat(u0) ;
-        
 
-    % ===================== %
-    % ===== dp0(s)_ds ===== %
-    % (eq 26f) 
-
-    mem_bvp.mem_ys.mem_p0s(:,is)    = R0*[0;0;1] ;
+    mem_bvp.mem_ys.mem_R0s(:,:,is)  = R0*hat(u0) ; % (eq 26e) 
+    mem_bvp.mem_ys.mem_p0s(:,is)    = R0*[0;0;1] ; % (eq 26f) 
 
 
 

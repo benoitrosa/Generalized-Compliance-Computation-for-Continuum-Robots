@@ -48,6 +48,8 @@ function mem_deriv_propag_low ...
     
     if is >= ind_origin
         
+        hat_001 = hat([0;0;1]) ; 
+        
         for j = 1:nbT
 
             if simulation_param.bool_J
@@ -64,7 +66,7 @@ function mem_deriv_propag_low ...
                     for iv = 1:length(curr_vectT)
                         i = curr_vectT(iv) ;
                         sum_dtcj = sum_dtcj ...
-                                   + hat([0;0;1])*rotz(mem_bvp.mem_y.mem_t(i,is))*mem_deriv_propag_low.mem_dti.mem_dti_dtcj(i,j,is)*K(:,:,i)*ctcr_construc.ui_init(:,is,i) ...
+                                   + hat_001*rotz(mem_bvp.mem_y.mem_t(i,is))*mem_deriv_propag_low.mem_dti.mem_dti_dtcj(i,j,is)*K(:,:,i)*ctcr_construc.ui_init(:,is,i) ...
                                    + rotz(mem_bvp.mem_y.mem_t(i,is))*K(:,:,i)*[duiinitxy_dtcj(is,Rc,i,j,theta_c,vect_ind_iT,ind_origin);0] ;
                     end
                     tp_dtcj = mem_bvp.mem_inv_sum_Ki(:,:,is)*(sum_dtcj + mem_deriv_propag_low.mem_dm0.mem_dm0_dtcj(:,j,is)) ;
@@ -85,7 +87,7 @@ function mem_deriv_propag_low ...
                     for iv = 1:length(curr_vectT)
                         i = curr_vectT(iv) ;
                         sum_dbcj = sum_dbcj ...
-                                   + hat([0;0;1])*rotz(mem_bvp.mem_y.mem_t(i,is))*mem_deriv_propag_low.mem_dti.mem_dti_dbcj(i,j,is)*K(:,:,i)*ctcr_construc.ui_init(:,is,i) ...
+                                   + hat_001*rotz(mem_bvp.mem_y.mem_t(i,is))*mem_deriv_propag_low.mem_dti.mem_dti_dbcj(i,j,is)*K(:,:,i)*ctcr_construc.ui_init(:,is,i) ...
                                    + rotz(mem_bvp.mem_y.mem_t(i,is))*K(:,:,i)*[duiinitxy_dbcj(is,vect_res,Rc,i,j,theta_c,vect_ind_iT,ind_origin,nbT);0] ;
                     end
                     tp_dbcj = mem_bvp.mem_inv_sum_Ki(:,:,is)   *(sum_dbcj + mem_deriv_propag_low.mem_dm0.mem_dm0_dbcj(:,j,is)) ;
@@ -147,8 +149,8 @@ function mem_deriv_propag_low ...
                         for iv = 1:length(curr_vectT)
                             i = curr_vectT(iv) ;
         
-                            sum_dtaus0 = sum_dtaus0 + hat([0;0;1])*rotz(mem_bvp.mem_y.mem_t(i,is))*mem_deriv_propag_low.mem_dti.mem_dti_dtaus0(i,j,is,is0)*K(:,:,i)*ctcr_construc.ui_init(:,is,i) ;
-                            sum_dfs0   = sum_dfs0   + hat([0;0;1])*rotz(mem_bvp.mem_y.mem_t(i,is))*mem_deriv_propag_low.mem_dti.mem_dti_dfs0(i,j,is,is0)  *K(:,:,i)*ctcr_construc.ui_init(:,is,i) ;
+                            sum_dtaus0 = sum_dtaus0 + hat_001*rotz(mem_bvp.mem_y.mem_t(i,is))*mem_deriv_propag_low.mem_dti.mem_dti_dtaus0(i,j,is,is0)*K(:,:,i)*ctcr_construc.ui_init(:,is,i) ;
+                            sum_dfs0   = sum_dfs0   + hat_001*rotz(mem_bvp.mem_y.mem_t(i,is))*mem_deriv_propag_low.mem_dti.mem_dti_dfs0(i,j,is,is0)  *K(:,:,i)*ctcr_construc.ui_init(:,is,i) ;
 
                         end
                         tp_dtaus0 = mem_bvp.mem_inv_sum_Ki(:,:,is)*(sum_dtaus0 + mem_deriv_propag_low.mem_dm0.mem_dm0_dtaus0(:,j,is,is0)) ;

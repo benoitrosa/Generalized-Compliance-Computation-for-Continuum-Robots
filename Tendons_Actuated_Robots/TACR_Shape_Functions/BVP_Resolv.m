@@ -83,7 +83,11 @@ function [mem_bvp , bvp_prop , tacr_shape , tacr_construc , mem_deriv_propag_low
 
 
     % Custom optimization settings
-    opts.Display                = simulation_param.Display                  ;
+    if simulation_param.bool_display_iter
+        opts.Display = 'iter'                                               ;
+    else
+        opts.Display = 'off'                                                ;
+    end 
     opts.FunctionTolerance      = simulation_param.FunctionTolerance        ;
     opts.StepTolerance          = simulation_param.FunctionTolerance        ; 
     opts.MaxIter                = simulation_param.MaxIter                  ;
@@ -97,7 +101,7 @@ function [mem_bvp , bvp_prop , tacr_shape , tacr_construc , mem_deriv_propag_low
 
     myfun = @(IC) BVP_BC_Comp_Fsolve( ...
                 IC , tacr_construc , tacr_carac , tacr_act , tacr_load , bvp_prop , ...
-                mem_bvp , mem_deriv_propag_low , simulation_param.bool_opt_lit) ;
+                mem_bvp , mem_deriv_propag_low , simulation_param) ;
 
     [IC_opt,~,exitflag,output,jacobian_num] = fsolve(myfun,IC,opts) ;
 
@@ -105,7 +109,7 @@ function [mem_bvp , bvp_prop , tacr_shape , tacr_construc , mem_deriv_propag_low
     [error , jacobian_lit , bvp_prop , mem_bvp , mem_deriv_propag_low] ...
     = BVP_BC_Comp_Fsolve( ...
     IC_opt , tacr_construc , tacr_carac , tacr_act , tacr_load , bvp_prop , ...
-    mem_bvp , mem_deriv_propag_low , simulation_param.bool_opt_lit) ;
+    mem_bvp , mem_deriv_propag_low , simulation_param) ;
 
 
     % ======================================= %

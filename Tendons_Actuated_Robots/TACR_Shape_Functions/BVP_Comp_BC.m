@@ -1,4 +1,5 @@
-function bvp_prop = BVP_Comp_BC(mem_bvp , bvp_prop , tacr_load, tacr_construc , tacr_act)
+function bvp_prop = BVP_Comp_BC( ...
+            mem_bvp , bvp_prop , tacr_load, tacr_construc , tacr_act)
 
 
 % ======================================================================= %

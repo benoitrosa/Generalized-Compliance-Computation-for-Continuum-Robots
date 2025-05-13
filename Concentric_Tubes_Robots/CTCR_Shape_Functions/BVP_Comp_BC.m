@@ -1,4 +1,5 @@
-function bvp_prop = BVP_Comp_BC(mem_bvp , bvp_prop , ctcr_carac , ctcr_construc , ctcr_load)
+function bvp_prop = BVP_Comp_BC( ...
+            mem_bvp , bvp_prop , ctcr_carac , ctcr_construc , ctcr_load)
 
 
 % ======================================================================= %
@@ -48,21 +49,21 @@ function bvp_prop = BVP_Comp_BC(mem_bvp , bvp_prop , ctcr_carac , ctcr_construc 
     % ======== Construction of the expected boudary conditions ======== %
 
     % Rotation from RB0 --> Rtip
-    R_tip = mem_bvp.mem_T(1:3,1:3,vect_ind_iT(nbT,3)) ;
+    R_tip                   = mem_bvp.mem_T(1:3,1:3,vect_ind_iT(nbT,3)) ;
 
     % Rotation from RB0 --> Rtip
-    R_tip_nbT = mem_bvp.mem_T(1:3,1:3,vect_ind_iT(nbT,3))*rotz(mem_bvp.mem_y.mem_t(nbT,vect_ind_iT(nbT,3)))' ;
+    R_tip_nbT               = mem_bvp.mem_T(1:3,1:3,vect_ind_iT(nbT,3))*rotz(mem_bvp.mem_y.mem_t(nbT,vect_ind_iT(nbT,3)))' ;
     
     % Transforming R_tip expressed in RB0 to Rtip
-    tau_Rtip = R_tip'*ctcr_load.tau_tip' ;
+    tau_Rtip                = R_tip'*ctcr_load.tau_tip' ;
     
     % Transforming f_tip expressed in RB0 to Rtip
-    f_Rtip = R_tip'*ctcr_load.f_tip' ;
+    f_Rtip                  = R_tip'*ctcr_load.f_tip' ;
     
     % Computing the expected distal value
-    expect_CL = zeros(ctcr_carac.nbT+6,1) ;
-    expect_CL(end-5: end) = [tau_Rtip ; f_Rtip] ;
-    expect_CL(end-6) = 1/ctcr_construc.K(3,3,nbT)*[0,0,1]*R_tip_nbT'*ctcr_load.tau_tip' ;
+    expect_CL               = zeros(ctcr_carac.nbT+6,1) ;
+    expect_CL(end-5: end)   = [tau_Rtip ; f_Rtip] ;
+    expect_CL(end-6)        = 1/ctcr_construc.K(3,3,nbT)*[0,0,1]*R_tip_nbT'*ctcr_load.tau_tip' ;
 
 
     % ================ Boudary conditions comparaison ================= %

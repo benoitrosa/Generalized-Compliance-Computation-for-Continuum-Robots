@@ -1,4 +1,5 @@
-function tacr_construc = TACR_Construc(simulation_param , tacr_carac , tacr_load , bool_back_st , bool_tendon_st)
+function tacr_construc = TACR_Construc( ...
+    simulation_param , tacr_carac , tacr_load)
 
 % ======================================================================= %
 % ======================================================================= %
@@ -112,7 +113,7 @@ function tacr_construc = TACR_Construc(simulation_param , tacr_carac , tacr_load
     % ================================================= %
 
 
-    if bool_back_st
+    if simulation_param.bool_back_st
 
         % ================================== %
         % ==== Example : Straight backbone
@@ -146,7 +147,7 @@ function tacr_construc = TACR_Construc(simulation_param , tacr_carac , tacr_load
 
     mem_ri      = zeros(3 , nbT , nbP)  ; 
 
-    if bool_tendon_st
+    if simulation_param.bool_tendon_st
 
         % ================================== %
         % ==== Example : Straight tendons
@@ -335,7 +336,7 @@ function tacr_construc = TACR_Construc(simulation_param , tacr_carac , tacr_load
 
 
     % ========================================================== %
-    % =================== GLOBAL DISTRIBUTION ================== %
+    % =================== Global distribution ================== %
 
     vect_tau_dist   = vect_tau_dist_1 + vect_tau_dist_2 ;
     vect_f_dist     = vect_f_dist_1   + vect_f_dist_2   ;
@@ -349,7 +350,6 @@ function tacr_construc = TACR_Construc(simulation_param , tacr_carac , tacr_load
     % ================== Setting output values ================= %
 
                    
-
     tacr_construc = TACRConstruc(nbP           , vect_z            , vect_res    , ...
                                  vect_ind_iT   , vect_ind_iD       , ...
                                  mem_ri        , mem_dri_ds        , mem_ddri_ds , ...

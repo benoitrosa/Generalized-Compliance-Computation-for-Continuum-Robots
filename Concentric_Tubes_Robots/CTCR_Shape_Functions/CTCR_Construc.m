@@ -54,10 +54,8 @@ function ctcr_construc ...
 
 
     % ========================================================== %
-
     % Construction of discretization points with regular steps
-    % and reference on the origin of the base frame
-
+    %     and reference on the origin of the base frame
     % ========================================================== %
 
     % Initialization of the discontinuity points
@@ -131,9 +129,8 @@ function ctcr_construc ...
     vect_res = diff(vect_z) ;
 
     % Deleting points too close
-    tp_vect_z   = [vect_z(vect_res     > resol_pt_disct),vect_z(end)] ;
-    tp_vect_res = vect_res(vect_res    > resol_pt_disct) ;
-    %clear vect_z vect_res
+    tp_vect_z   = [vect_z(vect_res     > 1e-10),vect_z(end)] ;
+    tp_vect_res = vect_res(vect_res    > 1e-10) ;
     vect_z      = tp_vect_z ;
     vect_res    = tp_vect_res ;
 
@@ -145,15 +142,13 @@ function ctcr_construc ...
 
 
     % ========================================================== % 
-    
     % Construction of the torque/force applied to the CTCR due
-    % to the constant distributed torque/force
-
+    %         to the constant distributed torque/force
     % ========================================================== % 
 
 
     % ========================================================== %
-    % ===================== DISTRIBUTION 1 ===================== %
+    % ===================== Distribution 1 ===================== %
 
     % Finding the index of the limits
     idx_load_lim_1 = [find(vect_z >= load_lim_1(1) , 1,'first') , find(vect_z <= load_lim_1(2) , 1,'last') ] ;
@@ -180,7 +175,7 @@ function ctcr_construc ...
     end
 
     % ========================================================== %
-    % ===================== DISTRIBUTION 2 ===================== %
+    % ===================== Distribution 2 ===================== %
 
     % Finding the index of the limits
     idx_load_lim_2 = [find(vect_z >= load_lim_2(1) , 1,'first') , find(vect_z <= load_lim_2(2) , 1,'last') ] ;
@@ -205,7 +200,7 @@ function ctcr_construc ...
 
 
     % ========================================================== %
-    % =================== GLOBAL DISTRIBUTION ================== %
+    % =================== Global distribution ================== %
 
     vect_tau_dist = vect_tau_dist_1 + vect_tau_dist_2 ;
     vect_f_dist   = vect_f_dist_1 + vect_f_dist_2 ;
@@ -213,10 +208,8 @@ function ctcr_construc ...
 
 
     % ========================================================== %
-
-    % Construction of the matrix of discontinuity points index and the
-    % initial curvature and positions matrix
-
+    % Construction of the matrix of discontinuity points index 
+    %      and the initial curvature and positions matrix
     % ========================================================== %
 
     % Initialisation
@@ -238,7 +231,6 @@ function ctcr_construc ...
         ind_sup   = find(vect_z   <= beta_c(iT)            ,1,'last') ;
 
         % Memorization
-        % ============ NEW ============ %
         vect_ind_iT(iT,:) = [ind_inf , ind_courb , ind_sup] ;
 
         % Initial curvature matrix construction
@@ -273,8 +265,10 @@ function ctcr_construc ...
     % ========================================================== %
     % ================== Setting output values ================= %
 
-    ctcr_construc = CTCRConstruc(nbP , K , vect_ind_iT , ind_origin , ...
-        vect_z , vect_res , ui_init , pos_init , vect_tau_dist , vect_f_dist ) ;
+    ctcr_construc = CTCRConstruc(nbP           , K        , vect_ind_iT , ...
+                                 ind_origin(1) , vect_z   , vect_res    , ...
+                                 ui_init       , pos_init , ...
+                                 vect_tau_dist , vect_f_dist ) ;
 
     % ========================================================== %
     % ========================================================== %

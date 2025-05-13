@@ -282,6 +282,7 @@ function mem_deriv_propag_low ...
                     ddpi_dfs0           = mem_deriv_propag_low.mem_ddpi_ds.mem_ddpi_dfs0_ds(:,iT,j,is,is0) ;
                     hat_ddpi_dfs0       = hat(ddpi_dfs0) ;
         
+                    
                     dA_i_dfs0_j         = - tacr_act.ti(iT)*( (hat_ddpi_dfs0*hat_dpi(:,:,iT)+hat_dpi(:,:,iT)*hat_ddpi_dfs0)*norm_dpi(iT)^2 - 3*((hat_dpi(:,:,iT))^2)*(ddpi_dfs0'*mem_bvp.mem_dpi_ds(:,iT,is))  )/(norm_dpi(iT)^5) ;
         
                     mem_deriv_propag_low.mem_dAi.mem_dAi_dfs0(:,:,iT,j,is,is0) = dA_i_dfs0_j ;

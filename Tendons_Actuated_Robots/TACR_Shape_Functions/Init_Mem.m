@@ -98,11 +98,11 @@ function [mem_bvp , mem_deriv_propag_low , mem_deriv_propag_high , mem_CJ] ...
     % ========================= %
     % ==== mem_du0
 
-    mem_du0_dn0     = zeros(3,3,nbP)        ;
-    mem_du0_dm0     = zeros(3,3,nbP)        ;
-    mem_du0_dti     = zeros(3,nbT,nbP)      ;
-    mem_du0_dtaus0  = zeros(3,3,nbP,nbP)    ;
-    mem_du0_dfs0    = zeros(3,3,nbP,nbP)    ;
+    mem_du0_dn0     = zeros(3,3,nbP)         ;
+    mem_du0_dm0     = zeros(3,3,nbP)         ;
+    mem_du0_dti     = zeros(3,nbT,nbP)       ;
+    mem_du0_dtaus0  = zeros(3,3,nbP,nbP)     ;
+    mem_du0_dfs0    = zeros(3,3,nbP,nbP)     ;
     
     mem_du0_dm0(:,:,1) = inv(tacr_carac.Kbt) ;
     
@@ -130,11 +130,11 @@ function [mem_bvp , mem_deriv_propag_low , mem_deriv_propag_high , mem_CJ] ...
     % ========================= %
     % ==== mem_dv0
 
-    mem_dv0_dn0     = zeros(3,3,nbP)        ;
-    mem_dv0_dm0     = zeros(3,3,nbP)        ;
-    mem_dv0_dti     = zeros(3,nbT,nbP)      ;
-    mem_dv0_dtaus0  = zeros(3,3,nbP,nbP)    ;
-    mem_dv0_dfs0    = zeros(3,3,nbP,nbP)    ;
+    mem_dv0_dn0     = zeros(3,3,nbP)         ;
+    mem_dv0_dm0     = zeros(3,3,nbP)         ;
+    mem_dv0_dti     = zeros(3,nbT,nbP)       ;
+    mem_dv0_dtaus0  = zeros(3,3,nbP,nbP)     ;
+    mem_dv0_dfs0    = zeros(3,3,nbP,nbP)     ;
 
     mem_dv0_dn0(:,:,1) = inv(tacr_carac.Kse) ;
     
@@ -374,10 +374,8 @@ function [mem_bvp , mem_deriv_propag_low , mem_deriv_propag_high , mem_CJ] ...
 
     mem_B                   = zeros(6 , 6+nbT)          ;
     mem_Bw0s0               = zeros(6 , 6 , nbP)        ;
-
     mem_E                   = zeros(6 , 6+nbT , nbP)    ;
     mem_Ew0s0               = zeros(6 , 6 , nbP , nbP)  ;
-
     mem_deriv_propag_high   = MemDerivPropagHigh(mem_B , mem_Bw0s0 , mem_E , mem_Ew0s0) ;
 
 
@@ -390,7 +388,6 @@ function [mem_bvp , mem_deriv_propag_low , mem_deriv_propag_high , mem_CJ] ...
 
     mem_Cs0     = zeros(6 , 6 , nbP , nbP)  ;
     mem_J       = zeros(6 , nbT , nbP)      ;
-
     mem_CJ      = MemCJ(mem_Cs0 , mem_J)    ;
 
 

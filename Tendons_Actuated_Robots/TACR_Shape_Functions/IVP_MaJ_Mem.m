@@ -1,5 +1,5 @@
 function [mem_bvp , mem_deriv_propag_low] = ...
-            IVP_MaJ_Mem(...
+            IVP_MaJ_Mem( ...
             is , mem_bvp , tacr_construc , ...
             mem_deriv_propag_low , bool_opt_lit)
 
@@ -34,11 +34,9 @@ function [mem_bvp , mem_deriv_propag_low] = ...
 
     
     if ~(is == tacr_construc.nbP)
-    
 
-        % ===================================================== %
-        % ====================== Main ODE ===================== %
-        % ===================================================== %
+        % ====================
+        % ==== Main ODE
 
         mem_bvp.mem_y.mem_u0(:,is+1)        = mem_bvp.mem_y.mem_u0(:,is)    + mem_bvp.mem_ys.mem_u0s(:,is)    *tacr_construc.vect_res(is) ;             
         mem_bvp.mem_y.mem_v0(:,is+1)        = mem_bvp.mem_y.mem_v0(:,is)    + mem_bvp.mem_ys.mem_v0s(:,is)    *tacr_construc.vect_res(is) ;
@@ -48,9 +46,8 @@ function [mem_bvp , mem_deriv_propag_low] = ...
 
 
 
-        % ===================================================== %
-        % =============== Low-Level Derivatives =============== %
-        % ===================================================== %
+        % ====================
+        % ==== Low-Level Derivatives
 
         if bool_opt_lit
 

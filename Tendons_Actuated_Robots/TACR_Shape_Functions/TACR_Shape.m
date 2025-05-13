@@ -1,7 +1,7 @@
 function [tacr_shape , mem_bvp , bvp_prop , mem_deriv_propag_low , ...
           mem_deriv_propag_high , mem_CJ , simulation_param , tacr_construc , exitflag , output] ...
           = TACR_Shape( ...
-          IC , simulation_param , tacr_carac , tacr_act , tacr_load , tacr_construc)
+          simulation_param , tacr_carac , tacr_act , tacr_load , tacr_construc)
 
 
 % ======================================================================= %
@@ -37,11 +37,39 @@ function [tacr_shape , mem_bvp , bvp_prop , mem_deriv_propag_low , ...
 % ======================================================================= %
     
     
+    fprintf('\n ============= \n ==== SMART INITIAL GUESS : %s \n' , string(simulation_param.bool_SIC)) ;
+    
+    if simulation_param.bool_SIC
+        n0_init = - tacr_load.f_tip' - tacr_load.f_dist_1' - tacr_load.f_dist_2' - sum([zeros(2,tacr_carac.nbT);tacr_act.ti],2) ;
+        m0_init = - tacr_load.tau_tip' - tacr_load.tau_dist_1' - tacr_load.tau_dist_2' ...
+                  - hat([0;0;tacr_carac.L])*tacr_load.f_tip' ...
+                  - hat([0;0;mean(tacr_load.load_lim_1)])*tacr_load.f_dist_1' ...
+                  - hat([0;0;mean(tacr_load.load_lim_2)])*tacr_load.f_dist_2' ;
+        IC      = [m0_init;n0_init] ;
+    else
+        IC      = zeros(6,1) ;
+    end
+
+
+    
     % ================
     % ==== Solving the BVP ====
 
     [mem_bvp , bvp_prop , tacr_shape , tacr_construc , mem_deriv_propag_low , mem_deriv_propag_high , mem_CJ , simulation_param , exitflag , output] ...
     = BVP_Resolv( ...
     IC , tacr_construc , simulation_param , tacr_carac , tacr_act , tacr_load) ;
+
+
+
+    % ================
+    % ==== Display in the terminal ====
+    
+    if simulation_param.bool_disp_terminal
+        fprintf(' == Time for TACR shape : %.2e [s] \n', bvp_prop.clk_bvp) ;
+        fprintf(' == Number of iterations : %.2e \n', bvp_prop.nb_iter) ;
+        fprintf(' == Optimization norm error : %.2e \n', bvp_prop.norm_tol) ;
+        fprintf(' == Number of discretization points : %.2e \n', tacr_construc.nbP) ;
+    end
+
     
 end

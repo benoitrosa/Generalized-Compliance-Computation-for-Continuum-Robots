@@ -1,59 +1,23 @@
  
 
-
-
-
 % ============================================================== %
-% ==================== Preparing the script ==================== %
-
-disp(' ')
-clear all
-close all
-%clc
-
-addpath('CTCR_Maths_Functions', 'CTCR_Shape_Functions', ...
-    'CTCR_Shape_Class', 'CTCR_Deriv_Propag_Class', 'CTCR_Deriv_Propag_Functions', ...
-    'CTCR_Graphic', 'CTCR_Config' , 'CTCR_CPP' , 'DATA') ; 
-
-
-
 % ============================================================== %
-% ======================= Informations ========================= %
 %
-% Equation implementations are indicated by their numbers with respect to the paper : 
+% Computation based on the Low-Level Derivative Propagation Method 
+% presented in the paper :
 %
 % Guillaume Lods, Benoit Rosa, Bernard Bayle et Florent Nageotte, 
-% Exact derivative propagation method to compute the generalized compliance matrix 
-% for continuum robots : Application to concentric tubes continuum robots, 
+% Exact derivative propagation method to compute the generalized 
+% compliance matrix for continuum robots : Application to concentric 
+% tubes continuum robots, 
 % Mechanism and Machine Theory, Volume 200, 15 September 2024
 %
-% ============================================================== %
-
-
-
-
-% ============================================================== %
-% ======================== Configuration ======================= %
-
-
-% ================
-% =============== File ===============
-
-name = 'CTCR_mex' ;                               % Name of the folder created to store the results and the graphs
-
-
-fprintf('\n ============= \n ==== LOADING THE CONFIG FILE \n') ;
-fprintf([' == ',name,'_config.mat \n']) ;
-
-[simulation_param , ctcr_carac , ctcr_act , ctcr_load , ...
-    ctcr_construc , prc_s0 , delta_f0] = Load_Config(name) ;
-
-
-
-% ============================================================== %
-% =================== Quasi-static shape model ================= %
+% Equation implementations are indicated by their numbers with 
+% respect to the paper.
 %
-% Quasi-static shape model based on :
+% ======================
+%
+% The quasi-static model used here is based on the following papers :
 %
 % Lock, J., Laing, G., Mahvash, M., and Dupont, P. E. (2010), 
 % Quasistatic modeling of concentric tube robots with external loads, 
@@ -68,32 +32,38 @@ fprintf([' == ',name,'_config.mat \n']) ;
 % ============================================================== %
 % ============================================================== %
 
+
+
+
+disp(' ')
+clear all
+close all
+clc
+
+addpath('CTCR_Shape_Functions'      , 'CTCR_Shape_Class'              , ...
+        'CTCR_Deriv_Propag_Class'   , 'CTCR_Deriv_Propag_Functions'   , ...
+        'CTCR_FD_Deriv_Propag_Class', 'CTCR_FD_Deriv_Propag_Functions', ...
+        'CTCR_Graphic'              , 'CTCR_Maths_Functions'          , ...
+        'CTCR_Config'               , 'CTCR_CPP'                      , ...
+        'DATA') ; 
+
+
+name = 'CTCR_test' ;    % Name of the folder created to store the results and the graphs
+
+
+fprintf('\n ============= \n ==== LOADING THE CONFIG FILE \n') ;
+[simulation_param , ctcr_carac , ctcr_act , ctcr_load , ctcr_construc , prc_s0 , delta_f0] = ...
+Load_Config( ...
+name) ;
+
+
 if simulation_param.flag_ctcr
 
-    fprintf('\n ============= \n ==== SMART INITIAL GUESS : %s \n' , string(simulation_param.bool_SIC)) ;
-
-    if simulation_param.bool_SIC
-        n0_init = - ctcr_load.f_tip' - ctcr_load.f_dist_1' - ctcr_load.f_dist_2' ;
-        m0_init = zeros(3,1) ;
-        IC      = [zeros(ctcr_carac.nbT,1) ; m0_init ; n0_init] ;
-    else
-        IC      = zeros(ctcr_carac.nbT+6,1) ;            % Initial value for yu(0) (see Table 5) 
-    end
-    
-
-
     fprintf('\n ============= \n ==== COMPUTING THE CTCR SHAPE \n') ;
-    
-    [ctcr_shape , mem_bvp , bvp_prop , mem_deriv_propag_low , ...
-    mem_deriv_propag_high , mem_CJ , simulation_param , ctcr_construc ,  ~ , ~] ...
+    [ctcr_shape , mem_bvp , bvp_prop , mem_deriv_propag_low , mem_deriv_propag_high , mem_CJ , simulation_param , ctcr_construc ,  ~ , ~] ...
     = CTCR_Shape( ...
-    IC , simulation_param , ctcr_carac , ctcr_load , ctcr_construc) ;
+    simulation_param , ctcr_carac , ctcr_load , ctcr_construc) ;
     
-
-    
-    % ================
-    % ==== Display in the terminal ====
-
     if simulation_param.bool_disp_terminal
         fprintf(' == Time for CTCR shape : %.2e [s] \n', bvp_prop.clk_bvp) ;
         fprintf(' == Number of iterations : %.2e \n', bvp_prop.nb_iter) ;
@@ -102,218 +72,98 @@ if simulation_param.flag_ctcr
     end
 
 
-
-
-    % ============================================================== %
-    % =============== Compute generalized compliance =============== %
-    % ===============   and joint Jacobian matrix    =============== %
-    %
-    % Computation based on the Low-Level Derivative Propagation Method 
-    % presented in the paper :
-    %
-    % Guillaume Lods, Benoit Rosa, Bernard Bayle et Florent Nageotte, 
-    % Exact derivative propagation method to compute the generalized 
-    % compliance matrix for continuum robots : Application to concentric 
-    % tubes continuum robots, 
-    % Mechanism and Machine Theory, Volume 200, 15 September 2024
-    %
-    % ============================================================== %
-    % ============================================================== %
-    
-    
-    
-    
-    
-    
-    % ================
-    % ====== Computation of the Low-Level Derivative Propagation Method =======
-    
     if simulation_param.bool_J || simulation_param.bool_Cs0
-            
-        fprintf('\n ============= \n ==== COMPUTING THE JOINT JACOBIAN AND THE GENERALIZED COMPLIANCE MATRIX \n') ;
-
+        fprintf('\n ============= \n ==== COMPUTING THE JOINT JACOBIAN AND THE GENERALIZED COMPLIANCE MATRIX USING LLDPM \n') ;
         [mem_CJ , mem_deriv_propag_high , mem_deriv_propag_low , time_comp_CJ] ...
         = CTCR_Deriv_Propag(...
-        ctcr_carac , ctcr_construc , ctcr_act , ctcr_load , mem_bvp , ...
-        bvp_prop , simulation_param , mem_deriv_propag_low , mem_deriv_propag_high , mem_CJ) ;
-            
+        ctcr_carac , ctcr_construc , ctcr_act , ctcr_load , mem_bvp , bvp_prop , simulation_param , mem_deriv_propag_low , mem_deriv_propag_high , mem_CJ) ;
     end
-                 
-            
-    % ================
-    % ==== Display in the terminal ====
 
-    if simulation_param.bool_disp_terminal
-        fprintf(' == Computation time for Cs0 and J : %.2e [s] \n', time_comp_CJ) ;
+
+    % fprintf('\n ============= \n ==== COMPUTING THE LINEARIZED DEFORMATIONS \n') ;
+    % [ctcr_shape_def_mod , ctcr_shape_def_jacob , mem_is0] = ...
+    % CTCR_Lin_Deform(prc_s0 , delta_f0 , ctcr_carac , ctcr_construc , ctcr_load , ...
+    % ctcr_shape , simulation_param , mem_CJ) ;
+
+
+
+
+    % ======================== // ! \\ ======================== %
+    % ===== This function can take a long time to proceed ===== %
+    % ======================== // ! \\ ======================== %
+
+    fprintf('\n ============= \n ==== COMPUTING THE JOINT JACOBIAN AND THE GENERALIZED COMPLIANCE MATRIX USING DF \n') ;
+    select_DF                       = 'pn' ;
+    ampl_vibr                       = 1e-6 ;
+    simulation_param.bool_opt_lit   = true ;
+    pt_s0_FD                        = ctcr_construc.ind_origin + [floor([0,20,40,50,60,80,100]/100*(ctcr_construc.nbP-ctcr_construc.ind_origin))] ;
+    [mem_FD_CJ , mem_FD_deriv_propag_high , mem_FD_deriv_propag_low] ...
+    = CTCR_FD_Deriv_Propag( ...
+    select_DF , ampl_vibr , ctcr_carac , ctcr_construc , ctcr_act , ctcr_load , simulation_param , bvp_prop , pt_s0_FD) ;
+
+
+
+    
+
+
+
+
+
+
+
+    % ======================================================================================== %
+    % ===============================    GENERATING GRAPHS    ================================ %
+    % ======================================================================================== %
+
+
+    if simulation_param.flag_ctcr && ~simulation_param.bool_problem_opt
+        fprintf('\n ============= \n ==== PLOTTING THE INITIAL TUBES \n') ;
+        Plot_Initial_Tubes(name , ctcr_carac , ctcr_construc) ;
     end
-        
-    
-    
-%     % ============================================================== %
-%     % =================== Generating some graphs =================== %
-%     % ============================================================== %
-% 
-% 
-%     % ================
-%     % ====== Plot initial tubes =======
-% 
-%     if simulation_param.flag_ctcr && ~simulation_param.bool_problem_opt
-% 
-%         fprintf('\n ============= \n ==== PLOTTING THE INITIAL TUBES \n') ;
-% 
-%         fig_init_tub                = figure('units','normalized','outerposition',[0 0 1 1]) ;
-%         fig_init_tub.Color          = 'w';
-%         fig_init_tub.WindowState    = 'fullscreen' ;
-%         ax_fig                      = axes(fig_init_tub) ;
-% 
-%         CTCR_Plot_Tubes(ax_fig , ctcr_carac , ctcr_construc) ;
-%         cd(['DATA/',name])
-%         saveas(fig_init_tub,strcat(name,'_init_tubes.fig')) ;
-%         saveas(fig_init_tub,strcat(name,'_init_tubes.png')) ;
-%         cd ../..
-%         close gcf
-% 
-%     end
-% 
-%     % ================
-%     % ====== Plot robot shape =======
-% 
-%     if simulation_param.flag_ctcr && ~simulation_param.bool_problem_opt
-% 
-%         fprintf('\n ============= \n ==== PLOTTING THE CTCR 3D SHAPE \n') ;
-% 
-%         fig_robot               = figure('units','normalized','outerposition',[0 0 1 1]) ;
-%         fig_robot.Color         = 'w';
-%         fig_robot.WindowState   = 'fullscreen' ;
-%         ax_fig                  = axes(fig_robot) ;
-% 
-%         CTCR_Plot_3D_Volume(ax_fig,ctcr_shape,ctcr_carac,ctcr_construc) ;
-%         cd(['DATA/',name])
-%         saveas(fig_robot,strcat(name,'_shape.fig')) ;  
-%         saveas(fig_robot,strcat(name,'_shape.png')) ;
-%         cd ../..
-%         close gcf
-% 
-%     end
-% 
-%     % ================
-%     % ========== Plot robot shape with loads =========
-% 
-%     if simulation_param.flag_ctcr && ~simulation_param.bool_problem_opt && ...
-%        (~isequal(ctcr_load.tau_tip, zeros(1,3)) || ...
-%        ~isequal(ctcr_load.f_tip, zeros(1,3)) || ...
-%        ~isequal(ctcr_load.tau_dist_1, zeros(1,3)) || ...
-%        ~isequal(ctcr_load.f_dist_1, zeros(1,3)) || ...
-%        ~isequal(ctcr_load.tau_dist_2, zeros(1,3)) || ...
-%        ~isequal(ctcr_load.f_dist_2, zeros(1,3)))
-% 
-%         fprintf('\n ============= \n ==== PLOTTING THE CTCR 3D SHAPE AND THE EXTERNAL LOADS \n') ;
-% 
-%         cd(['DATA/',name])
-%         filename        = strcat(name,'_shape.fig') ;
-%         fig_robot_load  = CTCR_Load_Plot(filename,simulation_param,ctcr_carac,ctcr_load,ctcr_construc,ctcr_shape) ;
-% 
-%         cd ../..
-%         cd(['DATA/',name])
-%         saveas(fig_robot_load,strcat(name,'_shape_loads.fig')) ;
-%         saveas(fig_robot_load,strcat(name,'_shape_loads.png')) ;
-%         cd ../..
-%         close gcf
-% 
-%     end
-%        
-%     
-%     % ============================================================== %
-%     % ============================================================== %
-%     % =========================== Extra ============================ %
-%     %                                                                %
-%     %                  For a given force variation                   %
-%     %     visualize the shape deformation computed by the model      %
-%     %                             versus                             %
-%     %         the shape deformation computed by linearization        %
-%     %            using the Generalized Compliance Matrix             %
-%     %                                                                %
-%     % ============================================================== %
-%     % ============================================================== %
-% 
-%     if ~isempty(prc_s0) && ~isempty(delta_f0)
-% 
-% 
-%         % ================
-%         % ============== Adding the vector force to ctcr_construc ===============
-%     
-%         fprintf('\n ============= \n ==== ADDIND THE FORCE VARIATION \n') ;
-% 
-%         [ctcr_construc_new,ctcr_load_new,mem_is0] ...
-%         = Add_Force_var( ...
-%         prc_s0,delta_f0,ctcr_construc,ctcr_load) ;
-%     
-%     
-%         % ================
-%         % ============== Compute the model again ===============
-%     
-%         fprintf('\n ============= \n ==== COMPUTING THE DEFORMED CTCR SHAPE USING THE SHAPE MODEL \n') ;
-% 
-%         [ctcr_shape_def_mod , mem_bvp_def_mod , bvp_prop_def_mod , mem_deriv_propag_low_def_mod , ...
-%         mem_deriv_propag_high_def_mod , mem_CJ_def_mod , simulation_param_def_mod , ctcr_construc_new , ~ , ~] ...
-%         = CTCR_Shape( ...
-%         IC , simulation_param , ctcr_carac , ctcr_load_new , ctcr_construc_new) ;
-%     
-% 
-%         
-%         % ================
-%         % ==== Display in the terminal ====
-%     
-%         if simulation_param.bool_disp_terminal
-%             fprintf(' == Time for CTCR shape : %.2e [s] \n', bvp_prop.clk_bvp) ;
-%             fprintf(' == Number of iterations : %.2e \n', bvp_prop.nb_iter) ;
-%             fprintf(' == Optimization norm error : %.2e \n', bvp_prop.norm_tol) ;
-%             fprintf(' == Number of discretization points : %.2e \n', ctcr_construc_new.nbP) ;
-%         end
-% 
-% 
-%     
-%         % ================
-%         % ============== Compute the deformation using the Generalized Compliance Matrix ===============
-%     
-%         fprintf('\n ============= \n ==== COMPUTING THE DEFORMED CTCR SHAPE BY LINEARIZATION USING THE GENERALIZED COMPLIANCE MATRIX \n') ;
-% 
-%         [ctcr_shape_def_jacob , time_comp_lin_deform] ...
-%         = Lin_Deform( ...
-%         mem_is0,delta_f0,ctcr_shape,ctcr_construc,mem_CJ.mem_Cs0) ;
-%     
-% 
-%         % ================
-%         % ==== Display in the terminal ====
-% 
-%         if simulation_param.bool_disp_terminal
-%             fprintf(' == Computation time for linearized deformations : %.2e [s] \n', time_comp_lin_deform) ;
-%         end
-% 
-% 
-%         % ================
-%         % ============== Visualize the two shapes on the same graph ===============
-% 
-%         fprintf('\n ============= \n ==== PLOTTING THE CTCR 3D DEFORMED SHAPES \n') ;
-% 
-%         fig_deform                  = figure('units','normalized','outerposition',[0 0 1 1]) ;
-%         fig_deform.Color            = 'w';
-%         fig_deform.WindowState      = 'fullscreen' ;
-%         curr_ax                     = axes(fig_deform) ;
-% 
-%         CTCR_Plot_3(curr_ax , ctcr_shape , ctcr_shape_def_mod , ctcr_shape_def_jacob  , ctcr_carac , ctcr_construc , mem_is0 , delta_f0) ;   
-%         cd(['DATA/',name])
-%         saveas(fig_deform,strcat(name,'_deform_shape.fig')) ;  
-%         saveas(fig_deform,strcat(name,'_deform_shape.png')) ;
-%         cd ../..
-%         close gcf
-% 
-%     end
+
+
+
+    if simulation_param.flag_ctcr && ~simulation_param.bool_problem_opt
+        fprintf('\n ============= \n ==== PLOTTING THE CTCR 3D SHAPE \n') ;
+        Plot_Actuated_Shape(name , ctcr_shape , ctcr_carac , ctcr_construc) ;
+    end
+
+
+
+    % tot_load = cat(2,ctcr_load.tau_tip,ctcr_load.f_tip,ctcr_load.tau_dist_1,ctcr_load.f_dist_1,ctcr_load.tau_dist_2,ctcr_load.f_dist_2) ;
+    % if simulation_param.flag_ctcr && ~simulation_param.bool_problem_opt && ~isequal(tot_load, zeros(1,6*3))
+    %     fprintf('\n ============= \n ==== PLOTTING THE CTCR 3D SHAPE AND THE EXTERNAL LOADS \n') ;
+    %     Plot_Shape_Loads(name , simulation_param , ctcr_carac , ctcr_load , ctcr_construc , ctcr_shape) ;
+    % end
+
+
+
+    % if simulation_param.flag_ctcr && ~simulation_param.bool_problem_opt && ~isempty(prc_s0) && ~isempty(delta_f0)
+    %     fprintf('\n ============= \n ==== PLOTTING A FIGURE TO COMPARE THE DEFORMED SHAPES \n') ;
+    %     Plot_Comp_Deform(name , ctcr_shape , ctcr_shape_def_mod , ctcr_shape_def_jacob , ctcr_carac , ctcr_construc , mem_is0 , delta_f0) ;
+    % end
+
+
+
+    % ======================== // ! \\ ======================== %
+    % ===== This function can take a long time to proceed ===== %
+    % ======================== // ! \\ ======================== %
+
+    % fprintf('\n ============= \n ==== PLOTTING THE 3D GRAPHS TO COMPARE DF AND LLDPM DERIVATIVES \n') ;
+    % % ===== Selection of the derivatives to show
+    % % options numerateur : 'Cs0(s)' , 'J(s)' , 'B' , 'uzi' , 'ti' , 'm0' , 'n0' , 'u0' , 'R0' , 'p0'
+    % % options derivateur : 'uzj(0)' , 'm0(0)' , 'n0(0)' , 'tcj' , 'bcj' , 'tau(s0)' , 'f(s0)'
+    % numerateur = {'Cs0(s)' , 'J(s)' , 'B'} ; 
+    % derivateur = {'uzj(0)' , 'm0(0)' , 'n0(0)'} ;
+    % Plot_Comp_Deriv(numerateur , derivateur , name , ctcr_construc , ctcr_carac , simulation_param , mem_CJ , ...
+    %                 mem_deriv_propag_high , mem_deriv_propag_low , mem_FD_CJ , mem_FD_deriv_propag_high , mem_FD_deriv_propag_low , pt_s0_FD) ;
 
 
 else
-    fprintf('CTCR features not compatible with the given actuation \n') ;
+    fprintf('CTCR not compatible with the given actuation \n') ;
 end
+
+
 
 
 
@@ -322,10 +172,10 @@ end
 % ======================================= %
     
 fprintf('\n ============= \n ==== SAVING THE DATA \n') ;
-
 cd(['DATA/',name]) ;
 save(strcat(name,'_data.mat'))
 cd ../..
 
-% ======================================= %
-% ======================================= %
+
+
+

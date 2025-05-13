@@ -1,4 +1,4 @@
-function [ctcr_construc_new,ctcr_load_new,mem_is0] = Add_Force_var(prc_s0,delta_f0,ctcr_construc,ctcr_load)
+function [ctcr_construc_new , ctcr_load_new , mem_is0] = Add_Force_var(prc_s0,delta_f0,ctcr_construc,ctcr_load)
     
 % ======================================================================= %
 % ======================================================================= %
