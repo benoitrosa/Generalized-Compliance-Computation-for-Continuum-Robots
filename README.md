@@ -16,7 +16,7 @@
 - Tendon Actuated Continuum Robot (TACR)
 - Concentric Agonist-Antagonist Robot (CAAR) will be released soon
 
-** The Generalized Compliance Matrix is a kind of Jacobian that fully captures the flexibility properties of the robot. It is a powerful mathematical tool for :**
+**The Generalized Compliance Matrix is a kind of Jacobian that fully captures the flexibility properties of the robot. It is a powerful mathematical tool for :**
 - Trajectory planning algorithms that take into account mechanical contacts between the robot and its environment
 - For stiffness modulation algorithms
 - Vision-based contact force estimation algorithms
@@ -30,9 +30,9 @@
 
 ## Content
 
-- "€œmain.m" is the main script using standard Matlab code.
-- "€œmain_cpp.m" is similar to "main.m" but contains MEX functions running converted C++ code using the Matlab Coder app.
-- "ROBOT_CPP/" ontains the MEX functions.
+- "€œ main.m " is the main script using standard Matlab code.
+- "€ œmain_cpp.m " is similar to "main.m" but contains MEX functions running converted C++ code using the Matlab Coder app.
+- " ROBOT_CPP/ " ontains the MEX functions.
 
 
 
