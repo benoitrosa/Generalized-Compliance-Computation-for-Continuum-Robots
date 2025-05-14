@@ -11,12 +11,12 @@
 
 ## Description
 
-**This code computes the Quasistatic Model, the Generalized Compliance Matrix and the Joint Jacobian of a continuum robot : **
+**This code computes the Quasistatic Model, the Generalized Compliance Matrix and the Joint Jacobian of a continuum robot :**
 - Concentric Tubes Continuum Robots (CTCR)
 - Tendon Actuated Continuum Robot (TACR)
 - Concentric Agonist-Antagonist Robot (CAAR) will be released soon
 
-** The Generalized Compliance Matrix is a kind of Jacobian that fully captures the flexibility properties of the robot. It is a powerful mathematical tool for : **
+** The Generalized Compliance Matrix is a kind of Jacobian that fully captures the flexibility properties of the robot. It is a powerful mathematical tool for :**
 - Trajectory planning algorithms that take into account mechanical contacts between the robot and its environment
 - For stiffness modulation algorithms
 - Vision-based contact force estimation algorithms
@@ -26,13 +26,13 @@
 
 ## Information and requirements
 
-**This code requires "Matlab R2023a", or a more recent version, as well as the installation of the "Optimization Toolbox". There are two main folders associated with the different kinds of robots: "Concentric_Tubes_Robots" and "Tendon_Actuated_Robots". The organisation of the folders is identical to what will be described for a given ROBOT = CTCR or TACR. **
+**This code requires "Matlab R2023a", or a more recent version, as well as the installation of the "Optimization Toolbox". There are two main folders associated with the different kinds of robots: "Concentric_Tubes_Robots" and "Tendon_Actuated_Robots". The organisation of the folders is identical to what will be described for a given ROBOT = CTCR or TACR.**
 
 ## Content
 
-** "€œmain.m" is the main script using standard Matlab code.
-** "€œmain_cpp.m" is similar to "main.m" but contains MEX functions running converted C++ code using the Matlab Coder app.
-** "ROBOT_CPP/" ontains the MEX functions.
+- "€œmain.m" is the main script using standard Matlab code.
+- "€œmain_cpp.m" is similar to "main.m" but contains MEX functions running converted C++ code using the Matlab Coder app.
+- "ROBOT_CPP/" ontains the MEX functions.
 
 
 
@@ -40,7 +40,7 @@
 
 - **"CTCR_CPP" : Contains the MEX functions.**
 
-- **"CTCR_Config" : Contains several configuration files examples that can be used to test the code.**
+- "CTCR_Config" : Contains several configuration files examples that can be used to test the code.**
 	- "Demo_11"  : CTCR nÂ°1 composed of 2 tubes
 	- "Demo_12"  : CTCR nÂ°1 with a tip external force
 	- "Demo_13"  : CTCR nÂ°1 with a mid-length external force
