@@ -9,12 +9,12 @@
 > HAL link : https://hal.science/hal-04626541/
 
 
-# Scientific description
+## Description
 
-**This code computes the Quasistatic Model, the Generalized Compliance Matrix and the Joint Jacobian of continuum robots :
-- Concentric Tubes Robots 
-- Tendon Actuated Robots
-- Concentric Agonist-Antagonist Robot (also called Push-Pulled Robot) will be released soon
+**This code computes the Quasistatic Model, the Generalized Compliance Matrix and the Joint Jacobian of a continuum robot :
+- Concentric Tubes Continuum Robots (CTCR)
+- Tendon Actuated Continuum Robot (TACR)
+- Concentric Agonist-Antagonist Robot (CAAR) will be released soon
 
 ** The Generalized Compliance Matrix is a kind of Jacobian that fully captures the flexibility properties of the robot. It is a powerful mathematical tool for : 
 - Trajectory planning algorithms that take into account mechanical contacts between the robot and its environment
@@ -24,22 +24,21 @@
 **An example is provided showing how to linearize the robot's deformations when one or more forces are applied to it.**
 
 
-# Contents and requirements
+## Information and requirements
 
-**This code requires "Matlab R2023a", or a more recent version, as well as the installation of the "Optimization Toolbox". There are two mains folders associated to the differents kind of robots : "Concentric_Tubes_Robots" and "Tendon_Actuated_Robots"**
+**This code requires "Matlab R2023a", or a more recent version, as well as the installation of the "Optimization Toolbox". There are two main folders associated with the different kinds of robots: "Concentric_Tubes_Robots" and "Tendon_Actuated_Robots". The organisation of the folders is identical to what will be described for a given ROBOT = CTCR or TACR. **
 
-## There are 2 main scripts : 
-**‚Äúmain.m‚Äù is a the standard Matlab code**
-- Advantage : You have access to all the internal comments of the functions.
-- Drawback  : The computation time is quite long.
+## Content
 
-**‚Äúmain_cpp.m‚Äù is a the Matlab code using MEX functions and C++ compiled functions.**
-- Advantage : The computation time is is greatly reduced.
-- Drawback  : You do not have access to all the internal comments of the functions.
+** "Äúmain.m" is the main script using standard Matlab code.
+** "Äúmain_cpp.m" is similar to "main.m" but contains MEX functions running converted C++ code using the Matlab Coder app.
+** "ROBOT_CPP/" ontains the MEX functions.
+
+
 
 ## Folder contents :
 
-- **"CTCR_CPP" : Contains the MEX functions used to run the C++ compiled functions. The MEX functions are provided for Macintosh, Windows and Linux.**
+- **"CTCR_CPP" : Contains the MEX functions.**
 
 - **"CTCR_Config" : Contains several configuration files examples that can be used to test the code.**
 	- "Demo_11"  : CTCR n¬∞1 composed of 2 tubes
