@@ -11,12 +11,12 @@
 
 ## Description
 
-**This code computes the Quasistatic Model, the Generalized Compliance Matrix and the Joint Jacobian of a continuum robot :
+**This code computes the Quasistatic Model, the Generalized Compliance Matrix and the Joint Jacobian of a continuum robot : **
 - Concentric Tubes Continuum Robots (CTCR)
 - Tendon Actuated Continuum Robot (TACR)
 - Concentric Agonist-Antagonist Robot (CAAR) will be released soon
 
-** The Generalized Compliance Matrix is a kind of Jacobian that fully captures the flexibility properties of the robot. It is a powerful mathematical tool for : 
+** The Generalized Compliance Matrix is a kind of Jacobian that fully captures the flexibility properties of the robot. It is a powerful mathematical tool for : **
 - Trajectory planning algorithms that take into account mechanical contacts between the robot and its environment
 - For stiffness modulation algorithms
 - Vision-based contact force estimation algorithms
