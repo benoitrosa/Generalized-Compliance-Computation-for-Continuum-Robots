@@ -97,14 +97,14 @@ if simulation_param.flag_ctcr
     % ===== This function can take a long time to proceed ===== %
     % ======================== // ! \\ ======================== %
 
-    fprintf('\n ============= \n ==== COMPUTING THE JOINT JACOBIAN AND THE GENERALIZED COMPLIANCE MATRIX USING DF \n') ;
-    select_DF                       = 'pn' ;
-    ampl_vibr                       = 1e-6 ;
-    simulation_param.bool_opt_lit   = true ;
-    pt_s0_FD                        = ctcr_construc.ind_origin + [floor([0,20,40,50,60,80,100]/100*(ctcr_construc.nbP-ctcr_construc.ind_origin))] ;
-    [mem_FD_CJ , mem_FD_deriv_propag_high , mem_FD_deriv_propag_low] ...
-    = CTCR_FD_Deriv_Propag( ...
-    select_DF , ampl_vibr , ctcr_carac , ctcr_construc , ctcr_act , ctcr_load , simulation_param , bvp_prop , pt_s0_FD) ;
+    % fprintf('\n ============= \n ==== COMPUTING THE JOINT JACOBIAN AND THE GENERALIZED COMPLIANCE MATRIX USING DF \n') ;
+    % select_DF                       = 'pn' ;
+    % ampl_vibr                       = 1e-6 ;
+    % simulation_param.bool_opt_lit   = true ;
+    % pt_s0_FD                        = ctcr_construc.ind_origin + [floor([0,20,40,50,60,80,100]/100*(ctcr_construc.nbP-ctcr_construc.ind_origin))] ;
+    % [mem_FD_CJ , mem_FD_deriv_propag_high , mem_FD_deriv_propag_low] ...
+    % = CTCR_FD_Deriv_Propag( ...
+    % select_DF , ampl_vibr , ctcr_carac , ctcr_construc , ctcr_act , ctcr_load , simulation_param , bvp_prop , pt_s0_FD) ;
 
 
 
@@ -160,8 +160,7 @@ if simulation_param.flag_ctcr
     % % options derivateur : 'uzj(0)' , 'm0(0)' , 'n0(0)' , 'tcj' , 'bcj' , 'tau(s0)' , 'f(s0)'
     % numerateur = {'Cs0(s)' , 'J(s)'} ; 
     % derivateur = {} ;
-    % Plot_Comp_Deriv(numerateur , derivateur , name , ctcr_construc , ctcr_carac , mem_CJ , ...
-    %                 mem_deriv_propag_high , mem_deriv_propag_low , mem_FD_CJ , mem_FD_deriv_propag_high , mem_FD_deriv_propag_low , pt_s0_FD) ;
+    % Plot_Comp_Deriv(numerateur , derivateur , name , ctcr_construc , ctcr_carac , mem_CJ , mem_deriv_propag_high , mem_deriv_propag_low , mem_FD_CJ , mem_FD_deriv_propag_high , mem_FD_deriv_propag_low , pt_s0_FD) ;
 
 
 else

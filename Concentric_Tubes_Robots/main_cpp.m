@@ -156,8 +156,7 @@ if simulation_param.flag_ctcr
     % options derivateur : 'uzj(0)' , 'm0(0)' , 'n0(0)' , 'tcj' , 'bcj' , 'tau(s0)' , 'f(s0)'
     numerateur = {'Cs0(s)' , 'J(s)'} ; 
     derivateur = {} ;
-    Plot_Comp_Deriv(numerateur , derivateur , name , ctcr_construc , ctcr_carac , mem_CJ , ...
-                    mem_deriv_propag_high , mem_deriv_propag_low , mem_FD_CJ , mem_FD_deriv_propag_high , mem_FD_deriv_propag_low , pt_s0_FD) ;
+    Plot_Comp_Deriv(numerateur , derivateur , name , ctcr_construc , ctcr_carac , mem_CJ , mem_deriv_propag_high , mem_deriv_propag_low , mem_FD_CJ , mem_FD_deriv_propag_high , mem_FD_deriv_propag_low , pt_s0_FD) ;
 
 
 else

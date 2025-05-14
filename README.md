@@ -2,15 +2,31 @@
 
 ## This code is associated to the following paper, please cite this reference if reusing the code :
 
-> Guillaume Lods, Benoit Rosa, Bernard Bayle et Florent Nageotte, "Exact derivative propagation method to compute the generalized compliance matrix for continuum robots : Application to concentric tubes continuum robots", Mechanism and Machine Theory, Volume 200, 15 September 2024
+> Guillaume Lods, Benoit Rosa, Bernard Bayle et Florent Nageotte, "Exact Derivative Propagation Method to Compute the Generalized Compliance Matrix for Continuum Robots : Application to concentric tubes continuum robots", Mechanism and Machine Theory, Volume 200, 15 September 2024
 
 > DOI : https://doi.org/10.1016/j.mechmachtheory.2024.105696
 
 > HAL link : https://hal.science/hal-04626541/
 
-**This code computes the Quasistatic Model, the Generalized Compliance Matrix and the Joint Jacobian of a concentric tubes continuum robot. An example is also provided showing how to linearize the robot's deformations when one or more forces are applied to it.**
 
-**This code requires "Matlab R2023a", or a more recent version, as well as the installation of the "Optimization Toolbox".**
+# Scientific description
+
+**This code computes the Quasistatic Model, the Generalized Compliance Matrix and the Joint Jacobian of continuum robots :
+- Concentric Tubes Robots 
+- Tendon Actuated Robots
+- Concentric Agonist-Antagonist Robot (also called Push-Pulled Robot) will be released soon
+
+** The Generalized Compliance Matrix is a kind of Jacobian that fully captures the flexibility properties of the robot. It is a powerful mathematical tool for : 
+- Trajectory planning algorithms that take into account mechanical contacts between the robot and its environment
+- For stiffness modulation algorithms
+- Vision-based contact force estimation algorithms
+
+**An example is provided showing how to linearize the robot's deformations when one or more forces are applied to it.**
+
+
+# Contents and requirements
+
+**This code requires "Matlab R2023a", or a more recent version, as well as the installation of the "Optimization Toolbox". There are two mains folders associated to the differents kind of robots : "Concentric_Tubes_Robots" and "Tendon_Actuated_Robots"**
 
 ## There are 2 main scripts : 
 **“main.m” is a the standard Matlab code**

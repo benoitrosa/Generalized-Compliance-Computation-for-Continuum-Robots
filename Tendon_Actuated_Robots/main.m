@@ -48,7 +48,7 @@ addpath('TACR_Shape_Functions'      , 'TACR_Shape_Class'              , ...
         'TACR_Write_Config'         , 'DATA') ; 
 
 
-name = 'TACR_test' ;             % Name of the folder created to store the results and the graphs
+name = 'TACR_mex' ;             % Name of the folder created to store the results and the graphs
 
 
 
@@ -64,7 +64,7 @@ name) ;
 fprintf('\n ============= \n ==== COMPUTING THE TACR SHAPE \n') ;
 
 [tacr_shape , mem_bvp , bvp_prop , mem_deriv_propag_low , mem_deriv_propag_high , mem_CJ , simulation_param , tacr_construc ,  ~ , ~] ...
-= TACR_Shape_mex( ...
+= TACR_Shape( ...
 simulation_param , tacr_carac , tacr_act , tacr_load , tacr_construc) ;
 
 if simulation_param.bool_disp_terminal
@@ -79,7 +79,7 @@ end
 if simulation_param.bool_J || simulation_param.bool_Cs0
     fprintf('\n ============= \n ==== COMPUTING THE JOINT JACOBIAN AND THE GENERALIZED COMPLIANCE MATRIX \n') ;
     [mem_CJ , mem_deriv_propag_high , mem_deriv_propag_low , time_comp_CJ] ...
-    = TACR_Deriv_Propag_mex(...
+    = TACR_Deriv_Propag(...
     tacr_carac , tacr_construc , tacr_act , tacr_load , mem_bvp , bvp_prop , simulation_param , mem_deriv_propag_low , mem_deriv_propag_high , mem_CJ) ;
 
     if simulation_param.bool_disp_terminal
@@ -87,6 +87,7 @@ if simulation_param.bool_J || simulation_param.bool_Cs0
     end
 
 end
+
 
 
 
@@ -99,17 +100,18 @@ prc_s0 , delta_f0 , tacr_carac , tacr_construc , tacr_load , tacr_shape , tacr_a
 
 
 
+
 % ======================== // ! \\ ======================== %
 % ===== This function can take a long time to proceed ===== %
 % ======================== // ! \\ ======================== %
 
-fprintf('\n ============= \n ==== COMPUTING THE JOINT JACOBIAN AND THE GENERALIZED COMPLIANCE MATRIX USING DF \n') ;
-select_DF                       = 'pn' ;
-ampl_vibr                       = 1e-6 ;
-simulation_param.bool_opt_lit   = true ;
-pt_s0_FD                        = [1,floor([10,20,40,50,60,80,100]/100*tacr_construc.nbP)] ;
-[mem_FD_CJ , mem_FD_deriv_propag_high , mem_FD_deriv_propag_low] ...
-= TACR_FD_Deriv_Propag_mex(select_DF , ampl_vibr , tacr_carac , tacr_construc , tacr_act , tacr_load , simulation_param , bvp_prop , pt_s0_FD) ;
+% fprintf('\n ============= \n ==== COMPUTING THE JOINT JACOBIAN AND THE GENERALIZED COMPLIANCE MATRIX USING DF \n') ;
+% select_DF                       = 'pn' ;
+% ampl_vibr                       = 1e-6 ;
+% simulation_param.bool_opt_lit   = true ;
+% pt_s0_FD                        = [1,floor([10,20,40,50,60,80,100]/100*tacr_construc.nbP)] ;
+% [mem_FD_CJ , mem_FD_deriv_propag_high , mem_FD_deriv_propag_low] ...
+% = TACR_FD_Deriv_Propag(select_DF , ampl_vibr , tacr_carac , tacr_construc , tacr_act , tacr_load , simulation_param , bvp_prop , pt_s0_FD) ;
 
 
 
@@ -117,15 +119,16 @@ pt_s0_FD                        = [1,floor([10,20,40,50,60,80,100]/100*tacr_cons
 
 
 
-% % ======================================================================================== %
-% % ===============================    GENERATING GRAPHS    ================================ %
-% % ======================================================================================== %
+% ======================================================================================== %
+% ===============================    GENERATING GRAPHS    ================================ %
+% ======================================================================================== %
 
 
 if ~simulation_param.bool_problem_opt
     fprintf('\n ============= \n ==== PLOTTING THE INITIAL TACR SHAPE \n') ;
     Plot_Initial_Shape(name , tacr_carac , tacr_construc) ;
 end
+
 
 
 if ~simulation_param.bool_problem_opt
@@ -153,14 +156,14 @@ end
 % ===== This function can take a long time to proceed ===== %
 % ======================== // ! \\ ======================== %
 
-fprintf('\n ============= \n ==== PLOTTING THE 3D GRAPHS TO COMPARE DF AND LLDPM DERIVATIVES \n') ;
-% ===== Selection of the derivatives to show
-% options : 'Cs0(s)' , 'J(s)' , 'B' , 'u0' , 'v0' , 'R0' , 'p0' , 'm0' , 'n0' , 'c' , 'd' , 'M' , 'inv_M' , 'dpi_ds' 
-% options : 'm0(0)' , 'n0(0)' , 'tj' , 'tau(s0)' , 'f(s0)'
-numerateur = {'Cs0(s)' , 'J(s)'} ; 
-derivateur = {'m0(0)' , 'n0(0)'} ;
-Plot_Comp_Deriv(numerateur , derivateur , name , tacr_construc , tacr_carac , simulation_param , mem_CJ , ...
-                mem_deriv_propag_high , mem_deriv_propag_low , mem_FD_CJ , mem_FD_deriv_propag_high , mem_FD_deriv_propag_low , pt_s0_FD)
+% fprintf('\n ============= \n ==== PLOTTING THE 3D GRAPHS TO COMPARE DF AND LLDPM DERIVATIVES \n') ;
+% % ===== Selection of the derivatives to show
+% % options : 'Cs0(s)' , 'J(s)' , 'b' , 'u0' , 'v0' , 'R0' , 'p0' , 'm0' , 'n0' , 'c' , 'd' , 'M' , 'inv_M' , 'dpi_ds' 
+% % options : 'm0(0)' , 'n0(0)' , 'tj' , 'tau(s0)' , 'f(s0)'
+% numerateur = {'Cs0(s)' , 'J(s)'} ; 
+% derivateur = {} ;
+% Plot_Comp_Deriv(numerateur , derivateur , name , tacr_construc , tacr_carac , simulation_param , mem_CJ , mem_deriv_propag_high , mem_deriv_propag_low , mem_FD_CJ , mem_FD_deriv_propag_high , mem_FD_deriv_propag_low , pt_s0_FD)
+
 
 
 
