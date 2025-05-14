@@ -16,6 +16,8 @@
 - Tendon Actuated Continuum Robot (TACR)
 - Concentric Agonist-Antagonist Robot (CAAR) will be released soon
 
+**The derivatives (the Generalized Compliance Matrix and the Joint Jacobian) are computed using the Low-Level Derivative Propagation Method, which is an analytic and very efficient method compared with numerical finite differences.**
+
 **The Generalized Compliance Matrix is a kind of Jacobian that fully captures the flexibility properties of the robot. It is a powerful mathematical tool for :**
 - Trajectory planning algorithms that take into account mechanical contacts between the robot and its environment
 - For stiffness modulation algorithms
@@ -30,53 +32,26 @@
 
 ## Content
 
-	- "main.m " is the main script using standard Matlab code.
-	- "main_cpp.m " is similar to "main.m" but contains MEX functions running converted C++ code using the Matlab Coder app.
-	- "ROBOT_CPP/ " ontains the MEX functions.
-
-
-
-## Folder contents :
-
-- **"CTCR_CPP" : Contains the MEX functions.**
-
-- "CTCR_Config" : Contains several configuration files examples that can be used to test the code.**
-	- "Demo_11"  : CTCR n°1 composed of 2 tubes
-	- "Demo_12"  : CTCR n°1 with a tip external force
-	- "Demo_13"  : CTCR n°1 with a mid-length external force
-	- "Demo_21"  : CTCR n°2 composed of 3 tubes
-	- "Demo_22"  : CTCR n°2 with a tip external force
-	- "Demo_23"  : CTCR n°2 with a mid-length external force
-	- "Demo_24"  : CTCR n°2 with a tip external force and a mid-length distributed external force
-	- "Demo_25"  : CTCR n°2 with a tip external force and two mid-length distributed external forces
-	- "Demo_26"  : CTCR n°2 with a 1-force deformation linearization
-	- "Demo_27"  : CTCR n°2 with a 2-forces deformation linearization
-	- "Demo_mex" : CTCR composed of T tubes used to generate the MEX functions
-
-- **"CTCR_Deriv_Propag_Class" : Contains the classes involved in the Low-Level Derivative Propagation Method computation.**
-
-- **"CTCR_Deriv_Propag_Functions" : Contains the functions involved in the Low-Level Derivative Propagation Method computation.**
-
-- **"CTCR_Graphic" :Contains the functions used to generate plots.**
-
-- **"CTCR_Graphic" : Contains the functions used to generate plots.**
-
-- **"CTCR_Maths_Functions" : Contains some elementary maths functions.**
-
-- **"CTCR_Shape_Class" : Contains the classes involved in the quasistatic model computation.**
-
-- **"CTCR_Shape_Functions" : Contains the functions involved in the quasistatic model computation.**
-
-- **"DOCS" : Contains helpful files.**
-	- “Variable_mapping.pdf”      : explains some of the correspondences between article and code variables
-	- "Tutorial_matlab_coder.mp4" : explains how to generate a MEX function from a Matlab code
+	- "main.m " is the main script using standard Matlab code
+	- "main_cpp.m " is similar to "main.m" but contains MEX functions running converted C++ code using the Matlab Coder app
+	- "ROBOT_CPP/ " contains the MEX functions
+	- "ROBOT_Config/" contains the config files
+	- "ROBOT_Deriv_Propag_Class/" contains the classes used to compute the derivatives using the Low-Level Derivative Propagation Method
+	- "ROBOT_Deriv_Propag_Functions/" contains the functions used to compute the derivatives using the Low-Level Derivative Propagation Method
+	- "ROBOT_FD_Deriv_Propag_Class/" contains the classes used to compute the derivatives using the numeric finite differences method
+	- "ROBOT_FD_Deriv_Propag_Functions/" contains the functions used to compute the derivatives using the numeric finite differences method
+	- "ROBOT_Graphic/" contains the functions used to generate graphs
+	- "ROBOT_Maths_Functions/" contains elementary mathematical functions
+	- "ROBOT_Shape_Class/" contains the classes used to compute the shape of the robot
+	- "ROBOT_Shape_Functions/" contains the functions used to compute the shape of the robot
+	- "ROBOT_Write_Config/" contains the functions used to generate custom config files
 
 ## How to use your custom configuration file : 
-1. Open "CTCR_Shape_Functions/Write_Config.m"
+1. Open "ROBOT_Write_Config/Write_Config.m"
 2. Change the parameters you want
-3. Set the folder "Generalized-Compliance-Computation-for-Continuum-Robots" as the Matlab workspace
+3. Set the folder "Generalized-Compliance-Computation-for-Continuum-Robots/ROBOT" as the Matlab workspace
 4. Run "Write_Config(<your_config_name>)" in the Matlab terminal
-5. Change the line n°42 of the "main.m" (or "main_cpp.m") as "name = '<your_config_name>'" ;
+5. Change the line name of the config file at the top of "main.m" (or "main_cpp.m")
 6. Run "main.m" (or "main_cpp.m")
 
 ## Contact : 
