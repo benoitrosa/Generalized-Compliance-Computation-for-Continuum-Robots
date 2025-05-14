@@ -1,4 +1,4 @@
-function [FD_Cs0 , problem_opt] ...
+function [FD_Cs0] ...
     = FD_Deriv_Propag_Cs0(...
       select_DF , epsJ , vect_iJ , tacr_construc , tacr_carac , ...
       tacr_act , tacr_load , bvp_prop , pt_s0_FD , simulation_param)
@@ -15,19 +15,28 @@ function [FD_Cs0 , problem_opt] ...
     % ========================================================== %
     % ================== Getting input values ================== %
     
-    nbP                 = tacr_construc.nbP ;
+    nbP             = tacr_construc.nbP             ;
     
 
-    % ======== Save the initial properties ======== %
-    bvp_prop_init       = bvp_prop  ;
-    tacr_act_init       = tacr_act  ;
-    tacr_load_init      = tacr_load ;
-    tacr_construc_init  = tacr_construc ;
-    problem_opt         = {} ;
+    % ========================================================== %
+    % ===================== Initialization ===================== %
+    
+    FD_Cs0          = zeros(6,6,nbP,nbP)            ;
+
+    mem_T0_plus     = zeros(4,4,nbP)  ;
+    mem_T0_normal   = zeros(4,4,nbP)  ;
+    mem_T0_minus    = zeros(4,4,nbP)  ;
+    
+    
+    % ========================================================== %
+    % ================= Save the initial values ================ %
+    
+    bvp_prop_init       = bvp_prop                  ;
+    tacr_act_init       = tacr_act                  ;
+    tacr_load_init      = tacr_load                 ;
+    tacr_construc_init  = tacr_construc             ;
     
 
-
-    FD_Cs0              = zeros(6,6,nbP,nbP) ;
 
     for tp_is0 = 1:length(pt_s0_FD)
         is0 = pt_s0_FD(tp_is0) ;
@@ -107,26 +116,15 @@ function [FD_Cs0 , problem_opt] ...
                 myfun = @(IC) BVP_BC_Comp_Fsolve( ...
                     IC , tacr_construc , tacr_carac , tacr_act , tacr_load , bvp_prop , ...
                     mem_bvp , mem_deriv_propag_low , simulation_param) ;
-    
-                bool_except = false ;
-                try
-                    [IC_opt,~,exitflag,output,jacobian_num] = fsolve(myfun,IC,opts) ;
-                catch exception
-                    bool_except = true ;
-                    problem_opt{end+1} = ['Exception problem for Cs0(s) with is0 = ',num2str(is0) , 'and icol = ',num2str(icol)] ;
-                    disp('======== Exception problem  ======== ')
-                end
+
+                [IC_opt,~,exitflag,output,jacobian_num] = fsolve(myfun,IC,opts) ;
+                
             
                 [error , jacobian_lit , bvp_prop , mem_bvp , mem_deriv_propag_low] ...
                 = BVP_BC_Comp_Fsolve( ...
                 IC_opt , tacr_construc , tacr_carac , tacr_act , tacr_load , bvp_prop , ...
                 mem_bvp , mem_deriv_propag_low , simulation_param) ;
-            
-    
-                if (exitflag == -2) && (~bool_except)
-                    problem_opt{end+1} = ['Problem for Cs0(s) with is0 = ',num2str(is0) , 'and icol = ',num2str(icol)] ;
-                    disp('======== Optimization problem  ======== ')
-                end
+ 
     
                 % Memorizing the values depending on the DF vibration
                 if iJ == 1
@@ -135,7 +133,7 @@ function [FD_Cs0 , problem_opt] ...
                 elseif iJ == 2
                     [~ , ~ , ~ , ~ , mem_T0_normal , ~ , ~ , ~ , ~ , ~ , ~ , ~ , ~] ...
                     = FD_Deriv_Propag_Extrac_Values(tacr_construc , bvp_prop , mem_bvp) ;
-                elseif iJ == 3
+                else %iJ == 3
                     [~ , ~ , ~ , ~ , mem_T0_minus , ~ , ~ , ~ , ~ , ~ , ~ , ~ , ~] ...
                     = FD_Deriv_Propag_Extrac_Values(tacr_construc , bvp_prop , mem_bvp) ;
                 end
@@ -158,7 +156,7 @@ function [FD_Cs0 , problem_opt] ...
             
                     FD_Cs0(:,icol,is,is0) = inv_hat6((mem_T0_plus(:,:,is) - mem_T0_normal(:,:,is))/tuned_eps) ;
     
-                elseif strcmp(select_DF,'nm')
+                else %strcmp(select_DF,'nm')
             
                     FD_Cs0(:,icol,is,is0) = inv_hat6((mem_T0_normal(:,:,is) - mem_T0_minus(:,:,is))/tuned_eps) ;
     

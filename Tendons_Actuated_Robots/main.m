@@ -45,70 +45,74 @@ addpath('TACR_Shape_Functions'      , 'TACR_Shape_Class'              , ...
         'TACR_FD_Deriv_Propag_Class', 'TACR_FD_Deriv_Propag_Functions', ...
         'TACR_Graphic'              , 'TACR_Maths_Functions'          , ...
         'TACR_Config'               , 'TACR_CPP'                      , ...
-        'DATA') ; 
+        'TACR_Write_Config'         , 'DATA') ; 
 
 
-name = 'TACR_test' ;             % Name of the folder created to store the results and the graphs
+name = 'TACR_mex' ;             % Name of the folder created to store the results and the graphs
 
 
 
 fprintf('\n ============= \n ==== LOADING THE CONFIG FILE \n') ;
 
-[simulation_param , tacr_carac , tacr_act , tacr_load , ...
-    tacr_construc , prc_s0 , delta_f0] = ...
-    Load_Config( ...
-    name) ;
+[simulation_param , tacr_carac , tacr_act , tacr_load , tacr_construc , prc_s0 , delta_f0] = ...
+Load_Config( ...
+name) ;
 
 
 
 
 fprintf('\n ============= \n ==== COMPUTING THE TACR SHAPE \n') ;
 
-[tacr_shape , mem_bvp , bvp_prop , mem_deriv_propag_low , ...
-    mem_deriv_propag_high , mem_CJ , simulation_param , tacr_construc ,  ~ , ~] ...
-    = TACR_Shape( ...
-    simulation_param , tacr_carac , tacr_act , tacr_load , tacr_construc) ;
+[tacr_shape , mem_bvp , bvp_prop , mem_deriv_propag_low , mem_deriv_propag_high , mem_CJ , simulation_param , tacr_construc ,  ~ , ~] ...
+= TACR_Shape( ...
+simulation_param , tacr_carac , tacr_act , tacr_load , tacr_construc) ;
 
+if simulation_param.bool_disp_terminal
+    fprintf(' == Time for TACR shape : %.2e [s] \n', bvp_prop.clk_bvp) ;
+    fprintf(' == Number of iterations : %.2e \n', bvp_prop.nb_iter) ;
+    fprintf(' == Optimization norm error : %.2e \n', bvp_prop.norm_tol) ;
+    fprintf(' == Number of discretization points : %.2e \n', tacr_construc.nbP) ;
+end
 
 
 
 if simulation_param.bool_J || simulation_param.bool_Cs0
-
     fprintf('\n ============= \n ==== COMPUTING THE JOINT JACOBIAN AND THE GENERALIZED COMPLIANCE MATRIX \n') ;
-
     [mem_CJ , mem_deriv_propag_high , mem_deriv_propag_low , time_comp_CJ] ...
-        = TACR_Deriv_Propag(...
-        tacr_carac , tacr_construc , tacr_act , tacr_load , mem_bvp , ...
-        bvp_prop , simulation_param , mem_deriv_propag_low , mem_deriv_propag_high , mem_CJ) ;
+    = TACR_Deriv_Propag(...
+    tacr_carac , tacr_construc , tacr_act , tacr_load , mem_bvp , bvp_prop , simulation_param , mem_deriv_propag_low , mem_deriv_propag_high , mem_CJ) ;
+
+    if simulation_param.bool_disp_terminal
+        fprintf(' == Computation time for Cs0 and J : %.2e [s] \n', time_comp_CJ) ;
+    end
 
 end
-
-
-fprintf('\n ============= \n ==== COMPUTING THE JOINT JACOBIAN AND THE GENERALIZED COMPLIANCE MATRIX USING DF \n') ;
-
-select_DF                       = 'pm' ;
-ampl_vibr                       = 1e-7 ;
-simulation_param.bool_opt_lit   = false ;
-pt_s0_FD                        = [1,floor([20,40,60,100]/100*tacr_construc.nbP)] ;
-bool_opt_lit                    = false ;
-
-[mem_FD_CJ , mem_FD_deriv_propag_high , mem_FD_deriv_propag_low , problem_opt] ...
-    = TACR_FD_Deriv_Propag( ...
-    select_DF , ampl_vibr , tacr_carac , tacr_construc , tacr_act , ...
-    tacr_load , simulation_param , bvp_prop , pt_s0_FD) ;
 
 
 
 
 fprintf('\n ============= \n ==== COMPUTING THE LINEARIZED DEFORMATIONS \n') ;
+[tacr_shape_def_mod , tacr_shape_def_jacob , mem_bvp_def_mod , mem_bvp_def_jacob , tacr_construc_def_mod , tacr_construc_def_jacob , mem_is0] = ...
+TACR_Lin_Deform( ...
+prc_s0 , delta_f0 , tacr_carac , tacr_construc , tacr_load , tacr_shape , tacr_act , simulation_param , mem_bvp , mem_CJ) ;
 
-[tacr_shape_def_mod , tacr_shape_def_jacob , ...
-    mem_bvp_def_mod , mem_bvp_def_jacob , ...
-    tacr_construc_def_mod , tacr_construc_def_jacob , ...
-    mem_is0] = ...
-    TACR_Lin_Deform( ...
-    prc_s0 , delta_f0 , tacr_carac , tacr_construc , tacr_load , ...
-    tacr_shape , tacr_act , simulation_param , mem_bvp , mem_CJ) ;
+
+
+
+
+
+% ======================== // ! \\ ======================== %
+% ===== This function can take a long time to proceed ===== %
+% ======================== // ! \\ ======================== %
+
+fprintf('\n ============= \n ==== COMPUTING THE JOINT JACOBIAN AND THE GENERALIZED COMPLIANCE MATRIX USING DF \n') ;
+select_DF                       = 'pn' ;
+ampl_vibr                       = 1e-6 ;
+simulation_param.bool_opt_lit   = true ;
+pt_s0_FD                        = [1,floor([10,20,40,50,60,80,100]/100*tacr_construc.nbP)] ;
+[mem_FD_CJ , mem_FD_deriv_propag_high , mem_FD_deriv_propag_low] ...
+= TACR_FD_Deriv_Propag(select_DF , ampl_vibr , tacr_carac , tacr_construc , tacr_act , tacr_load , simulation_param , bvp_prop , pt_s0_FD) ;
+
 
 
 
@@ -119,124 +123,46 @@ fprintf('\n ============= \n ==== COMPUTING THE LINEARIZED DEFORMATIONS \n') ;
 % ===============================    GENERATING GRAPHS    ================================ %
 % ======================================================================================== %
 
- 
-if ~simulation_param.bool_problem_opt
 
+if ~simulation_param.bool_problem_opt
     fprintf('\n ============= \n ==== PLOTTING THE INITIAL TACR SHAPE \n') ;
-
-    fig_init_shape                = figure('units','normalized','outerposition',[0 0 1 1]) ;
-    fig_init_shape.Color          = 'w';
-    fig_init_shape.WindowState    = 'fullscreen' ;
-    ax_fig                        = axes(fig_init_shape) ;
-
-    TACR_Plot(ax_fig , tacr_carac , tacr_construc.mem_p0_init , tacr_construc.mem_pi_init , tacr_construc.mem_R0_init , tacr_construc.vect_ind_iT , tacr_construc.vect_ind_iD)
-    cd(['DATA/',name])
-    saveas(fig_init_shape,strcat(name,'_init_shape.fig')) ;
-    saveas(fig_init_shape,strcat(name,'_init_shape.png')) ;
-    cd ../..
-    close gcf
-
+    Plot_Initial_Shape(name , tacr_carac , tacr_construc) ;
 end
 
 
 
 if ~simulation_param.bool_problem_opt
-
     fprintf('\n ============= \n ==== PLOTTING THE ACTUATED TACR SHAPE \n') ;
-
-    fig_act_shape                = figure('units','normalized','outerposition',[0 0 1 1]) ;
-    fig_act_shape.Color          = 'w';
-    fig_act_shape.WindowState    = 'fullscreen' ;
-    ax_fig                       = axes(fig_act_shape) ;
-
-    TACR_Plot(ax_fig , tacr_carac , tacr_construc.mem_p0 , tacr_construc.mem_pi , mem_bvp.mem_y.mem_R0 , tacr_construc.vect_ind_iT , tacr_construc.vect_ind_iD)
-    cd(['DATA/',name])
-    saveas(fig_act_shape,strcat(name,'_act_shape.fig')) ;
-    saveas(fig_act_shape,strcat(name,'_act_shape.png')) ;
-    cd ../..
-    close gcf
-
+    Plot_Actuated_Shape(name , tacr_carac , tacr_construc , mem_bvp) ;
 end
 
 
+% tot_load = cat(2,tacr_load.tau_tip,tacr_load.f_tip,tacr_load.tau_dist_1,tacr_load.f_dist_1,tacr_load.tau_dist_2,tacr_load.f_dist_2) ;
+% if ~simulation_param.bool_problem_opt && ~isequal(tot_load, zeros(1,6*3))
+%     fprintf('\n ============= \n ==== PLOTTING THE TACR 3D SHAPE AND THE EXTERNAL LOADS \n') ;
+%     Plot_Shape_Loads(name , simulation_param , tacr_carac , tacr_load , tacr_construc , tacr_shape) ;
+% end
 
-if ~simulation_param.bool_problem_opt && ...
-   (~isequal(tacr_load.tau_tip, zeros(1,3)) || ...
-   ~isequal(tacr_load.f_tip, zeros(1,3)) || ...
-   ~isequal(tacr_load.tau_dist_1, zeros(1,3)) || ...
-   ~isequal(tacr_load.f_dist_1, zeros(1,3)) || ...
-   ~isequal(tacr_load.tau_dist_2, zeros(1,3)) || ...
-   ~isequal(tacr_load.f_dist_2, zeros(1,3)))
 
-    fprintf('\n ============= \n ==== PLOTTING THE TACR 3D SHAPE AND THE EXTERNAL LOADS \n') ;
-
-    cd(['DATA/',name])
-    filename        = strcat(name,'_act_shape.fig') ;
-    fig_robot_load  = TACR_Load_Plot(filename,simulation_param,tacr_carac,tacr_load,tacr_construc,tacr_shape) ;
-
-    cd ../..
-    cd(['DATA/',name])
-    saveas(fig_robot_load,strcat(name,'_act_shape_loads.fig')) ;
-    saveas(fig_robot_load,strcat(name,'_act_shape_loads.png')) ;
-    cd ../..
-    close gcf
-
+if ~simulation_param.bool_problem_opt && ~isempty(prc_s0) && ~isempty(delta_f0)
+    fprintf('\n ============= \n ==== PLOTTING A FIGURE TO COMPARE THE DEFORMED SHAPES \n') ;
+    Plot_Comp_Deform(name , mem_bvp , mem_bvp_def_mod , mem_bvp_def_jacob , tacr_construc , tacr_construc_def_mod , tacr_construc_def_jacob , tacr_carac , mem_is0 , delta_f0) ;
 end
 
 
-
+% ======================== // ! \\ ======================== %
+% ===== This function can take a long time to proceed ===== %
+% ======================== // ! \\ ======================== %
 
 fprintf('\n ============= \n ==== PLOTTING THE 3D GRAPHS TO COMPARE DF AND LLDPM DERIVATIVES \n') ;
-
 % ===== Selection of the derivatives to show
-% options : 'Cs0(s)' , 'J(s)' , 'B' , 'u0' , 'v0' , 'R0' , 'p0' , 'm0' , 'n0' , 'c' , 'd' , 'M' , 'inv_M' , 'dpi_ds' 
+% options : 'Cs0(s)' , 'J(s)' , 'b' , 'u0' , 'v0' , 'R0' , 'p0' , 'm0' , 'n0' , 'c' , 'd' , 'M' , 'inv_M' , 'dpi_ds' 
 % options : 'm0(0)' , 'n0(0)' , 'tj' , 'tau(s0)' , 'f(s0)'
+numerateur = {'Cs0(s)' , 'J(s)'} ; 
+derivateur = {} ;
+Plot_Comp_Deriv(numerateur , derivateur , name , tacr_construc , tacr_carac , simulation_param , mem_CJ , ...
+                mem_deriv_propag_high , mem_deriv_propag_low , mem_FD_CJ , mem_FD_deriv_propag_high , mem_FD_deriv_propag_low , pt_s0_FD)
 
-numerateur = {'Cs0(s)' , 'J(s)' , 'B' , 'u0' , 'v0' , 'R0' , 'p0' , 'm0' , 'n0' , 'c' , 'd' , 'M' , 'inv_M' , 'dpi_ds'} ; 
-derivateur = {'m0(0)' , 'n0(0)' , 'tj' , 'tau(s0)' , 'f(s0)'} ;
-
-[vect_select_quant , vect_select_deriv] = ...
-TACR_3D_Comp_Manag( ...
-numerateur,derivateur) ;
-
-TACR_3D_Graph_Comp( ...
-    name               ,  vect_select_quant       , ...
-    vect_select_deriv  , tacr_construc            , tacr_carac              , ...
-    simulation_param   , ...
-    mem_CJ             , mem_deriv_propag_high    , mem_deriv_propag_low    , ...
-    mem_FD_CJ          , mem_FD_deriv_propag_high , mem_FD_deriv_propag_low , ...
-    pt_s0_FD) ;
-
-
-
-
-
-fprintf('\n ============= \n ==== PLOTTING A FIGURE TO COMPARE THE DEFORMED SHAPES \n') ;
-
-if ~isempty(prc_s0) && ~isempty(delta_f0)
-
-    % ================
-    % ============== Visualize the two shapes on the same graph ===============
-
-    fprintf('\n ============= \n ==== PLOTTING THE TACR 3D DEFORMED SHAPES \n') ;
-
-    fig_deform                  = figure('units','normalized','outerposition',[0 0 1 1]) ;
-    fig_deform.Color            = 'w';
-    fig_deform.WindowState      = 'fullscreen' ;
-    curr_ax                     = axes(fig_deform) ;
-
-    TACR_Plot_3(curr_ax , ...
-                mem_bvp.mem_y.mem_R0 , mem_bvp_def_mod.mem_y.mem_R0 , mem_bvp_def_jacob.mem_y.mem_R0 , ...
-                tacr_construc , tacr_construc_def_mod , tacr_construc_def_jacob , ...
-                tacr_carac , mem_is0 , delta_f0) ;  
-
-    cd(['DATA/',name])
-    saveas(fig_deform,strcat(name,'_deform_shape.fig')) ;  
-    saveas(fig_deform,strcat(name,'_deform_shape.png')) ;
-    cd ../..
-    close gcf
-
-end
 
 
 
@@ -251,8 +177,6 @@ cd(['DATA/',name]) ;
 save(strcat(name,'_data.mat'))
 cd ../..
 
-% ======================================= %
-% ======================================= %
 
 
 

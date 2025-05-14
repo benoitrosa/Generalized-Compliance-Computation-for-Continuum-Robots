@@ -1,10 +1,8 @@
-function [mem_FD_CJ , mem_FD_deriv_propag_high , mem_FD_deriv_propag_low , problem_opt] ...
+function [mem_FD_CJ , mem_FD_deriv_propag_high , mem_FD_deriv_propag_low] ...
     = TACR_FD_Deriv_Propag( ...
     select_DF , ampl_vibr , tacr_carac , tacr_construc , ...
     tacr_act , tacr_load , simulation_param , bvp_prop , pt_s0_FD)
 
-
-    problem_opt = {} ;
 
     tic_FD = tic ;    
 
@@ -21,7 +19,7 @@ function [mem_FD_CJ , mem_FD_deriv_propag_high , mem_FD_deriv_propag_low , probl
 
         vect_iJ = [1 , 2] ;
 
-    elseif strcmp(select_DF,'nm')
+    else %strcmp(select_DF,'nm')
 
         vect_iJ = [2 , 3] ;
 
@@ -32,7 +30,7 @@ function [mem_FD_CJ , mem_FD_deriv_propag_high , mem_FD_deriv_propag_low , probl
     % ================================= %
     % ====== FD Deriv_Propag_Low ====== %
 
-    disp(' ============ Computing FD Low Deriv')
+    fprintf(' ============ Computing FD Low Deriv \n') ;
 
     [tp_mem_FD_du0 , tp_mem_FD_dv0    , tp_mem_FD_dR0     , tp_mem_FD_dp0 , ...
      tp_mem_FD_dm0 , tp_mem_FD_dn0    , tp_mem_FD_dc      , tp_mem_FD_dd  , ...
@@ -48,24 +46,20 @@ function [mem_FD_CJ , mem_FD_deriv_propag_high , mem_FD_deriv_propag_low , probl
     % =================================== %
     % =============== FD J ============== %
 
-    disp(' ============ Computing FD J(s)')
+    fprintf(' ============ Computing FD J(s) \n') ;
 
 
-    [mem_FD_J,problem_opt_2] ...
+    [mem_FD_J] ...
     = FD_Deriv_Propag_J(...
     select_DF , ampl_vibr , vect_iJ , tacr_construc , ...
     tacr_carac , tacr_act , tacr_load , bvp_prop , simulation_param) ;
-
-    for i = 1:length(problem_opt_2)
-        problem_opt{end+i} = problem_opt_2{i} ;
-    end
 
 
 
     % ===================================== %
     % ============ FD LOW DWS0 ============ %
 
-    disp(' ============ Computing FD Low Deriv ws0')
+    fprintf(' ============ Computing FD Low Deriv ws0 \n') ;
 
      [tp_mem_FD_du0_dws0 , tp_mem_FD_dv0_dws0    , tp_mem_FD_dR0_dws0     , tp_mem_FD_dp0_dws0 , ...
      tp_mem_FD_dm0_dws0  , tp_mem_FD_dn0_dws0    , tp_mem_FD_dc_dws0      , tp_mem_FD_dd_dws0  , ...
@@ -81,19 +75,16 @@ function [mem_FD_CJ , mem_FD_deriv_propag_high , mem_FD_deriv_propag_low , probl
     % ===================================== %
     % =============== FD CS0 ============== %
 
-    disp(' ============ Computing FD Cs0(s)')
+    fprintf(' ============ Computing FD Cs0(s) \n') ;
 
-    [mem_FD_Cs0 , problem_opt_2] ...
+    [mem_FD_Cs0] ...
     = FD_Deriv_Propag_Cs0(...
       select_DF , ampl_vibr , vect_iJ , ...
       tacr_construc , tacr_carac , tacr_act , tacr_load , ...
       bvp_prop , pt_s0_FD , simulation_param) ;
 
-    for i = 1:length(problem_opt_2)
-        problem_opt{end+i} = problem_opt_2{i} ;
-    end
 
-
+    toc_FD = toc(tic_FD) ;
     
 
 
@@ -268,17 +259,8 @@ function [mem_FD_CJ , mem_FD_deriv_propag_high , mem_FD_deriv_propag_low , probl
 
 
 
-    if ~isempty(problem_opt)
-        disp(' ')
-        disp('==============================================================================')
-        disp('================================ //// ! \\\\ =================================')
-        disp('=========== Problème d''optimisation durant les différences finies ===========')
-
-        disp('')
-        return
-    else
-        disp(' ') ; disp(' ') ; disp(' ============ Time for FD computation') ; disp([' ====  ' , num2str(toc(tic_FD)), '  [s]'])
-    end
+    fprintf(' ============ Time for FD computation \n') ;
+    fprintf(' == Time for FD computation : %.2e [s] \n', toc_FD) ;
 
 
 

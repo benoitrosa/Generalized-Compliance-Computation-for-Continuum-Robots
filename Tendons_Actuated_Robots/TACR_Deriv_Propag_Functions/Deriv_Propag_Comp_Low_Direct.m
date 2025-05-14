@@ -165,6 +165,14 @@ function mem_deriv_propag_low ...
                     mem_deriv_propag_low.mem_dv0.mem_dv0_dti(:,j,is)    = mem_deriv_propag_low.mem_dv0.mem_dv0_dti(:,j,is) - tacr_carac.Kse \ dfi_dtj ; 
                             
                 end
+
+                % ====================
+                % ==== Re-computing j dependent variables since some values changed
+                
+                hat_du0_dtj        = hat(mem_deriv_propag_low.mem_du0.mem_du0_dti(:,j,is)) ;
+                hat_dv0_dtj        = hat(mem_deriv_propag_low.mem_dv0.mem_dv0_dti(:,j,is)) ;
+
+
             end
 
             mem_deriv_propag_low.mem_dM.mem_dM_dti(:,:,j,is)            = [[dA_dti_j , dG_dti_j] ; [dB_dti_j , dH_dti_j]] ;
@@ -295,7 +303,7 @@ function mem_deriv_propag_low ...
                                                           + hat_u0 * tacr_construc.mem_dri_ds(:,iT,is) ...
                                                           + tacr_construc.mem_ddri_ds(:,iT,is) ) ...
                                           + mem_bvp.mem_Ai(:,:,iT,is) * ( hat_du0_dfs0j * mem_bvp.mem_dpi_ds(:,iT,is) ...
-                                                                          + hat_u0 * mem_bvp.mem_dpi_ds(:,iT,is) ...
+                                                                          + hat_u0 * ddpi_dfs0 ...
                                                                           + hat_du0_dfs0j * tacr_construc.mem_dri_ds(:,iT,is) ) ;
             
                     db_i_dfs0_j         = hat_ri(:,:,iT) * da_i_dfs0_j ;
@@ -328,7 +336,7 @@ function mem_deriv_propag_low ...
             
                         ddpi_ds_dtaus0j     = mem_deriv_propag_low.mem_ddpi_ds.mem_ddpi_dtaus0_ds(:,iT,j,is,is0)            ;
                         ddpi_ds_dfs0j       = mem_deriv_propag_low.mem_ddpi_ds.mem_ddpi_dfs0_ds(:,iT,j,is,is0)              ;
-                        N                   = mem_bvp.mem_dpi_ds(:,iT,is)                                                                        ;
+                        N                   = mem_bvp.mem_dpi_ds(:,iT,is)                                                   ;
                         dN_dtaus0j          = ddpi_ds_dtaus0j                                                               ;
                         dN_dfs0j            = ddpi_ds_dfs0j                                                                 ; 
                         D                   = norm_dpi(iT)                                                                  ;
@@ -341,12 +349,22 @@ function mem_deriv_propag_low ...
                         mem_deriv_propag_low.mem_dm0.mem_dm0_dfs0(:,j,is,is0)   = mem_deriv_propag_low.mem_dm0.mem_dm0_dfs0(:,j,is,is0)     - hat_ri(:,:,iT)*dfi_dfs0j ;
                         mem_deriv_propag_low.mem_dn0.mem_dn0_dtaus0(:,j,is,is0) = mem_deriv_propag_low.mem_dn0.mem_dn0_dtaus0(:,j,is,is0)   - dfi_dtaus0j ;
                         mem_deriv_propag_low.mem_dn0.mem_dn0_dfs0(:,j,is,is0)   = mem_deriv_propag_low.mem_dn0.mem_dn0_dfs0(:,j,is,is0)     - dfi_dfs0j ;
+                        
                         mem_deriv_propag_low.mem_du0.mem_du0_dtaus0(:,j,is,is0) = mem_deriv_propag_low.mem_du0.mem_du0_dtaus0(:,j,is,is0)   - tacr_carac.Kbt \ hat_ri(:,:,iT)*dfi_dtaus0j ;
                         mem_deriv_propag_low.mem_du0.mem_du0_dfs0(:,j,is,is0)   = mem_deriv_propag_low.mem_du0.mem_du0_dfs0(:,j,is,is0)     - tacr_carac.Kbt \ hat_ri(:,:,iT)*dfi_dfs0j ;
                         mem_deriv_propag_low.mem_dv0.mem_dv0_dtaus0(:,j,is,is0) = mem_deriv_propag_low.mem_dv0.mem_dv0_dtaus0(:,j,is,is0)   - tacr_carac.Kse \ dfi_dtaus0j ; 
                         mem_deriv_propag_low.mem_dv0.mem_dv0_dfs0(:,j,is,is0)   = mem_deriv_propag_low.mem_dv0.mem_dv0_dfs0(:,j,is,is0)     - tacr_carac.Kse \ dfi_dfs0j ; 
                                 
                     end
+
+                    % ====================
+                    % ==== Re-computing j dependent variables since some values changed
+        
+                    hat_du0_dtaus0j     = hat(mem_deriv_propag_low.mem_du0.mem_du0_dtaus0(:,j,is,is0))  ;
+                    hat_du0_dfs0j       = hat(mem_deriv_propag_low.mem_du0.mem_du0_dfs0(:,j,is,is0))    ;
+                    hat_dv0_dtaus0j     = hat(mem_deriv_propag_low.mem_dv0.mem_dv0_dtaus0(:,j,is,is0))  ;
+                    hat_dv0_dfs0j       = hat(mem_deriv_propag_low.mem_dv0.mem_dv0_dfs0(:,j,is,is0))    ;
+
                 end
 
                 mem_deriv_propag_low.mem_dc.mem_dc_dtaus0(:,j,is,is0)           = - hat_du0_dtaus0j * Kbt_sous_u0 ...

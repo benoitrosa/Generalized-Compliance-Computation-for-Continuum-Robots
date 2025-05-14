@@ -1,4 +1,4 @@
-function [] = Write_Config(name)
+function [] = Write_Config_mex(name)
 
        
 % ======================================================================= %
@@ -27,9 +27,9 @@ function [] = Write_Config(name)
     % ================
     % ======== Geometric features ========
     
-    Lr              = [80  , 140 , 180]*1e-3 ;                      % [m] Vecttor of the straight lengths of the tubes (index i for tube i)
-    Lc              = [50  , 50 , 50]*1e-3 ;                        % [m] Vector of the curved lengths of the tubes (index i for tube i)
-    Rc              = [60 , 60 , 60]*1e-3 ;                         % [m] Vector of the radii of curvature of the tubes (index i for tube i)    
+    Lr              = [80,90,100,110,120,130,140]*1e-3 ;            % [m] Vecttor of the straight lengths of the tubes (index i for tube i)
+    Lc              = [80,80,80,80,80,80,80]*1e-3 ;                 % [m] Vector of the curved lengths of the tubes (index i for tube i)
+    Rc              = [100,100,100,100,100,100,100]*1e-3 ;          % [m] Vector of the radii of curvature of the tubes (index i for tube i)    
     nbT             = length(Lr) ;                                  % Number of tubes of the CTCR (nbT in the paper)
 
 
@@ -38,8 +38,8 @@ function [] = Write_Config(name)
     % ======== Stiffness features ========
     
     coeff_poiss     = 0.3 ;                                         % Poisson's ratio
-    R               = [0.9 , 0.8 , 0.7]*1e-3 ;                      % [m] External radius of the tubes (index i for tube i)
-    r               = [0.8 , 0.7 , 0.6]*1e-3 ;                      % [m] Internal radius of the tubes (index i for tube i)
+    R               = [0.9,0.8,0.7,0.6,0.5,0.4,0.3]*1e-3 ;          % [m] External radius of the tubes (index i for tube i)
+    r               = [0.8,0.7,0.6,0.5,0.4,0.3,0.2]*1e-3 ;          % [m] Internal radius of the tubes (index i for tube i)
     E               = 65e9 ;                                        % [Pa] Young modulus (the same for all the tubes)
     stiff           = CTCR_Geom_2_Stiff(nbT,E,R,r) ;                % [N.m2] Computation of the vector of the transversal bending stiffness (index i for tube i)
     
@@ -48,8 +48,8 @@ function [] = Write_Config(name)
     % ================
     % ============ Actuation =============
     
-    theta_c         = [3*pi/4 , 3*pi/4+pi/6 , 3*pi/4+2*pi/6] ;      % [rad] Rotation of the tubes (index i for tube i)
-    beta_c          = [100 , 140 , 180]*1e-3  ;                     % [m] Translation of the tubes (index i for tube i)
+    theta_c         = linspace(0,pi,7) ;                            % [rad] Rotation of the tubes (index i for tube i)
+    beta_c          = [100,105,110,115,120,125,130]*1e-3  ;         % [m] Translation of the tubes (index i for tube i)
     
 
 
@@ -82,12 +82,12 @@ function [] = Write_Config(name)
     % ================
     % ======== Solving parameters ========
     
-    resolution              = 0.002  ;                              % [m] Discretization step away from discontinuity points (𝛥(𝑠) in the paper see Table 5)
+    resolution              = 0.004  ;                              % [m] Discretization step away from discontinuity points (𝛥(𝑠) in the paper see Table 5)
     bool_display_iter       = false  ;                              % (boolean) Display the iteration of fsolve ?
     FunctionTolerance       = 10*eps ;                              % 'FunctionTolerance' options of optimoptions
     StepTolerance           = 10*eps ;                              % 'StepTolerance' options of optimoptions
-    MaxIter                 = 1e3    ;                              % 'MaxIter' options of optimoptions
-    MaxFunctionEvaluations  = 1e6    ;                              % 'MaxFunctionEvaluations' options of optimoptions
+    MaxIter                 = 5e0    ;                              % 'MaxIter' options of optimoptions
+    MaxFunctionEvaluations  = 1e2    ;                              % 'MaxFunctionEvaluations' options of optimoptions
     bool_opt_lit            = true   ;                              % Computing the optimization jacobian using the LLDPM ? If not, use numerical finite differences
     bool_SIC                = true   ;                              % Using the Smart Initial Guess ?
     nb_pt_dict              = 5      ;                              % Number of points before and after each discontinuity points
@@ -106,8 +106,8 @@ function [] = Write_Config(name)
     % ================
     % ============== Extra : Force variation for linearized deformations ===============
 
-    prc_s0              = [30, 70] ;                        % [% of the CTCR length] Vector of the curvilinear abscissa of the contact points (row i for force i)                   
-    delta_f0            = [[-0.8, 0.1 , 0];[0.1, -0.2 , 0]] ;   % [N] Matrix of the forces applied on the CTCR (row i for vector force i)  
+    prc_s0              = [30, 70] ;                                % [% of the CTCR length] Vector of the curvilinear abscissa of the contact points (row i for force i)                   
+    delta_f0            = [[-0.8, 0.1 , 0];[0.1, -0.2 , 0]] ;       % [N] Matrix of the forces applied on the CTCR (row i for vector force i)  
     
     
 

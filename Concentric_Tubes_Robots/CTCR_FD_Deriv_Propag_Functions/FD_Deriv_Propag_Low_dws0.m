@@ -12,26 +12,25 @@ function [mem_FD_duzi  , mem_FD_dti   , mem_FD_dm0 , mem_FD_dn0 , mem_FD_du0 ,..
 %
 %
 
-
-    % ======== Save the initial properties ======== %
-    ctcr_construc_init  = ctcr_construc ;
-    ctcr_load_init      = ctcr_load ;
     
     % ========================================================== %
     % ================== Getting input values ================== %
     
-    nbT                 = ctcr_carac.nbT ; 
-    nbP                 = ctcr_construc.nbP ;
+    nbT             = ctcr_carac.nbT        ; 
+    nbP             = ctcr_construc.nbP     ;
     
-    
-    mem_FD_duzi         = zeros(nbT,6,nbP,nbP)      ;
-    mem_FD_dti          = zeros(nbT,6,nbP,nbP)      ;
-    mem_FD_dm0          = zeros(3,6,nbP,nbP)        ;
-    mem_FD_dn0          = zeros(3,6,nbP,nbP)        ;
-    mem_FD_du0          = zeros(3,6,nbP,nbP)        ;
-    mem_FD_dR0          = zeros(3,3,6,nbP,nbP)      ;
-    mem_FD_dP0          = zeros(3,6,nbP,nbP)        ;
-    mem_FD_dB           = zeros(nbT+6,6,nbP)        ;
+
+    % ========================================================== %
+    % ===================== Initialization ===================== %
+
+    mem_FD_duzi     = zeros(nbT,6,nbP,nbP)  ;
+    mem_FD_dti      = zeros(nbT,6,nbP,nbP)  ;
+    mem_FD_dm0      = zeros(3,6,nbP,nbP)    ;
+    mem_FD_dn0      = zeros(3,6,nbP,nbP)    ;
+    mem_FD_du0      = zeros(3,6,nbP,nbP)    ;
+    mem_FD_dR0      = zeros(3,3,6,nbP,nbP)  ;
+    mem_FD_dP0      = zeros(3,6,nbP,nbP)    ;
+    mem_FD_dB       = zeros(nbT+6,6,nbP)    ;
     
     memy_plus       = zeros(2*nbT+12,nbP)   ;
     memy_normal     = zeros(2*nbT+12,nbP)   ;
@@ -45,6 +44,14 @@ function [mem_FD_duzi  , mem_FD_dti   , mem_FD_dm0 , mem_FD_dn0 , mem_FD_du0 ,..
     BC_plus         = zeros(nbT+6,1)        ;
     BC_normal       = zeros(nbT+6,1)        ;
     BC_minus        = zeros(nbT+6,1)        ;
+
+
+    % ========================================================== %
+    % ================= Save the initial values ================ %
+    
+    ctcr_construc_init  = ctcr_construc ;
+    ctcr_load_init      = ctcr_load ;
+    
     
     for tp_is0 = 1:length(pt_s0_FD)
         is0 = pt_s0_FD(tp_is0) ;

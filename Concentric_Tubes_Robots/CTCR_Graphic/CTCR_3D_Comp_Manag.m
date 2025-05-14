@@ -12,7 +12,7 @@ function [vect_select_quant , vect_select_deriv] = ...
     if ismember('J(s)',numerateur)
         vect_select_quant = [vect_select_quant , 2] ;
     end
-    if ismember('B',numerateur)
+    if ismember('b',numerateur)
         vect_select_quant = [vect_select_quant , 3] ;
     end
     if ismember('uzi',numerateur)

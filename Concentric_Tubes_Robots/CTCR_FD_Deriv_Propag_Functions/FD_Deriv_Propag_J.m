@@ -9,27 +9,36 @@ function [FD_J] = FD_Deriv_Propag_J(select_DF , epsJ , vect_iJ , simulation_para
 %
 %
 
-    % ======== Save the initial properties ======== %
-    ctcr_construc_init  = ctcr_construc ;
-    ctcr_act_init       = ctcr_act ;
-    bvp_prop_init       = bvp_prop ;
+   
 
 
     % ========================================================== %
     % ================== Getting input values ================== %
     
-    nbT     = ctcr_carac.nbT ;    
-    nbP     = ctcr_construc.nbP ;
+    nbT     = ctcr_carac.nbT            ;    
+    nbP     = ctcr_construc.nbP         ;
     
-    % ========================================================== %
-    % ========================================================== %
 
-    memT_plus       = zeros(4,4,nbP) ;
-    memT_normal     = zeros(4,4,nbP) ;
-    memT_minus      = zeros(4,4,nbP) ;
+
+    % ========================================================== %
+    % ===================== Initialization ===================== %
+
+    FD_J    = zeros(6,2*nbT,nbP)        ;
+
+    memT_plus       = zeros(4,4,nbP)    ;
+    memT_normal     = zeros(4,4,nbP)    ;
+    memT_minus      = zeros(4,4,nbP)    ;
+
+
+    % ========================================================== %
+    % ================= Save the initial values ================ %
+    
+    ctcr_construc_init  = ctcr_construc ;
+    ctcr_act_init       = ctcr_act      ;
+    bvp_prop_init       = bvp_prop      ;
 
     x       = [ctcr_act.theta_c' ; ctcr_act.beta_c'] ;
-    FD_J    = zeros(6,2*nbT,ctcr_construc.nbP) ;
+    
     
     % For loop to consider every derivatives of C : tau(L0) and f(L0)
     for icol = 1:2*nbT

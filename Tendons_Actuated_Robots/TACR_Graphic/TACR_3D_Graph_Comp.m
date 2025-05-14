@@ -102,7 +102,7 @@ function  [] = TACR_3D_Graph_Comp( ...
                 name_graph_latex = '$J(s)$' ;
                 name_file = 'GRAPH_3D_COMP_J' ;
 
-            % ============ B ============ %    
+            % ============ b ============ %    
             elseif iMat == 3
                 
                 if iDeriv == 1
@@ -123,7 +123,7 @@ function  [] = TACR_3D_Graph_Comp( ...
                         end
                     end
 
-                    name_graph_latex = '$\frac{\partial B}{\partial m_0(0)}$' ;
+                    name_graph_latex = '$\frac{\partial b}{\partial m_0(0)}$' ;
                     name_file = 'GRAPH_3D_COMP_DB_DM00' ;
                 
                 elseif iDeriv == 2
@@ -144,7 +144,7 @@ function  [] = TACR_3D_Graph_Comp( ...
                         end
                     end
 
-                    name_graph_latex = '$\frac{\partial B}{\partial n_0(0)}$' ;
+                    name_graph_latex = '$\frac{\partial b}{\partial n_0(0)}$' ;
                     name_file = 'GRAPH_3D_COMP_DB_DN00' ;
                 
                 elseif iDeriv == 3
@@ -165,7 +165,7 @@ function  [] = TACR_3D_Graph_Comp( ...
                         end
                     end
 
-                    name_graph_latex = '$\frac{\partial B}{\partial t_i}$' ;
+                    name_graph_latex = '$\frac{\partial b}{\partial t_i}$' ;
                     name_file = 'GRAPH_3D_COMP_DB_DTI' ;
 
                 
@@ -192,7 +192,7 @@ function  [] = TACR_3D_Graph_Comp( ...
                         
                     end
 
-                    name_graph_latex = '$\frac{\partial B}{\partial \tau_0(s_0)}$' ;
+                    name_graph_latex = '$\frac{\partial b}{\partial \tau_0(s_0)}$' ;
                     name_file = 'GRAPH_3D_COMP_DB_DTAU_S0_' ;
 
                 
@@ -218,7 +218,7 @@ function  [] = TACR_3D_Graph_Comp( ...
 
                     end 
 
-                    name_graph_latex = '$\frac{\partial B}{\partial f_0(s_0)}$' ;
+                    name_graph_latex = '$\frac{\partial b}{\partial f_0(s_0)}$' ;
                     name_file = 'GRAPH_3D_COMP_DB_DF_S0_' ;
 
                 end
@@ -1396,7 +1396,7 @@ function  [] = TACR_3D_Graph_Comp( ...
                 hold off
         
 
-                l = legend(h,{'Litteral','Differences Finies'},'Fontsize',30,'Interpreter','Latex','Location','south') ;
+                l = legend(h,{'Analytic LLDPM','Numeric Finite Differences'},'Fontsize',30,'Interpreter','Latex','Location','south') ;
                 l.Position(1) = 0.44  ;
                 l.Position(2) = 0.015  ;
         

@@ -45,7 +45,7 @@ addpath('CTCR_Shape_Functions'      , 'CTCR_Shape_Class'              , ...
         'CTCR_FD_Deriv_Propag_Class', 'CTCR_FD_Deriv_Propag_Functions', ...
         'CTCR_Graphic'              , 'CTCR_Maths_Functions'          , ...
         'CTCR_Config'               , 'CTCR_CPP'                      , ...
-        'DATA') ; 
+        'CTCR_Write_Config'         , 'DATA') ; 
 
 
 name = 'CTCR_test' ;    % Name of the folder created to store the results and the graphs
@@ -77,13 +77,18 @@ if simulation_param.flag_ctcr
         [mem_CJ , mem_deriv_propag_high , mem_deriv_propag_low , time_comp_CJ] ...
         = CTCR_Deriv_Propag(...
         ctcr_carac , ctcr_construc , ctcr_act , ctcr_load , mem_bvp , bvp_prop , simulation_param , mem_deriv_propag_low , mem_deriv_propag_high , mem_CJ) ;
+
+        if simulation_param.bool_disp_terminal
+            fprintf(' == Computation time for Cs0 and J : %.2e [s] \n', time_comp_CJ) ;
+        end
+
     end
 
 
-    % fprintf('\n ============= \n ==== COMPUTING THE LINEARIZED DEFORMATIONS \n') ;
-    % [ctcr_shape_def_mod , ctcr_shape_def_jacob , mem_is0] = ...
-    % CTCR_Lin_Deform(prc_s0 , delta_f0 , ctcr_carac , ctcr_construc , ctcr_load , ...
-    % ctcr_shape , simulation_param , mem_CJ) ;
+    fprintf('\n ============= \n ==== COMPUTING THE LINEARIZED DEFORMATIONS \n') ;
+    [ctcr_shape_def_mod , ctcr_shape_def_jacob , mem_is0] = ...
+    CTCR_Lin_Deform(prc_s0 , delta_f0 , ctcr_carac , ctcr_construc , ctcr_load , ...
+    ctcr_shape , simulation_param , mem_CJ) ;
 
 
 
@@ -138,10 +143,10 @@ if simulation_param.flag_ctcr
 
 
 
-    % if simulation_param.flag_ctcr && ~simulation_param.bool_problem_opt && ~isempty(prc_s0) && ~isempty(delta_f0)
-    %     fprintf('\n ============= \n ==== PLOTTING A FIGURE TO COMPARE THE DEFORMED SHAPES \n') ;
-    %     Plot_Comp_Deform(name , ctcr_shape , ctcr_shape_def_mod , ctcr_shape_def_jacob , ctcr_carac , ctcr_construc , mem_is0 , delta_f0) ;
-    % end
+    if simulation_param.flag_ctcr && ~simulation_param.bool_problem_opt && ~isempty(prc_s0) && ~isempty(delta_f0)
+        fprintf('\n ============= \n ==== PLOTTING A FIGURE TO COMPARE THE DEFORMED SHAPES \n') ;
+        Plot_Comp_Deform(name , ctcr_shape , ctcr_shape_def_mod , ctcr_shape_def_jacob , ctcr_carac , ctcr_construc , mem_is0 , delta_f0) ;
+    end
 
 
 
@@ -151,11 +156,11 @@ if simulation_param.flag_ctcr
 
     % fprintf('\n ============= \n ==== PLOTTING THE 3D GRAPHS TO COMPARE DF AND LLDPM DERIVATIVES \n') ;
     % % ===== Selection of the derivatives to show
-    % % options numerateur : 'Cs0(s)' , 'J(s)' , 'B' , 'uzi' , 'ti' , 'm0' , 'n0' , 'u0' , 'R0' , 'p0'
+    % % options numerateur : 'Cs0(s)' , 'J(s)' , 'b' , 'uzi' , 'ti' , 'm0' , 'n0' , 'u0' , 'R0' , 'p0'
     % % options derivateur : 'uzj(0)' , 'm0(0)' , 'n0(0)' , 'tcj' , 'bcj' , 'tau(s0)' , 'f(s0)'
-    % numerateur = {'Cs0(s)' , 'J(s)' , 'B'} ; 
-    % derivateur = {'uzj(0)' , 'm0(0)' , 'n0(0)'} ;
-    % Plot_Comp_Deriv(numerateur , derivateur , name , ctcr_construc , ctcr_carac , simulation_param , mem_CJ , ...
+    % numerateur = {'Cs0(s)' , 'J(s)'} ; 
+    % derivateur = {} ;
+    % Plot_Comp_Deriv(numerateur , derivateur , name , ctcr_construc , ctcr_carac , mem_CJ , ...
     %                 mem_deriv_propag_high , mem_deriv_propag_low , mem_FD_CJ , mem_FD_deriv_propag_high , mem_FD_deriv_propag_low , pt_s0_FD) ;
 
 

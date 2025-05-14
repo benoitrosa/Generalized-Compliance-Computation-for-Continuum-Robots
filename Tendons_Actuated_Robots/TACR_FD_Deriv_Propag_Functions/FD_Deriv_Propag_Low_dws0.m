@@ -21,15 +21,11 @@ function [mem_FD_du0 , mem_FD_dv0 , mem_FD_dR0 , mem_FD_dp0 , mem_FD_dm0 , ...
     nbP     = tacr_construc.nbP ;
     nbT     = tacr_carac.nbT ;
 
-    % ========================================================== %
-    % ========================================================== %
 
-    % ======== Save the initial properties ======== %
-    bvp_prop_init       = bvp_prop  ;
-    tacr_load_init      = tacr_load ;
-    tacr_construc_init  = tacr_construc ;
     
-
+    % ========================================================== %
+    % ===================== Initialization ===================== %
+    
     mem_FD_du0          = zeros(3,6+nbT,nbP,nbP)        ;
     mem_FD_dv0          = zeros(3,6+nbT,nbP,nbP)        ;
     mem_FD_dR0          = zeros(3,3,6+nbT,nbP,nbP)      ;
@@ -43,6 +39,57 @@ function [mem_FD_du0 , mem_FD_dv0 , mem_FD_dR0 , mem_FD_dp0 , mem_FD_dm0 , ...
     mem_FD_ddpi_ds      = zeros(3,nbT,6+nbT,nbP,nbP)    ;
     mem_FD_dAi          = zeros(3,3,nbT,6+nbT,nbP,nbP)  ;
     mem_FD_dB           = zeros(6,6+nbT,nbP)            ; 
+    
+    BC_plus             = zeros(6,nbP)                  ;
+    mem_u0_plus         = zeros(3,nbP)                  ;
+    mem_v0_plus         = zeros(3,nbP)                  ;
+    mem_T0_plus         = zeros(4,4,nbP)                ;
+    mem_m0_plus         = zeros(3,nbP)                  ;
+    mem_n0_plus         = zeros(3,nbP)                  ;
+    mem_c_plus          = zeros(3,nbP)                  ;
+    mem_d_plus          = zeros(3,nbP)                  ;
+    mem_M_plus          = zeros(6,6,nbP)                ;
+    mem_inv_M_plus      = zeros(6,6,nbP)                ;
+    mem_dpi_ds_plus     = zeros(3,nbT,nbP)              ;
+    mem_dAi_plus        = zeros(3,3,nbT,nbP)            ;
+    
+    BC_normal           = zeros(6,nbP)                  ;
+    mem_u0_normal       = zeros(3,nbP)                  ;
+    mem_v0_normal       = zeros(3,nbP)                  ;
+    mem_T0_normal       = zeros(4,4,nbP)                ;
+    mem_m0_normal       = zeros(3,nbP)                  ;
+    mem_n0_normal       = zeros(3,nbP)                  ;
+    mem_c_normal        = zeros(3,nbP)                  ;
+    mem_d_normal        = zeros(3,nbP)                  ;
+    mem_M_normal        = zeros(6,6,nbP)                ;
+    mem_inv_M_normal    = zeros(6,6,nbP)                ;
+    mem_dpi_ds_normal   = zeros(3,nbT,nbP)              ;
+    mem_dAi_normal      = zeros(3,3,nbT,nbP)            ;
+    
+    BC_minus            = zeros(6,nbP)                  ;
+    mem_u0_minus        = zeros(3,nbP)                  ;
+    mem_v0_minus        = zeros(3,nbP)                  ;
+    mem_T0_minus        = zeros(4,4,nbP)                ;
+    mem_m0_minus        = zeros(3,nbP)                  ;
+    mem_n0_minus        = zeros(3,nbP)                  ;
+    mem_c_minus         = zeros(3,nbP)                  ;
+    mem_d_minus         = zeros(3,nbP)                  ;
+    mem_M_minus         = zeros(6,6,nbP)                ;
+    mem_inv_M_minus     = zeros(6,6,nbP)                ;
+    mem_dpi_ds_minus    = zeros(3,nbT,nbP)              ;
+    mem_dAi_minus       = zeros(3,3,nbT,nbP)            ;
+                 
+    
+    
+    % ========================================================== %
+    % ================= Save the initial values ================ %
+    
+    bvp_prop_init       = bvp_prop  ;
+    tacr_load_init      = tacr_load ;
+    tacr_construc_init  = tacr_construc ;
+    
+
+    
 
 
     for tp_is0 = 1:length(pt_s0_FD)
@@ -68,7 +115,7 @@ function [mem_FD_du0 , mem_FD_dv0 , mem_FD_dR0 , mem_FD_dp0 , mem_FD_dm0 , ...
                     x_perturb = x_plus ;
                 elseif iJ == 2
                     x_perturb = x ;
-                else % iJ == 3
+                else %iJ == 3
                     x_perturb = x_minus ;
                 end
 
@@ -102,7 +149,7 @@ function [mem_FD_du0 , mem_FD_dv0 , mem_FD_dR0 , mem_FD_dp0 , mem_FD_dm0 , ...
                     [~ , BC_normal , mem_u0_normal , mem_v0_normal , mem_T0_normal , mem_m0_normal , mem_n0_normal , ...
                      mem_c_normal , mem_d_normal , mem_M_normal , mem_inv_M_normal , mem_dpi_ds_normal , mem_dAi_normal] ...
                     = FD_Deriv_Propag_Extrac_Values(tacr_construc , bvp_prop , mem_bvp) ;
-                elseif iJ == 3
+                else %iJ == 3
                     [~ , BC_minus , mem_u0_minus , mem_v0_minus , mem_T0_minus , mem_m0_minus , mem_n0_minus , ...
                      mem_c_minus , mem_d_minus , mem_M_minus , mem_inv_M_minus , mem_dpi_ds_minus , mem_dAi_minus] ...
                     = FD_Deriv_Propag_Extrac_Values(tacr_construc , bvp_prop , mem_bvp) ;
@@ -147,7 +194,7 @@ function [mem_FD_du0 , mem_FD_dv0 , mem_FD_dR0 , mem_FD_dp0 , mem_FD_dm0 , ...
                     mem_FD_ddpi_ds(:,:,icol,is,is0) = (mem_dpi_ds_plus(:,:,is)      - mem_dpi_ds_normal(:,:,is))    /tuned_eps ;
                     mem_FD_dAi(:,:,:,icol,is,is0)   = (mem_dAi_plus(:,:,:,is)       - mem_dAi_normal(:,:,:,is))     /tuned_eps ;
                 
-                elseif strcmp(select_DF,'nm')
+                else %strcmp(select_DF,'nm')
             
                     mem_FD_du0(:,icol,is,is0)       = (mem_u0_normal(1:3,is)        - mem_u0_minus(1:3,is))         /tuned_eps ;
                     mem_FD_dv0(:,icol,is,is0)       = (mem_v0_normal(1:3,is)        - mem_v0_minus(1:3,is))         /tuned_eps ;
@@ -174,7 +221,7 @@ function [mem_FD_du0 , mem_FD_dv0 , mem_FD_dR0 , mem_FD_dp0 , mem_FD_dm0 , ...
 
                 mem_FD_dB(:,icol,is0)           = (BC_plus - BC_normal)  / tuned_eps     ;
 
-            elseif strcmp(select_DF,'nm')
+            else %strcmp(select_DF,'nm')
         
                 mem_FD_dB(:,icol,is0)           = (BC_normal - BC_minus) / tuned_eps     ;
 

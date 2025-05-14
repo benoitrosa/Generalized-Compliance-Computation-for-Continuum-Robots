@@ -87,8 +87,6 @@ function [mem_FD_CJ , mem_FD_deriv_propag_high , mem_FD_deriv_propag_low] ...
       ctcr_load , bvp_prop , pt_s0_FD) ;
 
 
-    
-
     toc_FD = toc(tic_FD) ;
     
     

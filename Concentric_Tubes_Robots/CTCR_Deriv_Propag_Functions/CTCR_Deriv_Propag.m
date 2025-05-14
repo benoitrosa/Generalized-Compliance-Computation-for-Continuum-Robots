@@ -100,15 +100,5 @@ function [mem_CJ , mem_deriv_propag_high , mem_deriv_propag_low , time_comp_CJ] 
 
     time_comp_CJ = toc(tic_CJ) ;
 
-
-
-    
-    % ================
-    % ==== Display in the terminal ====
-
-    if simulation_param.bool_disp_terminal
-        fprintf(' == Computation time for Cs0 and J : %.2e [s] \n', time_comp_CJ) ;
-    end
-
     
 end

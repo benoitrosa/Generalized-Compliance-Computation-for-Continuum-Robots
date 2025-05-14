@@ -59,17 +59,5 @@ function [tacr_shape , mem_bvp , bvp_prop , mem_deriv_propag_low , ...
     = BVP_Resolv( ...
     IC , tacr_construc , simulation_param , tacr_carac , tacr_act , tacr_load) ;
 
-
-
-    % ================
-    % ==== Display in the terminal ====
-    
-    if simulation_param.bool_disp_terminal
-        fprintf(' == Time for TACR shape : %.2e [s] \n', bvp_prop.clk_bvp) ;
-        fprintf(' == Number of iterations : %.2e \n', bvp_prop.nb_iter) ;
-        fprintf(' == Optimization norm error : %.2e \n', bvp_prop.norm_tol) ;
-        fprintf(' == Number of discretization points : %.2e \n', tacr_construc.nbP) ;
-    end
-
     
 end

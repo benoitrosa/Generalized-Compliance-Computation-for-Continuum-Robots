@@ -110,13 +110,19 @@ function [mem_bvp , mem_deriv_propag_low] ...
         for tp_iT = 1:length(end_vectT)
             iT  = end_vectT(tp_iT) ;
 
-            fi                          = - tacr_act.ti(iT) * mem_bvp.mem_dpi_ds(:,iT,is)/norm_dpi(iT)                                             ;
+            fi                          = - tacr_act.ti(iT) * mem_bvp.mem_dpi_ds(:,iT,is)/norm_dpi(iT)      ;
             mem_bvp.mem_m0(:,is)        = mem_bvp.mem_m0(:,is) - hat_ri(:,:,iT) * fi                        ; 
-            mem_bvp.mem_n0(:,is)        = mem_bvp.mem_n0(:,is) - fi                                                             ;
+            mem_bvp.mem_n0(:,is)        = mem_bvp.mem_n0(:,is) - fi                                         ;
             mem_bvp.mem_y.mem_u0(:,is)  = mem_bvp.mem_y.mem_u0(:,is) - tacr_carac.Kbt \ hat_ri(:,:,iT) * fi ;
-            mem_bvp.mem_y.mem_v0(:,is)  = mem_bvp.mem_y.mem_v0(:,is) - tacr_carac.Kse \ fi                                      ;   
+            mem_bvp.mem_y.mem_v0(:,is)  = mem_bvp.mem_y.mem_v0(:,is) - tacr_carac.Kse \ fi                  ;   
             
         end
+
+        hat_u0      = hat(mem_bvp.mem_y.mem_u0(:,is))   ;
+        hat_v0      = hat(mem_bvp.mem_y.mem_v0(:,is))   ;
+        
+        Kbt_sous_u0 = tacr_carac.Kbt * ( mem_bvp.mem_y.mem_u0(:,is) - tacr_construc.mem_u0_init(:,is) ) ;
+        Kse_sous_v0 = tacr_carac.Kse * ( mem_bvp.mem_y.mem_v0(:,is) - tacr_construc.mem_v0_init(:,is) ) ;
     end
 
 
@@ -186,6 +192,7 @@ function [mem_bvp , mem_deriv_propag_low] ...
                 mem_deriv_propag_low.mem_ddpi_ds.mem_ddpi_dm0_ds(:,iT,j,is) = ...
                                                 hat_du0_dm0j * tacr_construc.mem_ri(:,iT,is) ...
                                                 + mem_deriv_propag_low.mem_dv0.mem_dv0_dm0(:,j,is) ;
+
                         
                 % ====================
                 % ==== Pre-computing iT and j dependent variables
@@ -250,7 +257,7 @@ function [mem_bvp , mem_deriv_propag_low] ...
                                                    + hat_u0 * tacr_construc.mem_dri_ds(:,iT,is) ...
                                                    + tacr_construc.mem_ddri_ds(:,iT,is) ) ...
                                       + mem_bvp.mem_Ai(:,:,iT,is) * ( hat_du0_dn0j * mem_bvp.mem_dpi_ds(:,iT,is) ...
-                                                                      + hat_u0 * mem_deriv_propag_low.mem_ddpi_ds.mem_ddpi_dn0_ds(:,iT,j,is) ...
+                                                                      + hat_u0 * ddpi_dn0j ...
                                                                       + hat_du0_dn0j * tacr_construc.mem_dri_ds(:,iT,is) ) ;
         
                 db_i_dn0j           = hat_ri(:,:,iT) * da_i_dn0j ;
@@ -282,16 +289,28 @@ function [mem_bvp , mem_deriv_propag_low] ...
                 for tp_iT = 1:length(end_vectT)
                     iT  = end_vectT(tp_iT) ;
         
-                    ddpi_ds_dn0j    = mem_deriv_propag_low.mem_ddpi_ds.mem_ddpi_dn0_ds(:,iT,j,is) ;
-                    ddpi_ds_dm0j    = mem_deriv_propag_low.mem_ddpi_ds.mem_ddpi_dm0_ds(:,iT,j,is) ;
-                    N               = mem_bvp.mem_dpi_ds(:,iT,is)        ;
-                    dN_dn0j         = ddpi_ds_dn0j  ;
-                    dN_dm0j         = ddpi_ds_dm0j  ; 
-                    D               = norm_dpi(iT)  ;
-                    dD_dn0j         = 1/2 * (ddpi_ds_dn0j'*mem_bvp.mem_dpi_ds(:,iT,is) + mem_bvp.mem_dpi_ds(:,iT,is)'*ddpi_ds_dn0j) / (norm_dpi(iT)^3) ;
-                    dD_dm0j         = 1/2 * (ddpi_ds_dm0j'*mem_bvp.mem_dpi_ds(:,iT,is) + mem_bvp.mem_dpi_ds(:,iT,is)'*ddpi_ds_dm0j) / (norm_dpi(iT)^3) ;
-                    dfi_dn0j        = - tacr_act.ti(iT) * (dN_dn0j*D - N * dD_dn0j) / (D^2) ;
-                    dfi_dm0j        = - tacr_act.ti(iT) * (dN_dm0j*D - N * dD_dm0j) / (D^2) ;
+                    ddpi_ds_dn0j        = mem_deriv_propag_low.mem_ddpi_ds.mem_ddpi_dn0_ds(:,iT,j,is)       ;
+                    ddpi_ds_dm0j        = mem_deriv_propag_low.mem_ddpi_ds.mem_ddpi_dm0_ds(:,iT,j,is)       ;
+                    N                   = mem_bvp.mem_dpi_ds(:,iT,is)                                       ;
+                    dN_dn0j             = ddpi_ds_dn0j                                                      ;
+                    dN_dm0j             = ddpi_ds_dm0j                                                      ; 
+                    D                   = norm_dpi(iT)                                                      ;
+                    dD_dn0j             = 1/2 * (ddpi_ds_dn0j'*mem_bvp.mem_dpi_ds(:,iT,is) + mem_bvp.mem_dpi_ds(:,iT,is)'*ddpi_ds_dn0j) / (norm_dpi(iT)^3)  ;
+                    dD_dm0j             = 1/2 * (ddpi_ds_dm0j'*mem_bvp.mem_dpi_ds(:,iT,is) + mem_bvp.mem_dpi_ds(:,iT,is)'*ddpi_ds_dm0j) / (norm_dpi(iT)^3) ;
+                    dfi_dn0j            = - tacr_act.ti(iT) * (dN_dn0j*D - N*dD_dn0j) / (D^2)               ;
+                    dfi_dm0j            = - tacr_act.ti(iT) * (dN_dm0j*D - N*dD_dm0j) / (D^2)               ;
+
+
+                    % ddpi_ds_dn0j        = mem_deriv_propag_low.mem_ddpi_ds.mem_ddpi_dn0_ds(:,iT,j,is) ;
+                    % ddpi_ds_dm0j        = mem_deriv_propag_low.mem_ddpi_ds.mem_ddpi_dm0_ds(:,iT,j,is) ;
+                    % N                   = mem_bvp.mem_dpi_ds(:,iT,is)        ;
+                    % dN_dn0j             = ddpi_ds_dn0j  ;
+                    % dN_dm0j             = ddpi_ds_dm0j  ; 
+                    % D                   = norm_dpi(iT)  ;
+                    % dD_dn0j             = 1/2 * (ddpi_ds_dn0j'*mem_bvp.mem_dpi_ds(:,iT,is) + mem_bvp.mem_dpi_ds(:,iT,is)'*ddpi_ds_dn0j) / (norm_dpi(iT)^3) ;
+                    % dD_dm0j             = 1/2 * (ddpi_ds_dm0j'*mem_bvp.mem_dpi_ds(:,iT,is) + mem_bvp.mem_dpi_ds(:,iT,is)'*ddpi_ds_dm0j) / (norm_dpi(iT)^3) ;
+                    % dfi_dn0j            = - tacr_act.ti(iT) * (dN_dn0j*D - N * dD_dn0j) / (D^2) ;
+                    % dfi_dm0j            = - tacr_act.ti(iT) * (dN_dm0j*D - N * dD_dm0j) / (D^2) ;
 
                     mem_deriv_propag_low.mem_dm0.mem_dm0_dn0(:,j,is) = mem_deriv_propag_low.mem_dm0.mem_dm0_dn0(:,j,is) - hat_ri(:,:,iT)*dfi_dn0j ;
                     mem_deriv_propag_low.mem_dm0.mem_dm0_dm0(:,j,is) = mem_deriv_propag_low.mem_dm0.mem_dm0_dm0(:,j,is) - hat_ri(:,:,iT)*dfi_dm0j ;
@@ -303,8 +322,17 @@ function [mem_bvp , mem_deriv_propag_low] ...
                     mem_deriv_propag_low.mem_dv0.mem_dv0_dm0(:,j,is) = mem_deriv_propag_low.mem_dv0.mem_dv0_dm0(:,j,is) - tacr_carac.Kse \ dfi_dm0j ;  
                             
                 end
+
+                % ====================
+                % ==== Re-computing j dependent variables since some values changed
+    
+                hat_du0_dn0j        = hat(mem_deriv_propag_low.mem_du0.mem_du0_dn0(:,j,is)) ;
+                hat_du0_dm0j        = hat(mem_deriv_propag_low.mem_du0.mem_du0_dm0(:,j,is)) ;
+                hat_dv0_dn0j        = hat(mem_deriv_propag_low.mem_dv0.mem_dv0_dn0(:,j,is)) ;
+                hat_dv0_dm0j        = hat(mem_deriv_propag_low.mem_dv0.mem_dv0_dm0(:,j,is)) ;
                 
             end
+
 
             mem_deriv_propag_low.mem_dM.mem_dM_dm0(:,:,j,is)            = [[dA_dm0j , dG_dm0j] ; [dB_dm0j , dH_dm0j]] ;
             mem_deriv_propag_low.mem_dM.mem_dM_dn0(:,:,j,is)            = [[dA_dn0j , dG_dn0j] ; [dB_dn0j , dH_dn0j]] ;

@@ -11,28 +11,33 @@ function [mem_FD_Cs0] ...
 %
 %
 
-    
-    % ======== Save the initial properties ======== %
-    ctcr_construc_init  = ctcr_construc ;
-
 
     % ========================================================== %
     % ================== Getting input values ================== %
     
-    nbP             = ctcr_construc.nbP ;
-    nbT             = ctcr_carac.nbT ;
-
-    mem_FD_Cs0      = zeros(6,6,nbP,nbP)     ;
-
-    memT_plus       = zeros(4,4,ctcr_construc.nbP) ;
-    memT_normal     = zeros(4,4,ctcr_construc.nbP) ;
-    memT_minus      = zeros(4,4,ctcr_construc.nbP) ;
+    nbP             = ctcr_construc.nbP     ;
+    nbT             = ctcr_carac.nbT        ;
 
 
-    % ======== Save the initial properties ======== %
+    % ========================================================== %
+    % ===================== Initialization ===================== %
+    
+    mem_FD_Cs0      = zeros(6,6,nbP,nbP)    ;
+
+    memT_plus       = zeros(4,4,nbP)        ;
+    memT_normal     = zeros(4,4,nbP)        ;
+    memT_minus      = zeros(4,4,nbP)        ;
+
+
+    % ========================================================== %
+    % ================= Save the initial values ================ %
+
     bvp_prop_init       = bvp_prop  ;
     ctcr_load_init      = ctcr_load ;
+    ctcr_construc_init  = ctcr_construc     ;
 
+
+    
     for tp_is0 = 1:length(pt_s0_FD)
         is0 = pt_s0_FD(tp_is0) ;
 
