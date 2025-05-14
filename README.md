@@ -31,7 +31,6 @@
 **This code requires "Matlab R2023a", or a more recent version, as well as the installation of the "Optimization Toolbox". There are two main folders associated with the different kinds of robots: "Concentric_Tubes_Robots" and "Tendon_Actuated_Robots". The organisation of the folders is identical to what will be described for a given ROBOT = CTCR or TACR.**
 
 ## Content
-
 	- "main.m " is the main script using standard Matlab code
 	- "main_cpp.m " is similar to "main.m" but contains MEX functions running converted C++ code using the Matlab Coder app
 	- "ROBOT_CPP/ " contains the MEX functions
@@ -47,12 +46,12 @@
 	- "ROBOT_Write_Config/" contains the functions used to generate custom config files
 
 ## How to use your custom configuration file : 
-1. Open "ROBOT_Write_Config/Write_Config.m"
-2. Change the parameters you want
-3. Set the folder "Generalized-Compliance-Computation-for-Continuum-Robots/ROBOT" as the Matlab workspace
-4. Run "Write_Config(<your_config_name>)" in the Matlab terminal
-5. Change the line name of the config file at the top of "main.m" (or "main_cpp.m")
-6. Run "main.m" (or "main_cpp.m")
+	- Open "ROBOT_Write_Config/Write_Config.m"
+	- Change the parameters you want
+	- Set the folder "Generalized-Compliance-Computation-for-Continuum-Robots/ROBOT" as the Matlab workspace
+	- Run "Write_Config(<your_config_name>)" in the Matlab terminal
+	Change the name of the config file at the top of "main.m" (or "main_cpp.m")
+	- Run "main.m" (or "main_cpp.m")
 
 ## Contact : 
 **Do not hesitate to contact us if you have any questions.**
