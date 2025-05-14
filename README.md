@@ -55,4 +55,6 @@
 
 ## Contact : 
 **Do not hesitate to contact us if you have any questions.**
+
 **Guillaume Lods | g.lods@unistra.fr**
+**Benoit Rosa | b.rosa@unistra.fr**
