@@ -30,9 +30,9 @@
 
 ## Content
 
-	- "€œ main.m " is the main script using standard Matlab code.
-	- "€ œmain_cpp.m " is similar to "main.m" but contains MEX functions running converted C++ code using the Matlab Coder app.
-	- " ROBOT_CPP/ " ontains the MEX functions.
+	- "main.m " is the main script using standard Matlab code.
+	- "main_cpp.m " is similar to "main.m" but contains MEX functions running converted C++ code using the Matlab Coder app.
+	- "ROBOT_CPP/ " ontains the MEX functions.
 
 
 
