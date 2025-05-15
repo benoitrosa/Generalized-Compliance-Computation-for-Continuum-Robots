@@ -97,7 +97,7 @@ if simulation_param.flag_ctcr
     select_DF                       = 'pn' ;
     ampl_vibr                       = 1e-6 ;
     simulation_param.bool_opt_lit   = true ;
-    pt_s0_FD                        = ctcr_construc.ind_origin + [floor([0,20,40,50,60,80,100]/100*(ctcr_construc.nbP-ctcr_construc.ind_origin))] ;
+    [~,pt_s0_FD]                    = min(abs(ctcr_construc.vect_z(:)-linspace(0,100,10)/100*ctcr_construc.vect_z(end))) ;
     [mem_FD_CJ , mem_FD_deriv_propag_high , mem_FD_deriv_propag_low] ...
     = CTCR_FD_Deriv_Propag_mex( ...
     select_DF , ampl_vibr , ctcr_carac , ctcr_construc , ctcr_act , ctcr_load , simulation_param , bvp_prop , pt_s0_FD) ;

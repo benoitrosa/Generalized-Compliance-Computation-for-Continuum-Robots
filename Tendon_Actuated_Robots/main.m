@@ -109,7 +109,7 @@ prc_s0 , delta_f0 , tacr_carac , tacr_construc , tacr_load , tacr_shape , tacr_a
 % select_DF                       = 'pn' ;
 % ampl_vibr                       = 1e-6 ;
 % simulation_param.bool_opt_lit   = true ;
-% pt_s0_FD                        = [1,floor([10,20,40,50,60,80,100]/100*tacr_construc.nbP)] ;
+% [~,pt_s0_FD]                    = min(abs(tacr_construc.vect_z(:)-linspace(0,100,10)/100*tacr_construc.vect_z(end))) ;
 % [mem_FD_CJ , mem_FD_deriv_propag_high , mem_FD_deriv_propag_low] ...
 % = TACR_FD_Deriv_Propag(select_DF , ampl_vibr , tacr_carac , tacr_construc , tacr_act , tacr_load , simulation_param , bvp_prop , pt_s0_FD) ;
 
